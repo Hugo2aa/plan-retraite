@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f6e6a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Plan Retraite">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>Mon Plan Retraite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Appli mobile : en-tête collant, 5 onglets fixes en bas, sous-onglets segmentés dans chaque vue. Colonne max 560px. */
+:root{
+  --bg:#eef2f1; --surface:#ffffff; --ink:#16232a; --muted:#5b6a70; --line:#dbe2e0;
+  --accent:#0f6e6a; --accent-soft:#d6ecea; --gain:#c7801a; --gain-soft:#f6e7cf;
+  --warn:#a8402b; --warn-soft:#f6dfd8; --good:#2f7d3a; --good-soft:#dcefdf;
+  --font-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --font-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --tabh:64px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1416; --surface:#172225; --ink:#e7eeec; --muted:#9aaba9; --line:#2a393c;
+  --accent:#3fb3aa; --accent-soft:#1d3a3a; --gain:#e2a54a; --gain-soft:#3a2f1c; --warn:#e07b62; --warn-soft:#3b231d; --good:#6cc27a; --good-soft:#1d3322; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0c1416; --surface:#172225; --ink:#e7eeec; --muted:#9aaba9; --line:#2a393c;
+  --accent:#3fb3aa; --accent-soft:#1d3a3a; --gain:#e2a54a; --gain-soft:#3a2f1c; --warn:#e07b62; --warn-soft:#3b231d; --good:#6cc27a; --good-soft:#1d3322; color-scheme:dark;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5}
+.app{max-width:560px;margin:0 auto;min-height:100%;padding:0 max(16px,env(safe-area-inset-right)) calc(var(--tabh) + 24px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+header.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(12px + env(safe-area-inset-top)) 0 10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+header.bar h1{font-family:var(--font-display);font-size:1.3rem;margin:0}
+.pill{font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.ok{color:var(--good);border-color:var(--good)}
+h2,h3,h4{font-family:var(--font-display);line-height:1.2;margin:0;text-wrap:balance}
+h2{font-size:1.45rem;margin:4px 0}
+h3{font-size:1.08rem}
+h4{font-size:.98rem}
+.lead{color:var(--muted);margin:0 0 14px;font-size:.95rem}
+.view{display:none}.view.on{display:block}
+.pane{display:none}.pane.on{display:block}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.card.tint{background:var(--accent-soft);border-color:transparent}
+.card.amber{background:var(--gain-soft);border-color:transparent}
+.card.red{background:var(--warn-soft);border-color:transparent}
+.card.green{background:var(--good-soft);border-color:transparent}
+.muted{color:var(--muted)} .small{font-size:.87rem}
+p{margin:6px 0}
+a{color:var(--accent)}
+button,.btn{font:inherit;font-weight:700;border:0;border-radius:12px;min-height:46px;padding:10px 16px;background:var(--accent);color:#fff;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;text-decoration:none;gap:6px}
+.btn.ghost,button.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+button.sm{min-height:36px;width:auto;padding:6px 12px;font-size:.88rem}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);height:var(--tabh)}
+nav.tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--muted);font-size:.72rem;font-weight:700}
+nav.tabs svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs a[aria-current="page"]{color:var(--accent)}
+.seg{display:flex;gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:3px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none}
+.seg button{background:transparent;color:var(--muted);min-height:38px;border-radius:9px;font-size:.88rem;padding:6px 10px;flex:1 0 auto;width:auto}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.field{display:grid;gap:4px;margin-bottom:12px}
+.field label{font-weight:700;font-size:.9rem;display:flex;justify-content:space-between;gap:8px}
+.field label output{font-variant-numeric:tabular-nums;color:var(--accent)}
+.field small{color:var(--muted)}
+input[type=number],input[type=text],input[type=month],select,textarea{font:inherit;font-size:16px;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);width:100%;font-variant-numeric:tabular-nums}
+textarea{min-height:90px;font-size:13px;font-family:ui-monospace,monospace}
+input[type=range]{width:100%;accent-color:var(--accent);height:32px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.chips button{width:auto;min-height:36px;padding:6px 12px;font-size:.86rem;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:999px}
+.chips button[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;font-weight:600;font-size:.95rem}
+.switch input{width:22px;height:22px;accent-color:var(--accent)}
+.hero{display:flex;gap:16px;align-items:center}
+.ring{flex:0 0 88px;height:88px;position:relative}
+.ring svg{width:88px;height:88px;transform:rotate(-90deg)}
+.ring .t{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-display);font-size:1.25rem;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.04em}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi .v{font-family:var(--font-display);font-size:1.4rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi .l{font-size:.8rem;color:var(--muted);font-weight:600}
+.kpi.bad .v{color:var(--warn)} .kpi.ok .v{color:var(--good)}
+.bigv{font-family:var(--font-display);font-size:2.1rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.res .big{grid-column:1/-1;background:var(--accent);color:#fff;border-radius:16px;padding:16px}
+.res .big .v{font-family:var(--font-display);font-size:2rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.res .big .l{font-size:.85rem;opacity:.92;font-weight:600}
+.res .sm{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.res .sm .v{font-family:var(--font-display);font-size:1.25rem;font-variant-numeric:tabular-nums}
+.res .sm .l{font-size:.8rem;color:var(--muted);font-weight:600}
+canvas{width:100%;height:220px;display:block}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin-bottom:4px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;background:var(--c)}
+.split{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.split div{border-radius:12px;padding:10px;text-align:center}
+.split .v{font-family:var(--font-display);font-size:1.1rem;font-variant-numeric:tabular-nums}
+.split .l{font-size:.74rem;font-weight:700}
+.verdict{border-radius:12px;padding:12px 14px;font-weight:600;margin-top:4px}
+.verdict.yes{background:var(--good-soft)} .verdict.no{background:var(--warn-soft)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.progress i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.progress.gain i{background:var(--gain)}
+/* comptes */
+.acc{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}
+.acc:last-child{border-bottom:0}
+.acc .name{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.acc .name span{font-size:.75rem;color:var(--muted);font-weight:600}
+.acc input{min-height:42px}
+.acc label{font-size:.78rem;color:var(--muted);font-weight:700;display:block;margin-bottom:2px}
+.bars .b{display:grid;grid-template-columns:96px 1fr 76px;gap:8px;align-items:center;font-size:.86rem;margin:6px 0}
+.bars .track{height:12px;background:var(--bg);border-radius:99px;overflow:hidden}
+.bars .track i{display:block;height:100%;border-radius:99px}
+.bars .amt{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.hist{font-size:.88rem}
+.hist .h{display:grid;grid-template-columns:72px 1fr 1fr 1fr;gap:6px;padding:7px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.hist .h.head{font-weight:700;color:var(--muted);font-size:.78rem}
+.pos{color:var(--good)} .neg{color:var(--warn)}
+/* checklist */
+.phase{margin:18px 0 8px;display:flex;justify-content:space-between;align-items:baseline}
+.phase h3{font-size:1rem}
+.phase span{font-size:.8rem;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
+.task{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;overflow:hidden}
+.task .top{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;cursor:pointer}
+.task input{flex:0 0 26px;width:26px;height:26px;margin:0;accent-color:var(--accent)}
+.task .t{font-weight:700}
+.task .d{font-size:.9rem;color:var(--muted)}
+.task.done .t{text-decoration:line-through;color:var(--muted)}
+details.how{border-top:1px solid var(--line)}
+details.how summary{list-style:none;cursor:pointer;padding:10px 14px;font-weight:700;color:var(--accent);font-size:.9rem;display:flex;justify-content:space-between}
+details.how summary::-webkit-details-marker{display:none}
+details.how summary::after{content:"+";font-size:1.2rem;line-height:1}
+details.how[open] summary::after{content:"−"}
+details.how .body{padding:0 14px 14px;font-size:.93rem}
+ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
+.ordre{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}
+.ordre div{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:.88rem}
+.ordre b{display:block;color:var(--muted);font-size:.72rem}
+/* comparatif */
+.broker{border-top:1px solid var(--line);padding:12px 0}
+.broker:first-of-type{border-top:0;padding-top:4px}
+.broker .n{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.broker .n b{font-size:1rem}
+.tag{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.tag.amber{background:var(--gain-soft);color:var(--gain)}
+.broker ul{margin:4px 0 0;font-size:.9rem}
+/* actu */
+.asof{display:inline-block;font-size:.78rem;font-weight:700;color:var(--warn);background:var(--warn-soft);padding:3px 10px;border-radius:999px;margin-bottom:10px}
+.news{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.news .n{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;border-top:4px solid var(--c)}
+.news .v{font-family:var(--font-display);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.news .l{font-size:.82rem;font-weight:700}
+.news p{font-size:.82rem;color:var(--muted);margin:4px 0 0}
+.rule{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
+.rule b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:.85rem}
+.rule p{margin:0;font-size:.93rem}
+.ag{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)} .ag:last-child{border-bottom:0}
+.ag strong{flex:0 0 96px}
+/* quiz */
+.qopt{background:var(--bg);color:var(--ink);border:1.5px solid var(--line);justify-content:flex-start;text-align:left;font-weight:600;margin-bottom:8px;min-height:50px}
+.qopt.right{border-color:var(--good);background:var(--good-soft)}
+.qopt.wrong{border-color:var(--warn);background:var(--warn-soft)}
+.qopt:disabled{cursor:default;opacity:1}
+/* lexique */
+.term{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.term dt{font-weight:700}
+.term dt .cat{font-weight:600;font-size:.7rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.term dd{margin:4px 0 0;font-size:.93rem}
+.catbar{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;scrollbar-width:none}
+.catbar button{flex:0 0 auto;width:auto;min-height:34px;padding:4px 12px;font-size:.85rem;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:999px}
+.catbar button[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.foot{color:var(--muted);font-size:.8rem;margin-top:16px}
+.toast{position:fixed;left:50%;bottom:calc(var(--tabh) + 16px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:.9rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion: reduce){.progress i,.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="bar">
+  <h1>Mon Plan Retraite</h1>
+  <span class="pill ok" id="sync">Sur ce téléphone</span>
+</header>
+<main>
+
+<!-- ================= ACCUEIL ================= -->
+<section class="view" id="v-accueil">
+  <div class="card tint" id="install" hidden><h3>Installe l'appli</h3><p class="small">Dans Safari, touche <strong>Partager</strong> (carré avec flèche) puis <strong>« Sur l'écran d'accueil »</strong>. Tu auras l'icône Plan Retraite, en plein écran et hors ligne.</p></div>
+  <h2>Bonjour 👋</h2>
+  <p class="lead">Ton tableau de bord. Mets tes vrais chiffres dans « Mon argent », coche tes étapes dans « Plan ».</p>
+  <div class="card">
+    <div class="hero">
+      <div class="ring" aria-hidden="true"><svg viewBox="0 0 88 88"><circle cx="44" cy="44" r="36" stroke="var(--line)" stroke-width="10" fill="none"/><circle id="ringArc" cx="44" cy="44" r="36" stroke="var(--accent)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="226.2" stroke-dashoffset="226.2"/></svg><div class="t" id="ringTxt">0 %</div></div>
+      <div><div class="eyebrow">Prochaine étape</div><div id="nextT" style="font-weight:700;font-size:1.05rem"></div><div id="nextD" class="small muted"></div></div>
+    </div>
+    <div style="margin-top:12px"><a class="btn" href="#plan">Voir mon plan</a></div>
+  </div>
+  <div class="card">
+    <div class="eyebrow">Mon patrimoine</div>
+    <div class="bigv" id="homeTotal">0 €</div>
+    <p class="small muted" id="homeSplit"></p>
+    <div class="small" style="font-weight:700;margin-top:8px">Matelas de sécurité</div>
+    <div class="progress gain"><i id="homeMat" style="width:0"></i></div>
+    <p class="small muted" id="homeMatTxt" style="margin:0"></p>
+    <div style="margin-top:12px"><a class="btn ghost" href="#argent">Mettre à jour mes comptes</a></div>
+  </div>
+  <h3 style="margin:16px 0 8px">Les chiffres du moment</h3>
+  <div class="kpis" id="kpis"></div>
+  <div class="card amber"><h3>Le rappel du jour</h3><p id="tip"></p></div>
+</section>
+
+<!-- ================= MON ARGENT ================= -->
+<section class="view" id="v-argent">
+  <h2>Mon argent</h2>
+  <div class="seg" role="group" aria-label="Sections">
+    <button type="button" data-seg="argent" data-p="comptes" aria-pressed="true">Mes comptes</button>
+    <button type="button" data-seg="argent" data-p="suivi" aria-pressed="false">Suivi</button>
+    <button type="button" data-seg="argent" data-p="budget" aria-pressed="false">Budget &amp; LEP</button>
+  </div>
+
+  <div class="pane on" data-pane="argent:comptes">
+    <div class="card">
+      <div class="eyebrow">Total</div>
+      <div class="bigv" id="accTotal">0 €</div>
+      <p class="small muted" id="accMonthly"></p>
+      <div class="bars" id="bars"></div>
+    </div>
+    <div class="card" id="matCard">
+      <h3>Mon matelas de sécurité</h3>
+      <div class="progress gain"><i id="matBar" style="width:0"></i></div>
+      <p class="small" id="matTxt"></p>
+    </div>
+    <div class="card">
+      <h3>Mes soldes</h3>
+      <p class="small muted">Indique ce qu'il y a sur chaque compte aujourd'hui et ce que tu y verses chaque mois. Tout est enregistré automatiquement.</p>
+      <div id="accounts"></div>
+    </div>
+    <button type="button" id="snap">Enregistrer le relevé de ce mois</button>
+    <p class="small muted" style="text-align:center">Fais-le une fois par mois pour suivre ta progression.</p>
+  </div>
+
+  <div class="pane" data-pane="argent:suivi">
+    <div class="card">
+      <h3>Ma progression réelle</h3>
+      <p class="small muted">Valeur de tous tes comptes comparée à l'argent que tu as versé. L'écart, ce sont tes gains (ou pertes) réels.</p>
+      <div class="legend"><span style="--c:var(--accent)">Valeur totale</span><span style="--c:var(--gain)">Argent versé</span></div>
+      <canvas id="cHist" role="img" aria-label="Progression réelle"></canvas>
+      <p class="small" id="histSum"></p>
+    </div>
+    <div class="card">
+      <h3>Mes relevés</h3>
+      <div class="hist" id="hist"></div>
+      <button type="button" class="ghost sm" id="undo" style="margin-top:10px">Supprimer le dernier relevé</button>
+    </div>
+    <div class="card">
+      <h3>Sauvegarde</h3>
+      <p class="small muted">Tes chiffres sont gardés uniquement sur ce téléphone. Copie-les de temps en temps (dans Notes, par exemple) pour ne jamais les perdre, ou pour me les envoyer quand tu veux une analyse.</p><p class="small muted" id="lastBk"></p>
+      <div class="btns"><button type="button" class="ghost" id="exp">Copier mes données</button><button type="button" class="ghost" id="impBtn">Coller des données</button></div>
+      <div id="impBox" hidden style="margin-top:10px">
+        <textarea id="impTxt" aria-label="Données à importer" placeholder="Colle ici tes données copiées"></textarea>
+        <button type="button" id="impGo" style="margin-top:8px">Importer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane" data-pane="argent:budget">
+    <div class="card">
+      <h3>Mon budget en 30 secondes</h3>
+      <p class="small muted">Règle 50/30/20 : besoins, envies, épargne.</p>
+      <div class="row2">
+        <div class="field"><label for="sal">Salaire net / mois</label><input type="number" id="sal" inputmode="numeric" min="0" step="50"></div>
+        <div class="field"><label for="dep">Dépenses fixes</label><input type="number" id="dep" inputmode="numeric" min="0" step="50"></div>
+      </div>
+      <div class="split">
+        <div style="background:var(--accent-soft)"><div class="v" id="b50">–</div><div class="l">Besoins 50 %</div></div>
+        <div style="background:var(--gain-soft)"><div class="v" id="b30">–</div><div class="l">Envies 30 %</div></div>
+        <div style="border:1.5px solid var(--accent)"><div class="v" id="b20">–</div><div class="l">Épargne 20 %</div></div>
+      </div>
+      <p class="small" id="bMsg"></p>
+      <p class="small" id="precMsg"></p>
+    </div>
+    <div class="card">
+      <h3>Ai-je droit au LEP ?</h3>
+      <p class="small muted">Ton revenu fiscal de référence est en 1re page de ton avis d'impôt.</p>
+      <div class="row2">
+        <div class="field"><label for="rfr">Revenu fiscal de réf.</label><input type="number" id="rfr" inputmode="numeric" placeholder="ex. 12000"></div>
+        <div class="field"><label for="parts">Parts</label><select id="parts"><option value="1">1 (seul)</option><option value="1.5">1,5</option><option value="2">2</option><option value="2.5">2,5</option><option value="3">3</option></select></div>
+      </div>
+      <div class="verdict" id="lepV" hidden></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SIMULER ================= -->
+<section class="view" id="v-simuler">
+  <h2>Simuler</h2>
+  <div class="seg" role="group" aria-label="Simulations">
+    <button type="button" data-seg="simuler" data-p="epargne" aria-pressed="true">Épargne</button>
+    <button type="button" data-seg="simuler" data-p="repart" aria-pressed="false">Répartition</button>
+    <button type="button" data-seg="simuler" data-p="retraite" aria-pressed="false">Retraite totale</button>
+    <button type="button" data-seg="simuler" data-p="immo" aria-pressed="false">Immobilier</button>
+  </div>
+
+  <!-- Épargne -->
+  <div class="pane on" data-pane="simuler:epargne">
+    <button type="button" class="ghost" id="useReal" style="margin-bottom:12px">Partir de mes vrais comptes</button>
+    <div class="chips" role="group" aria-label="Mode"><button type="button" id="mProj" aria-pressed="true">Combien j'aurai ?</button><button type="button" id="mGoal" aria-pressed="false">Combien verser ?</button></div>
+    <div id="goalBox" hidden class="card tint">
+      <div class="field" style="margin-bottom:8px"><label for="goal">Revenu en plus voulu à la retraite <output id="goalO"></output></label><input type="range" id="goal" min="100" max="3000" step="50" value="800"></div>
+      <p style="margin:0">Il te faut verser environ <strong id="needM" style="font-size:1.3rem">–</strong> par mois dès maintenant <span class="small muted">(euros d'aujourd'hui)</span>.</p>
+    </div>
+    <div class="res">
+      <div class="big"><div class="l">Capital à <span id="tAge">64</span> ans (euros d'aujourd'hui)</div><div class="v" id="vFinal">–</div><div class="l" id="vFinalN"></div></div>
+      <div class="sm"><div class="l">Tu auras versé</div><div class="v" id="vVerse">–</div></div>
+      <div class="sm"><div class="l">Revenu en plus / mois</div><div class="v" id="vRente">–</div></div>
+    </div>
+    <div class="card" style="padding:12px"><div class="legend"><span style="--c:var(--accent)">Versé</span><span style="--c:var(--gain)">Gains</span></div><canvas id="c" role="img" aria-label="Évolution du capital"></canvas></div>
+    <div class="card amber small" id="wait"></div>
+    <div class="card red small" id="crashMsg" hidden></div>
+    <div class="card">
+      <div class="row2">
+        <div class="field"><label for="mens">Versement / mois</label><input type="number" id="mens" inputmode="numeric" min="0" step="10" value="100"></div>
+        <div class="field"><label for="init">Déjà placé (€)</label><input type="number" id="init" inputmode="numeric" min="0" step="100" value="0"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="age">Âge <output id="ageO"></output></label><input type="range" id="age" min="16" max="60" value="20"></div>
+        <div class="field"><label for="ret">Jusqu'à <output id="retO"></output></label><input type="range" id="ret" min="40" max="70" value="64"></div>
+      </div>
+      <div class="field"><label for="rdt">Rendement / an <output id="rdtO"></output></label>
+        <div class="chips" role="group" aria-label="Profils" id="rchips"><button type="button" data-r="3">Prudent 3 %</button><button type="button" data-r="5">Équilibré 5 %</button><button type="button" data-r="7">ETF monde 7 %</button></div>
+        <input type="range" id="rdt" min="0" max="10" step="0.5" value="7" aria-label="Rendement par an"></div>
+      <div class="row2">
+        <div class="field"><label for="frais">Frais <output id="fraisO"></output></label><input type="range" id="frais" min="0" max="3" step="0.1" value="0.3"></div>
+        <div class="field"><label for="hausse">Hausse/an <output id="hausseO"></output></label><input type="range" id="hausse" min="0" max="5" step="0.5" value="2"></div>
+      </div>
+      <div class="field"><label for="infl">Inflation moyenne <output id="inflO"></output></label><input type="range" id="infl" min="0" max="5" step="0.5" value="2"></div>
+      <label class="switch" for="crash">Simuler un krach <input type="checkbox" id="crash"></label>
+      <div id="crashbox" hidden><div class="row2">
+        <div class="field"><label for="crashAge">À <output id="crashAgeO"></output></label><input type="range" id="crashAge" min="21" max="63" value="40"></div>
+        <div class="field"><label for="crashPct">Chute <output id="crashPctO"></output></label><input type="range" id="crashPct" min="10" max="55" step="5" value="35"></div>
+      </div></div>
+      <p class="small muted">Estimation, pas une promesse. Impôts non déduits. 7 % ≈ moyenne historique des actions mondiales, avec des années à −30 %.</p>
+    </div>
+  </div>
+
+  <!-- Répartition -->
+  <div class="pane" data-pane="simuler:repart">
+    <p class="lead">Comment répartir ton argent investi entre bourse et placements sans risque ? Plus tu mets en actions, plus le rendement attendu monte, et plus les mauvaises années font mal.</p>
+    <div class="chips" role="group" aria-label="Profils de répartition" id="aPresets">
+      <button type="button" data-a="30,50,20">Prudent</button><button type="button" data-a="60,30,10">Équilibré</button><button type="button" data-a="90,0,10">Dynamique</button><button type="button" data-a="100,0,0">100 % actions</button>
+    </div>
+    <div class="card">
+      <div class="field"><label for="aAct">Actions (ETF monde) <output id="aActO"></output></label><input type="range" id="aAct" min="0" max="100" step="5" value="90"></div>
+      <div class="field"><label for="aFe">Fonds euros (assurance vie) <output id="aFeO"></output></label><input type="range" id="aFe" min="0" max="100" step="5" value="0"></div>
+      <p class="small" style="margin:0">Livrets : <strong id="aLiv">10 %</strong> (le reste)</p>
+    </div>
+    <div class="res">
+      <div class="sm"><div class="l">Rendement attendu / an</div><div class="v" id="aRdt">–</div></div>
+      <div class="sm"><div class="l">Pire année possible</div><div class="v neg" id="aWorst">–</div></div>
+    </div>
+    <div class="card small" id="aMsg"></div>
+    <button type="button" id="aApply">Utiliser ce rendement dans le simulateur</button>
+    <p class="small muted" style="margin-top:10px">Hypothèses long terme indicatives : actions monde 7 %/an (pire année ≈ −40 %), fonds euros 2,5 % (jamais négatif), livrets 2 % (jamais négatif). Ton épargne de précaution reste à part, toujours sur livret.</p>
+  </div>
+
+  <!-- Retraite totale -->
+  <div class="pane" data-pane="simuler:retraite">
+    <p class="lead">Ta retraite = la pension publique + ce que ton épargne te rapporte. Voici une estimation simple des deux.</p>
+    <div class="card">
+      <div class="field"><label for="rSal">Salaire net en fin de carrière (euros d'aujourd'hui)</label><input type="number" id="rSal" inputmode="numeric" value="2500" step="100" min="0"></div>
+      <div class="field"><label for="rTaux">Taux de remplacement <output id="rTauxO"></output></label><input type="range" id="rTaux" min="35" max="80" step="1" value="55">
+        <small>Part de ton salaire que la retraite publique remplacera. Elle tend à baisser pour les jeunes générations : 50–60 % est une hypothèse prudente pour un salarié du privé.</small></div>
+    </div>
+    <div class="res">
+      <div class="big"><div class="l">Revenu total à la retraite, par mois</div><div class="v" id="rTot">–</div><div class="l" id="rPct"></div></div>
+      <div class="sm"><div class="l">Pension publique estimée</div><div class="v" id="rPub">–</div></div>
+      <div class="sm"><div class="l">Grâce à ton épargne</div><div class="v" id="rPriv">–</div></div>
+    </div>
+    <div class="card small" id="rMsg"></div>
+    <div class="card tint small">Pour une estimation officielle de ta pension, utilise le simulateur M@rel sur info-retraite.fr, avec ta vraie carrière. L'épargne vient de l'onglet Épargne (même réglages).</div>
+  </div>
+
+  <!-- Immobilier -->
+  <div class="pane" data-pane="simuler:immo">
+    <p class="lead">Acheter ta résidence principale : combien mettre de côté pour l'apport, et quelle mensualité de crédit.</p>
+    <div class="card">
+      <div class="row2">
+        <div class="field"><label for="iPrix">Prix du logement</label><input type="number" id="iPrix" inputmode="numeric" value="200000" step="5000"></div>
+        <div class="field"><label for="iAns">Dans combien d'années</label><input type="number" id="iAns" inputmode="numeric" value="6" min="1" max="20"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="iApport">Apport <output id="iApportO"></output></label><input type="range" id="iApport" min="0" max="30" step="1" value="10"></div>
+        <div class="field"><label for="iNot">Frais de notaire <output id="iNotO"></output></label><input type="range" id="iNot" min="2" max="9" step="0.5" value="7.5"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="iDeja">Déjà épargné (€)</label><input type="number" id="iDeja" inputmode="numeric" value="0" step="500"></div>
+        <div class="field"><label for="iRdt">Rendement épargne <output id="iRdtO"></output></label><input type="range" id="iRdt" min="0" max="5" step="0.25" value="2.5"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="iTaux">Taux du crédit <output id="iTauxO"></output></label><input type="range" id="iTaux" min="1" max="6" step="0.05" value="3.75"></div>
+        <div class="field"><label for="iDur">Durée <output id="iDurO"></output></label><input type="range" id="iDur" min="10" max="25" step="1" value="20"></div>
+      </div>
+      <small class="muted">Notaire : ~7–8 % dans l'ancien, ~2–3 % dans le neuf. Taux moyen sur 20 ans relevé par les courtiers en novembre 2026 : environ 3,75 %.</small>
+    </div>
+    <div class="res">
+      <div class="big"><div class="l">À épargner chaque mois pour l'apport</div><div class="v" id="iMens">–</div><div class="l" id="iNeed"></div></div>
+      <div class="sm"><div class="l">Mensualité du crédit</div><div class="v" id="iMensu">–</div></div>
+      <div class="sm"><div class="l">Revenu net mini du foyer</div><div class="v" id="iRev">–</div></div>
+    </div>
+    <div class="card small" id="iMsg"></div>
+  </div>
+</section>
+
+<!-- ================= PLAN ================= -->
+<section class="view" id="v-plan">
+  <h2>Mon plan</h2>
+  <div class="seg" role="group" aria-label="Plan">
+    <button type="button" data-seg="plan" data-p="etapes" aria-pressed="true">Étapes</button>
+    <button type="button" data-seg="plan" data-p="compar" aria-pressed="false">Comparatif</button>
+    <button type="button" data-seg="plan" data-p="apres" aria-pressed="false">Après l'alternance</button>
+  </div>
+  <div class="pane on" data-pane="plan:etapes">
+    <div class="card" style="padding:12px 14px"><div style="display:flex;justify-content:space-between;font-weight:700"><span>Progression</span><span id="progTxt">0/0</span></div><div class="progress"><i id="progBar" style="width:0"></i></div></div>
+    <div id="tasks"></div>
+    <button type="button" class="ghost" id="reset" style="margin-top:8px">Tout décocher</button>
+  </div>
+
+  <div class="pane" data-pane="plan:compar">
+    <span class="asof">Tarifs relevés le 6 novembre 2026</span>
+    <p class="lead">Quelques offres souvent citées pour un petit investissement mensuel. Ce n'est ni exhaustif ni une recommandation : les tarifs changent souvent, vérifie toujours la grille officielle avant d'ouvrir.</p>
+    <div class="card">
+      <h3>PEA : courtiers en ligne</h3>
+      <p class="small muted">Pour 100 € par mois, l'essentiel est de payer 0 € (ou presque) sur les achats programmés.</p>
+      <div class="broker"><div class="n"><b>Trade Republic</b><span class="tag">0 € en programmé</span></div><ul><li>1 € par ordre passé à la main.</li><li>Investissements programmés gratuits, fractions de parts.</li><li>Appli simple, pensée pour le mobile.</li></ul></div>
+      <div class="broker"><div class="n"><b>Bourse Direct</b><span class="tag">0,99 € l'ordre</span></div><ul><li>0,99 € jusqu'à 500 €.</li><li>Achats programmés gratuits sur une sélection d'ETF.</li><li>Courtier français, interface plus austère.</li></ul></div>
+      <div class="broker"><div class="n"><b>Fortuneo</b><span class="tag">1 ordre/mois offert</span></div><ul><li>Offre Starter : 1er ordre du mois gratuit s'il fait 500 € ou moins, puis 0,35 %.</li><li>Pas d'achat programmé automatique : passe l'ordre toi-même.</li></ul></div>
+      <div class="broker"><div class="n"><b>BoursoBank</b><span class="tag amber">1,99 € l'ordre</span></div><ul><li>1,99 € jusqu'à 500 €, 0 € sur une sélection (Boursomarkets).</li><li>Pratique si tu as déjà ton compte chez eux.</li></ul></div>
+      <div class="broker"><div class="n"><b>Saxo Banque</b><span class="tag amber">0,08 %, min. 2 €</span></div><ul><li>Une sélection d'ETF Amundi à 0 % jusqu'à fin 2026.</li><li>Pas d'achat programmé sur le PEA.</li></ul></div>
+    </div>
+    <div class="card">
+      <h3>Assurance vie en ligne</h3>
+      <p class="small muted">Critères : 0 % sur versement, frais sur unités de compte sous 0,6 %/an, ETF disponibles, bon fonds euros. Rendements de fonds euros = année 2025.</p>
+      <div class="broker"><div class="n"><b>Linxea Spirit 2</b><span class="tag">UC 0,50 %</span></div><ul><li>Fonds euros 3,08 % et 3,26 % en 2025, plus de 150 ETF.</li><li>Versement initial : 500 €.</li></ul></div>
+      <div class="broker"><div class="n"><b>Meilleurtaux Essentiel Vie</b><span class="tag">Fonds € 3,50 %</span></div><ul><li>UC 0,50 % (0,60 % sur les ETF), fonds euros 0,77 %.</li><li>Une vingtaine d'ETF.</li></ul></div>
+      <div class="broker"><div class="n"><b>Lucya CNP</b><span class="tag">UC 0,30 %</span></div><ul><li>Frais sur unités de compte parmi les plus bas.</li><li>Versement initial : 500 €.</li></ul></div>
+      <div class="broker"><div class="n"><b>Placement-direct Euro+</b><span class="tag">Fonds € 3,60 %</span></div><ul><li>Fonds euros parmi les meilleurs en 2025, accessible sans obligation d'unités de compte.</li></ul></div>
+    </div>
+    <div class="card amber small"><strong>À éviter :</strong> contrats et PEA de banque traditionnelle avec frais sur versement (jusqu'à 3–5 %), droits de garde, et gestion pilotée à plus de 1,5 %/an pour un petit montant.</div>
+  </div>
+
+  <div class="pane" data-pane="plan:apres">
+    <p class="lead">Ce qui change quand ton alternance se termine, et comment adapter ton plan.</p>
+    <div class="card"><h3>Les 3 derniers mois</h3><ul>
+      <li>Gonfle ton épargne de précaution vers 6 mois de dépenses : la recherche d'emploi peut prendre du temps.</li>
+      <li>Renseigne-toi sur tes droits au chômage (France Travail) : tes mois d'alternance comptent.</li>
+      <li>Épargne salariale : tu peux la garder après ton départ ou la transférer vers le plan de ton futur employeur. Note tes identifiants.</li>
+      <li>Ne vends rien sur ton PEA : il continue, même sans versement.</li></ul></div>
+    <div class="card"><h3>Ton premier CDI</h3><ul>
+      <li><strong>Refais ton budget</strong> avec le nouveau salaire, avant de prendre de nouvelles habitudes de dépense.</li>
+      <li><strong>Augmente ton versement mensuel</strong> : une bonne règle est d'épargner au moins la moitié de chaque augmentation.</li>
+      <li><strong>Épargne salariale</strong> de la nouvelle entreprise : redemande l'abondement aux RH.</li>
+      <li><strong>Impôts</strong> : l'exonération du salaire d'apprenti s'arrête. Vérifie ton taux de prélèvement à la source sur impots.gouv.fr.</li>
+      <li><strong>LEP</strong> : si ton revenu fiscal dépasse le plafond deux ans de suite, il devra être fermé. Bascule alors sur le Livret A.</li></ul></div>
+    <div class="card"><h3>Quand ton salaire monte</h3><ul>
+      <li>Imposé à 30 % ou plus : le <strong>PER</strong> devient intéressant (chaque 100 € versés te font économiser 30 € d'impôt).</li>
+      <li>PEA rempli ou besoin de souplesse : alimente davantage ton <strong>assurance vie</strong>.</li>
+      <li>Projet de logement : utilise l'onglet Immobilier pour planifier l'apport, garde cet argent hors bourse s'il sert dans moins de 5 ans.</li></ul></div>
+    <div class="card tint"><h3>Ce qui ne change jamais</h3><p class="small">Un ETF monde, des versements automatiques, un matelas de sécurité, des frais bas, et ne jamais vendre dans la panique.</p></div>
+  </div>
+</section>
+
+<!-- ================= PLUS ================= -->
+<section class="view" id="v-plus">
+  <h2>Apprendre</h2>
+  <div class="seg" role="group" aria-label="Apprendre">
+    <button type="button" data-seg="plus" data-p="actu" aria-pressed="true">Actu</button>
+    <button type="button" data-seg="plus" data-p="quiz" aria-pressed="false">Quiz</button>
+    <button type="button" data-seg="plus" data-p="lexique" aria-pressed="false">Lexique</button>
+  </div>
+  <div class="pane on" data-pane="plus:actu">
+    <span class="asof" id="asof"></span>
+    <div class="news" id="news"></div>
+    <h3 style="margin:14px 0 8px">Ce que ça change pour toi</h3>
+    <div id="impacts"></div>
+    <h3 style="margin:18px 0 8px">À l'agenda</h3>
+    <div class="card small" style="padding:6px 14px" id="agenda"></div>
+    <h3 style="margin:18px 0 8px">Les règles d'or</h3>
+    <div id="rules"></div>
+    <div class="card tint small"><strong>Suivre l'actu sans te faire piéger :</strong> un point par mois suffit. Sources neutres : lafinancepourtous.com, amf-france.org (et sa liste noire des arnaques), service-public.fr.</div>
+  </div>
+  <div class="pane" data-pane="plus:quiz">
+    <div class="card" id="quiz"></div>
+  </div>
+  <div class="pane" data-pane="plus:lexique">
+    <div class="field"><label for="q">Chercher un mot</label><input type="text" id="q" placeholder="PEA, abondement, ETF…" autocomplete="off"></div>
+    <div class="catbar" id="cats" role="group" aria-label="Catégories"></div>
+    <dl id="gloss" style="margin:0"></dl>
+    <p class="muted" id="empty" hidden>Aucun terme trouvé.</p>
+  </div>
+  <p class="foot">Sources : COR (rapport juin 2026), Insee (inflation oct. 2026), BCE (29 oct. 2026), LFSS 2026, service-public.fr, grilles tarifaires des courtiers (nov. 2026). Outil pédagogique, pas un conseil financier personnalisé.</p>
+</section>
+</main>
+</div>
+
+<nav class="tabs" aria-label="Navigation"><div class="in">
+  <a href="#accueil" data-v="accueil"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Accueil</a>
+  <a href="#argent" data-v="argent"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 15h2"/></svg>Mon argent</a>
+  <a href="#simuler" data-v="simuler"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>Simuler</a>
+  <a href="#plan" data-v="plan"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Plan</a>
+  <a href="#plus" data-v="plus"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M19 19v2H6"/></svg>Apprendre</a>
+</div></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const eur=n=>Math.round(n||0).toLocaleString('fr-FR')+' €';
+const pct=n=>(+n).toLocaleString('fr-FR',{maximumFractionDigits:2})+' %';
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),2000);}
+
+/* ================= ÉTAT ================= */
+const ACCS=[
+ {id:'lep',n:'LEP',k:'secu',c:'var(--good)'},
+ {id:'livretA',n:'Livret A / LDDS',k:'secu',c:'var(--good)'},
+ {id:'pea',n:'PEA',k:'inv',c:'var(--accent)'},
+ {id:'av',n:'Assurance vie',k:'inv',c:'var(--accent)'},
+ {id:'pee',n:'Épargne salariale',k:'inv',c:'var(--accent)'},
+ {id:'autre',n:'Autre (crypto…)',k:'autre',c:'var(--gain)'}
+];
+function defState(){return{v:1,profil:{salaire:1100,depenses:600,rfr:'',parts:'1'},comptes:Object.fromEntries(ACCS.map(a=>[a.id,{solde:0,mensuel:0}])),historique:[],done:{},sim:{}};}
+let S=defState();
+function clean(d){ // valide un état venu de l'extérieur
+  const s=defState(); if(!d||typeof d!=='object') return s;
+  if(d.profil) for(const k of ['salaire','depenses']) if(isFinite(+d.profil[k])) s.profil[k]=+d.profil[k];
+  if(d.profil&&d.profil.rfr!==undefined) s.profil.rfr=String(d.profil.rfr).replace(/[^\d]/g,'');
+  if(d.profil&&['1','1.5','2','2.5','3'].includes(String(d.profil.parts))) s.profil.parts=String(d.profil.parts);
+  if(d.comptes) for(const a of ACCS){const c=d.comptes[a.id]; if(c){s.comptes[a.id]={solde:Math.max(0,+c.solde||0),mensuel:Math.max(0,+c.mensuel||0)};}}
+  if(Array.isArray(d.historique)) s.historique=d.historique.filter(h=>h&&/^\d{4}-\d{2}$/.test(h.m)).map(h=>({m:h.m,total:+h.total||0,verse:+h.verse||0,inv:+h.inv||0})).slice(-240);
+  if(d.done&&typeof d.done==='object') for(const k in d.done) if(d.done[k]===true) s.done[k]=true;
+  if(d.sim&&typeof d.sim==='object') for(const k in d.sim) if(isFinite(+d.sim[k])) s.sim[k]=+d.sim[k];
+  return s;
+}
+const LS='prt-state-v2';
+try{const raw=localStorage.getItem(LS); if(raw) S=clean(JSON.parse(raw));}catch(e){}
+let DBDOC=null, saving=false, pending=false, saveT=null, lastSent='';
+function persist(){
+  try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}
+  if(!DBDOC) return;
+  clearTimeout(saveT); saveT=setTimeout(flush,700);
+}
+async function flush(){
+  if(!DBDOC) return;
+  const body=JSON.stringify(S); if(body===lastSent) return;
+  if(saving){pending=true;return;}
+  saving=true;
+  try{await DBDOC.set(JSON.parse(body)); lastSent=body; setSync('ok');}
+  catch(e){ if(e&&e.code==='invalid_argument'){DBDOC=null;setSync('local');} else setSync('err'); }
+  saving=false; if(pending){pending=false;flush();}
+}
+function setSync(k){const p=$('sync'); p.className='pill'+(k==='ok'?' ok':''); p.textContent=k==='ok'?'Synchronisé ✓':k==='load'?'Connexion…':k==='err'?'Hors ligne, gardé ici':'Sur cet appareil';}
+
+/* ================= NAVIGATION ================= */
+const VIEWS=['accueil','argent','simuler','plan','plus'];
+function route(){
+  let v=(location.hash||'').slice(1); if(!VIEWS.includes(v)) v='accueil';
+  VIEWS.forEach(n=>$('v-'+n).classList.toggle('on',n===v));
+  document.querySelectorAll('nav.tabs a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  window.scrollTo(0,0); refreshCanvases();
+}
+window.addEventListener('hashchange',route);
+document.querySelectorAll('.seg button[data-seg]').forEach(b=>b.addEventListener('click',()=>showPane(b.dataset.seg,b.dataset.p)));
+function showPane(seg,p){
+  document.querySelectorAll(`.seg button[data-seg="${seg}"]`).forEach(x=>x.setAttribute('aria-pressed',x.dataset.p===p));
+  document.querySelectorAll(`[data-pane^="${seg}:"]`).forEach(x=>x.classList.toggle('on',x.dataset.pane===seg+':'+p));
+  refreshCanvases();
+}
+function refreshCanvases(){requestAnimationFrame(()=>{update();drawHist();});}
+
+/* ================= COMPTES ================= */
+function totals(){
+  let t=0,secu=0,inv=0,autre=0,mInv=0,mAll=0;
+  for(const a of ACCS){const c=S.comptes[a.id]; t+=c.solde; mAll+=c.mensuel; if(a.k==='secu')secu+=c.solde; else if(a.k==='inv'){inv+=c.solde;mInv+=c.mensuel;} else autre+=c.solde;}
+  return{t,secu,inv,autre,mInv,mAll};
+}
+function renderAccounts(){
+  $('accounts').innerHTML=ACCS.map(a=>`<div class="acc"><div class="name">${a.n}<span>${a.k==='secu'?'Sécurité':a.k==='inv'?'Long terme':'Risqué'}</span></div>
+   <div><label for="s-${a.id}">Solde (€)</label><input type="number" inputmode="decimal" min="0" step="10" id="s-${a.id}" value="${S.comptes[a.id].solde||''}" placeholder="0"></div>
+   <div><label for="m-${a.id}">Versé / mois (€)</label><input type="number" inputmode="decimal" min="0" step="10" id="m-${a.id}" value="${S.comptes[a.id].mensuel||''}" placeholder="0"></div></div>`).join('');
+  ACCS.forEach(a=>{
+    $('s-'+a.id).addEventListener('input',e=>{S.comptes[a.id].solde=Math.max(0,+e.target.value||0);persist();renderMoney();});
+    $('m-'+a.id).addEventListener('input',e=>{S.comptes[a.id].mensuel=Math.max(0,+e.target.value||0);persist();renderMoney();});
+  });
+}
+function renderMoney(){
+  const T=totals(), dep=S.profil.depenses||0, goal=dep*3;
+  $('accTotal').textContent=eur(T.t); $('homeTotal').textContent=eur(T.t);
+  $('accMonthly').textContent=`Tu épargnes ${eur(T.mAll)} par mois, dont ${eur(T.mInv)} investis à long terme.`;
+  $('homeSplit').textContent=T.t?`Sécurité ${eur(T.secu)} · Long terme ${eur(T.inv)}${T.autre?` · Risqué ${eur(T.autre)}`:''}`:'Renseigne tes comptes dans « Mon argent ».';
+  const max=Math.max(...ACCS.map(a=>S.comptes[a.id].solde),1);
+  $('bars').innerHTML=ACCS.filter(a=>S.comptes[a.id].solde>0).map(a=>`<div class="b"><span>${a.n}</span><span class="track"><i style="width:${S.comptes[a.id].solde/max*100}%;background:${a.c}"></i></span><span class="amt">${eur(S.comptes[a.id].solde)}</span></div>`).join('')||'<p class="small muted">Aucun solde pour l\'instant.</p>';
+  const r=goal?Math.min(1,T.secu/goal):0;
+  $('matBar').style.width=$('homeMat').style.width=(r*100)+'%';
+  const txt=!dep?'Indique tes dépenses fixes dans « Budget & LEP » pour calculer ton objectif.':T.secu>=dep*6?`Matelas complet (${eur(T.secu)}, plus de 6 mois). Tout le reste peut aller vers le long terme.`:T.secu>=goal?`Objectif de 3 mois atteint (${eur(T.secu)}). Tu peux viser 6 mois (${eur(dep*6)}) ou investir davantage.`:`${eur(T.secu)} sur ${eur(goal)} (3 mois de dépenses). Il manque ${eur(goal-T.secu)}.`;
+  $('matTxt').textContent=$('homeMatTxt').textContent=txt;
+  if(T.autre>0&&T.t>0&&T.autre/T.t>0.1) $('matTxt').textContent+=` Attention : ${Math.round(T.autre/T.t*100)} % de ton argent est sur des placements très risqués.`;
+}
+$('snap').addEventListener('click',()=>{
+  const T=totals(), d=new Date(), m=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  const H=S.historique, last=H[H.length-1];
+  let verse;
+  if(!last) verse=T.t;
+  else if(last.m===m) verse=last.verse;
+  else { const [y1,m1]=last.m.split('-').map(Number); const months=(d.getFullYear()-y1)*12+(d.getMonth()+1-m1); verse=last.verse+T.mAll*Math.max(1,months); }
+  const entry={m,total:T.t,verse,inv:T.inv};
+  if(last&&last.m===m){
+    // relevé du mois déjà fait : on met à jour la valeur, le versé reste celui calculé à partir du mois précédent
+    const prev=H[H.length-2]; entry.verse=prev?prev.verse+T.mAll:T.t; H[H.length-1]=entry; toast('Relevé du mois mis à jour');
+  } else { H.push(entry); toast('Relevé enregistré ✔'); }
+  persist(); renderHist(); drawHist();
+});
+const MOIS=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+const fmtM=m=>{const[y,mm]=m.split('-');return MOIS[+mm-1]+' '+y.slice(2);};
+function renderHist(){
+  const H=S.historique;
+  $('hist').innerHTML=H.length?`<div class="h head"><span>Mois</span><span>Valeur</span><span>Versé</span><span>Gains</span></div>`+H.slice().reverse().map(h=>{const g=h.total-h.verse;return`<div class="h"><span>${fmtM(h.m)}</span><span>${eur(h.total)}</span><span>${eur(h.verse)}</span><span class="${g>=0?'pos':'neg'}">${g>=0?'+':''}${eur(g)}</span></div>`;}).join(''):'<p class="small muted">Aucun relevé. Remplis tes soldes puis appuie sur « Enregistrer le relevé de ce mois ».</p>';
+  $('undo').hidden=!H.length;
+  if(H.length){const f=H[0],l=H[H.length-1],g=l.total-l.verse;$('histSum').innerHTML=`Depuis ${fmtM(f.m)} : valeur ${eur(l.total)}, versé ${eur(l.verse)}, soit <strong class="${g>=0?'pos':'neg'}">${g>=0?'+':''}${eur(g)}</strong> de gains réels.`;}
+  else $('histSum').textContent='Ton graphique apparaîtra après ton premier relevé.';
+}
+$('undo').addEventListener('click',()=>{S.historique.pop();persist();renderHist();drawHist();toast('Dernier relevé supprimé');});
+function drawHist(){
+  const c=$('cHist'); if(!c||!c.clientWidth) return;
+  const H=S.historique, dpr=window.devicePixelRatio||1, W=c.clientWidth, Ht=c.clientHeight;
+  c.width=W*dpr;c.height=Ht*dpr;const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,W,Ht);
+  const cs=getComputedStyle(document.documentElement),col=n=>cs.getPropertyValue(n).trim();
+  x.font='12px '+col('--font-body');x.fillStyle=col('--muted');
+  if(!H.length){x.textAlign='center';x.fillText('Pas encore de relevé',W/2,Ht/2);return;}
+  const L=50,R=10,T=8,B=24,w=W-L-R,h=Ht-T-B;
+  const max=Math.max(...H.map(d=>Math.max(d.total,d.verse)),1),step=niceStep(max/3),top=Math.ceil(max/step)*step;
+  const X=i=>L+(H.length>1?i/(H.length-1):.5)*w,Y=v=>T+h-(v/top)*h;
+  x.strokeStyle=col('--line');x.textAlign='right';x.textBaseline='middle';
+  for(let v=0;v<=top+1;v+=step){x.beginPath();x.moveTo(L,Y(v));x.lineTo(W-R,Y(v));x.stroke();x.fillText(short(v),L-6,Y(v));}
+  x.textBaseline='top';const ev=Math.max(1,Math.ceil(H.length/5));
+  H.forEach((d,i)=>{if(i%ev===0||i===H.length-1){x.textAlign=H.length===1?'center':i===H.length-1?'right':i===0?'left':'center';x.fillText(fmtM(d.m),X(i),T+h+6);}});
+  [['verse','--gain'],['total','--accent']].forEach(([k,cv])=>{x.strokeStyle=col(cv);x.lineWidth=2.5;x.beginPath();H.forEach((d,i)=>i?x.lineTo(X(i),Y(d[k])):x.moveTo(X(i),Y(d[k])));x.stroke();x.fillStyle=col(cv);H.forEach((d,i)=>{x.beginPath();x.arc(X(i),Y(d[k]),3.5,0,7);x.fill();});});
+  x.lineWidth=1;
+}
+/* Sauvegarde */
+$('exp').addEventListener('click',async()=>{const t=JSON.stringify(S);try{await navigator.clipboard.writeText(t);toast('Données copiées');}catch(e){$('impBox').hidden=false;$('impTxt').value=t;$('impTxt').select();toast('Copie le texte affiché');}});
+$('impBtn').addEventListener('click',()=>{$('impBox').hidden=!$('impBox').hidden;$('impTxt').value='';});
+$('impGo').addEventListener('click',()=>{try{S=clean(JSON.parse($('impTxt').value));persist();renderAll();$('impBox').hidden=true;toast('Données importées ✔');}catch(e){toast('Texte non reconnu : colle exactement les données copiées');}});
+
+/* ================= BUDGET & LEP ================= */
+function budget(){
+  const s=S.profil.salaire||0,d=S.profil.depenses||0;
+  $('b50').textContent=eur(s*.5);$('b30').textContent=eur(s*.3);$('b20').textContent=eur(s*.2);
+  $('bMsg').innerHTML=d>s*.5?`Tes dépenses fixes dépassent 50 % de ton salaire : vise plutôt <strong>${eur(Math.max(0,Math.min(s*.2,(s-d)*.4)))}</strong> d'épargne par mois pour commencer.`:`Il te reste ${eur(s-d)} après tes dépenses fixes : <strong>${eur(s*.2)}</strong> d'épargne par mois est réaliste.`;
+  $('precMsg').innerHTML=`Épargne de précaution à viser : <strong>${eur(d*3)}</strong> (3 mois) à <strong>${eur(d*6)}</strong> (6 mois).`;
+}
+$('sal').addEventListener('input',e=>{S.profil.salaire=Math.max(0,+e.target.value||0);persist();budget();renderMoney();});
+$('dep').addEventListener('input',e=>{S.profil.depenses=Math.max(0,+e.target.value||0);persist();budget();renderMoney();});
+function lep(){
+  const r=S.profil.rfr,p=+S.profil.parts,v=$('lepV'); if(r===''){v.hidden=true;return;}
+  const lim=23028+(p-1)*2*6149; v.hidden=false;
+  if(+r<=lim){v.className='verdict yes';v.textContent=`✔ Tu peux ouvrir un LEP (plafond : ${eur(lim)}). 2,50 % net, jusqu'à 10 000 €.`;}
+  else{v.className='verdict no';v.textContent=`Plafond dépassé (${eur(lim)}). Ouvre plutôt un Livret A. Si tu es rattaché à tes parents, ta propre déclaration pourrait changer la donne.`;}
+}
+$('rfr').addEventListener('input',e=>{S.profil.rfr=e.target.value.replace(/[^\d]/g,'');persist();lep();});
+$('parts').addEventListener('change',e=>{S.profil.parts=e.target.value;persist();lep();});
+
+/* ================= SIMULATEUR ================= */
+let mode='proj';
+const SIMK=['mens','init','age','ret','rdt','frais','hausse','infl'];
+function simulate(p){
+  const years=Math.max(0,p.ret-p.age),rm=Math.pow(1+(p.rdt-p.frais)/100,1/12)-1;
+  let cap=p.init,verse=p.init,m=p.mens;const pts=[{y:0,cap,verse}];
+  for(let y=1;y<=years;y++){for(let k=0;k<12;k++){cap+=m;verse+=m;cap*=1+rm;}if(p.crash&&p.age+y===p.crashAge)cap*=1-p.crashPct/100;pts.push({y,cap,verse});m*=1+p.hausse/100;}
+  return pts;
+}
+function read(){return{age:+$('age').value,ret:+$('ret').value,mens:Math.max(0,+$('mens').value||0),hausse:+$('hausse').value,init:Math.max(0,+$('init').value||0),rdt:+$('rdt').value,frais:+$('frais').value,infl:+$('infl').value,crash:$('crash').checked,crashAge:+$('crashAge').value,crashPct:+$('crashPct').value};}
+let lastCapR=0;
+function update(){
+  const p=read();
+  if(p.ret<=p.age){p.ret=p.age+1;$('ret').value=p.ret;}
+  $('crashAge').min=p.age+1;$('crashAge').max=p.ret;
+  if(p.crashAge<=p.age||p.crashAge>p.ret){p.crashAge=Math.round((p.age+p.ret)/2);$('crashAge').value=p.crashAge;}
+  $('ageO').textContent=p.age+' ans';$('retO').textContent=p.ret+' ans';$('rdtO').textContent=pct(p.rdt);$('fraisO').textContent=pct(p.frais);$('hausseO').textContent=pct(p.hausse);$('inflO').textContent=pct(p.infl);
+  $('crashAgeO').textContent=p.crashAge+' ans';$('crashPctO').textContent='−'+p.crashPct+' %';$('crashbox').hidden=!p.crash;
+  document.querySelectorAll('#rchips button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.r===p.rdt));
+  const defl=y=>Math.pow(1+p.infl/100,y);
+  if(mode==='goal'){
+    const goal=+$('goal').value;$('goalO').textContent=eur(goal)+'/mois';
+    const target=goal*12/0.04;
+    const u=simulate({...p,mens:1,init:0,crash:false}),uc=u[u.length-1].cap/defl(u.length-1);
+    const b=simulate({...p,mens:0,crash:false}),bc=b[b.length-1].cap/defl(b.length-1);
+    const need=Math.ceil(Math.max(0,(target-bc)/uc)/5)*5;$('needM').textContent=eur(need);$('mens').value=need;p.mens=need;
+  }
+  const pts=simulate(p),last=pts[pts.length-1],yrs=last.y,capR=last.cap/defl(yrs); lastCapR=capR;
+  $('tAge').textContent=p.ret;$('vFinal').textContent=eur(capR);$('vFinalN').textContent=`soit ${eur(last.cap)} en euros de l'époque`;
+  $('vVerse').textContent=eur(last.verse);$('vRente').textContent=eur(capR*0.04/12);
+  if(p.age+10<p.ret){const ll=simulate({...p,age:p.age+10}),capL=ll[ll.length-1].cap/defl(yrs);$('wait').innerHTML=`<strong>Le coût d'attendre :</strong> en commençant à ${p.age+10} ans, tu finirais avec ${eur(capL)}, soit <strong>${Math.max(0,Math.round((1-capL/capR)*100))} % de moins</strong>.`;}
+  else $('wait').textContent='Plus la durée est longue, plus les intérêts composés travaillent pour toi.';
+  const cm=$('crashMsg');
+  if(p.crash){const base=simulate({...p,crash:false}),idx=p.crashAge-p.age;let back=null;for(let i=idx;i<pts.length;i++){if(pts[i].cap>=base[idx].cap){back=i-idx;break;}}
+    cm.hidden=false;cm.innerHTML=`<strong>Krach de −${p.crashPct} % à ${p.crashAge} ans.</strong> `+(back!==null?`En continuant tes versements, tu retrouves ton niveau en <strong>${back} an${back>1?'s':''}</strong>. `:`Pas le temps de récupérer avant ${p.ret} ans : on réduit le risque à l'approche de la retraite. `)+`Tout vendre pendant la panique aurait rendu la perte définitive.`;}
+  else cm.hidden=true;
+  draw(pts,p,defl); retraite();
+  const ns={};SIMK.forEach(k=>ns[k]=+$(k).value); if(JSON.stringify(ns)!==JSON.stringify(S.sim)){S.sim=ns;persist();}
+}
+function draw(pts,p,defl){
+  const c=$('c'),dpr=window.devicePixelRatio||1,W=c.clientWidth,H=c.clientHeight;if(!W)return;
+  c.width=W*dpr;c.height=H*dpr;const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,W,H);
+  const cs=getComputedStyle(document.documentElement),col=n=>cs.getPropertyValue(n).trim();
+  const L=50,R=8,T=8,B=24,w=W-L-R,h=H-T-B;
+  const data=pts.map(d=>({cap:d.cap/defl(d.y),ver:Math.min(d.verse,d.cap)/defl(d.y)}));
+  const maxV=Math.max(...data.map(d=>d.cap),1),step=niceStep(maxV/3),top=Math.ceil(maxV/step)*step;
+  const X=i=>L+(data.length>1?i/(data.length-1):0)*w,Y=v=>T+h-(v/top)*h;
+  x.font='11px '+col('--font-body');x.fillStyle=col('--muted');x.strokeStyle=col('--line');x.textAlign='right';x.textBaseline='middle';
+  for(let v=0;v<=top+1;v+=step){x.beginPath();x.moveTo(L,Y(v));x.lineTo(W-R,Y(v));x.stroke();x.fillText(short(v),L-6,Y(v));}
+  x.textBaseline='top';const ev=Math.max(1,Math.ceil(data.length/5));
+  data.forEach((d,i)=>{const last=i===data.length-1;if((i%ev===0&&i<data.length-ev/2)||last){x.textAlign=last?'right':(i===0?'left':'center');x.fillText((p.age+i)+' ans',last?X(i)+R:X(i),T+h+6);}});
+  [['cap','--gain'],['ver','--accent']].forEach(([k,cv])=>{x.beginPath();x.moveTo(X(0),Y(0));data.forEach((d,i)=>x.lineTo(X(i),Y(d[k])));x.lineTo(X(data.length-1),Y(0));x.closePath();x.globalAlpha=.85;x.fillStyle=col(cv);x.fill();x.globalAlpha=1;});
+  if(p.crash){const i=p.crashAge-p.age;if(i>0&&i<data.length){x.strokeStyle=col('--warn');x.setLineDash([4,4]);x.beginPath();x.moveTo(X(i),T);x.lineTo(X(i),T+h);x.stroke();x.setLineDash([]);}}
+  const i=data.length-1;x.fillStyle=col('--ink');x.beginPath();x.arc(X(i),Y(data[i].cap),3.5,0,7);x.fill();
+}
+function niceStep(v){const p=Math.pow(10,Math.floor(Math.log10(v||1)));const n=v/p;return(n<=1?1:n<=2?2:n<=5?5:10)*p;}
+function short(v){return v>=1e6?(v/1e6).toLocaleString('fr-FR',{maximumFractionDigits:1})+' M€':v>=1e3?Math.round(v/1e3)+' k€':Math.round(v)+' €';}
+document.querySelectorAll('[data-pane="simuler:epargne"] input').forEach(el=>el.addEventListener('input',e=>{if(e.target.id==='mens'&&mode==='goal')setMode('proj');update();}));
+document.querySelectorAll('#rchips button').forEach(b=>b.addEventListener('click',()=>{$('rdt').value=b.dataset.r;update();}));
+function setMode(m){mode=m;$('mProj').setAttribute('aria-pressed',m==='proj');$('mGoal').setAttribute('aria-pressed',m==='goal');$('goalBox').hidden=m!=='goal';update();}
+$('mProj').addEventListener('click',()=>setMode('proj'));$('mGoal').addEventListener('click',()=>setMode('goal'));
+$('useReal').addEventListener('click',()=>{const T=totals();$('init').value=Math.round(T.inv);$('mens').value=Math.round(T.mInv);if(mode==='goal')setMode('proj');update();toast(T.inv||T.mInv?'Simulation à partir de tes comptes long terme':'Renseigne d\'abord tes comptes dans « Mon argent »');});
+
+/* Répartition */
+function repart(){
+  let a=+$('aAct').value,f=+$('aFe').value; if(a+f>100){f=100-a;$('aFe').value=f;} const l=100-a-f;
+  $('aActO').textContent=a+' %';$('aFeO').textContent=f+' %';$('aLiv').textContent=l+' %';
+  const r=(a*7+f*2.5+l*2)/100, worst=a*-0.40;
+  $('aRdt').textContent=pct(Math.round(r*10)/10);$('aWorst').textContent=Math.round(worst)+' %';
+  $('aMsg').innerHTML=`Sur 10 000 € investis : environ <strong>+${eur(10000*r/100)}</strong> par an en moyenne, mais une très mauvaise année pourrait faire perdre <strong>${eur(10000*a*0.004)}</strong> temporairement. `+(a>=80?'À 20 ans avec un horizon de 40 ans, une forte part en actions est logique, à condition de ne pas vendre dans les baisses.':a<=40?'Profil très prudent : adapté à un projet à moins de 5 ans, beaucoup moins à ta retraite dans 40 ans.':'Profil équilibré : moins de stress, mais un capital final nettement plus faible sur 40 ans.');
+  document.querySelectorAll('#aPresets button').forEach(b=>{const[x,y]=b.dataset.a.split(',').map(Number);b.setAttribute('aria-pressed',x===a&&y===f);});
+  return r;
+}
+['aAct','aFe'].forEach(id=>$(id).addEventListener('input',repart));
+document.querySelectorAll('#aPresets button').forEach(b=>b.addEventListener('click',()=>{const[x,y]=b.dataset.a.split(',').map(Number);$('aAct').value=x;$('aFe').value=y;repart();}));
+$('aApply').addEventListener('click',()=>{const r=repart();$('rdt').value=Math.round(r*2)/2;showPane('simuler','epargne');update();toast('Rendement appliqué : '+pct(Math.round(r*2)/2));});
+
+/* Retraite totale */
+function retraite(){
+  const s=Math.max(0,+$('rSal').value||0),t=+$('rTaux').value; $('rTauxO').textContent=t+' %';
+  const pub=s*t/100,priv=lastCapR*0.04/12,tot=pub+priv;
+  $('rPub').textContent=eur(pub);$('rPriv').textContent=eur(priv);$('rTot').textContent=eur(tot);
+  $('rPct').textContent=s?`soit ${Math.round(tot/s*100)} % de ton dernier salaire`:'';
+  $('rMsg').innerHTML=s?(tot/s>=0.75?`Avec ton épargne, tu gardes environ ${Math.round(tot/s*100)} % de ton niveau de vie. C'est un bon objectif.`:`Tu gardes environ ${Math.round(tot/s*100)} % de ton niveau de vie. Pour viser 75 %, il faudrait ${eur(Math.max(0,s*0.75-pub))} par mois grâce à ton épargne : utilise le mode « Combien verser ? ».`):'';
+}
+['rSal','rTaux'].forEach(id=>$(id).addEventListener('input',retraite));
+
+/* Immobilier */
+function immo(){
+  const prix=Math.max(0,+$('iPrix').value||0),ans=Math.max(1,+$('iAns').value||1),ap=+$('iApport').value,no=+$('iNot').value,deja=Math.max(0,+$('iDeja').value||0),rr=+$('iRdt').value,tx=+$('iTaux').value,dur=+$('iDur').value;
+  $('iApportO').textContent=ap+' %';$('iNotO').textContent=pct(no);$('iRdtO').textContent=pct(rr);$('iTauxO').textContent=pct(tx);$('iDurO').textContent=dur+' ans';
+  const need=prix*(ap+no)/100,n=ans*12,r=rr/100/12,fv0=deja*Math.pow(1+r,n);
+  const m=Math.max(0,r?(need-fv0)*r/(Math.pow(1+r,n)-1):(need-deja)/n);
+  const loan=prix*(1-ap/100),i=tx/100/12,N=dur*12,mensu=i?loan*i/(1-Math.pow(1+i,-N)):loan/N;
+  $('iMens').textContent=eur(m);$('iNeed').textContent=`pour réunir ${eur(need)} (apport ${eur(prix*ap/100)} + notaire ${eur(prix*no/100)}) dans ${ans} an${ans>1?'s':''}`;
+  $('iMensu').textContent=eur(mensu);$('iRev').textContent=eur(mensu/0.35);
+  $('iMsg').innerHTML=`Tu emprunterais ${eur(loan)} sur ${dur} ans, pour un coût total des intérêts d'environ <strong>${eur(mensu*N-loan)}</strong> (hors assurance). Les banques limitent la mensualité à 35 % des revenus, d'où le revenu minimum. <strong>L'argent de l'apport ne va pas en bourse</strong> si le projet est à moins de 5 ans : livrets, fonds euros ou PEL.`;
+}
+['iPrix','iAns','iApport','iNot','iDeja','iRdt','iTaux','iDur'].forEach(id=>$(id).addEventListener('input',immo));
+
+/* ================= CHECKLIST ================= */
+const PLAN=[
+ {phase:"1. Préparer",items:[
+  {id:"budget",t:"Faire mon budget",d:"Salaire, dépenses fixes, ce qui reste.",how:`<p>Utilise « Mon argent » → « Budget & LEP ». Vise 10 à 20 % d'épargne. Même 30 € par mois suffisent pour démarrer.</p>`},
+  {id:"comptes",t:"Renseigner mes comptes dans l'appli",d:"Soldes et versements mensuels.",how:`<p>« Mon argent » → « Mes comptes ». Puis « Enregistrer le relevé de ce mois » : c'est ton point de départ.</p>`},
+  {id:"montant",t:"Fixer mon montant mensuel",d:"Un montant que je tiendrai.",how:`<p>Mieux vaut 50 € tenus chaque mois que 200 € abandonnés au bout de trois mois.</p>`}]},
+ {phase:"2. Matelas de sécurité",items:[
+  {id:"rfr",t:"Vérifier si j'ai droit au LEP",d:"Avec mon revenu fiscal de référence.",how:`<ol><li>impots.gouv.fr → Documents → dernier avis d'impôt.</li><li>Ligne « Revenu fiscal de référence ».</li><li>Teste-le dans « Budget & LEP ». Plafond 2026 : 23 028 € (personne seule).</li></ol><p class="muted">Rattaché à tes parents ? C'est leur revenu qui compte. Ta propre déclaration peut te rendre éligible.</p>`},
+  {id:"lep",t:"Ouvrir un LEP (ou un Livret A)",d:"Dans ma banque, 20 minutes.",how:`<ol><li>En agence ou dans l'appli de ta banque.</li><li>Avis d'impôt + pièce d'identité. Dépôt minimum : 30 €.</li><li>Pas éligible ? Livret A (10 € minimum).</li></ol>`},
+  {id:"vir1",t:"Programmer un virement automatique",d:"Le lendemain de ma paie.",how:`<p>Appli de ta banque → Virements → Virement permanent, chaque mois.</p>`},
+  {id:"matelas",t:"Atteindre 3 mois de dépenses",d:"Mon objectif de précaution.",how:`<p>La jauge « Matelas de sécurité » de l'accueil te montre où tu en es.</p>`}]},
+ {phase:"3. Entreprise",items:[
+  {id:"rh",t:"Envoyer un e-mail aux RH",d:"PEE, PERCOL, abondement ?",how:`<ol><li>Y a-t-il un PEE ou un PERCOL, accessible aux alternants ?</li><li>Un abondement ? Taux et plafond ?</li><li>Intéressement ou participation ?</li><li>Quel fonds a les frais les plus bas (actions monde, indiciel) ?</li><li>Comment accéder à mon espace ?</li></ol>`},
+  {id:"abond",t:"Verser pour toucher tout l'abondement",d:"De l'argent offert : priorité.",how:`<p>Verse au moins ce qu'il faut pour atteindre le plafond d'abondement.</p>`}]},
+ {phase:"4. PEA : le cœur du plan",items:[
+  {id:"courtier",t:"Choisir mon courtier en ligne",d:"Voir l'onglet « Comparatif ».",how:`<ul><li>Tenue de compte : 0 €.</li><li>Achats programmés gratuits ou presque.</li><li>ETF monde éligible PEA disponible.</li><li>Fractions de parts : un plus.</li><li>Établissement agréé (registre REGAFI).</li></ul>`},
+  {id:"pea",t:"Ouvrir mon PEA et verser 10 €",d:"Le compteur des 5 ans démarre.",how:`<ol><li>Site du courtier → « Ouvrir un PEA ».</li><li>Pièce d'identité, justificatif de domicile (moins de 3 mois), RIB.</li><li>Questionnaire de connaissances : réponds honnêtement.</li><li>Premier virement, même 10 €.</li></ol>`},
+  {id:"etf",t:"Choisir mon ETF monde",d:"Un seul, et le garder.",how:`<ul><li>MSCI World ou MSCI ACWI / All World.</li><li>« Éligible PEA ».</li><li>Frais (TER) sous 0,45 %.</li><li>Capitalisant (« Acc » ou « C »).</li><li>Encours élevé.</li><li>« Swap » ou « synthétique » : normal sur un PEA.</li></ul>`},
+  {id:"ordre",t:"Passer mon premier ordre d'achat",d:"Ordre à cours limité.",how:`<div class="ordre"><div><b>Sens</b>Achat</div><div><b>Type</b>À cours limité</div><div><b>Limite</b>Dernier prix + 0,5 %</div><div><b>Validité</b>Jour</div></div><p>Bourse ouverte 9 h–17 h 30. Évite la première demi-heure et les dernières minutes.</p>`},
+  {id:"auto",t:"Programmer l'achat mensuel",d:"Et ne plus y toucher.",how:`<ol><li>Investissement programmé : même montant, même jour, 2–3 jours après la paie.</li><li>Virement automatique compte courant → PEA juste avant.</li></ol>`}]},
+ {phase:"5. Compléter",items:[
+  {id:"av",t:"Ouvrir une assurance vie en ligne",d:"Pour lancer le compteur des 8 ans.",how:`<ul><li>0 % de frais sur versement.</li><li>Frais UC sous 0,6 %/an.</li><li>ETF + bon fonds euros.</li><li>Gestion libre.</li><li>Remplis la clause bénéficiaire.</li></ul>`},
+  {id:"quiz",t:"Réussir le quiz (8/10 ou plus)",d:"Onglet « Apprendre ».",how:`<p>Pour être sûr de maîtriser les bases avant d'investir plus.</p>`},
+  {id:"carriere",t:"Vérifier mon relevé de carrière",d:"Sur info-retraite.fr.",how:`<p>Connexion via FranceConnect. Vérifie que tes trimestres d'alternance sont comptés.</p>`},
+  {id:"bilan",t:"Faire mon bilan annuel",d:"Augmenter mes versements.",how:`<p>Une fois par an : augmente ton versement si ton salaire a monté, vérifie ton matelas, pense au PER quand tu seras imposé à 30 %.</p>`}]}
+];
+const ALL=PLAN.flatMap(p=>p.items);
+function renderTasks(){
+  const open=[...document.querySelectorAll('#tasks details[open]')].map(d=>d.dataset.id);
+  $('tasks').innerHTML=PLAN.map(p=>{const n=p.items.filter(i=>S.done[i.id]).length;
+    return `<div class="phase"><h3>${p.phase}</h3><span>${n}/${p.items.length}</span></div>`+p.items.map(i=>`<div class="task${S.done[i.id]?' done':''}"><label class="top" for="tk-${i.id}"><input type="checkbox" id="tk-${i.id}" data-id="${i.id}"${S.done[i.id]?' checked':''}><span><span class="t">${i.t}</span><br><span class="d">${i.d}</span></span></label><details class="how" data-id="${i.id}"${open.includes(i.id)?' open':''}><summary>Comment faire</summary><div class="body">${i.how}</div></details></div>`).join('');}).join('');
+  $('tasks').querySelectorAll('input[type=checkbox]').forEach(cb=>cb.addEventListener('change',e=>{const id=e.target.dataset.id;if(e.target.checked)S.done[id]=true;else delete S.done[id];persist();renderTasks();if(e.target.checked)toast('Bravo, une étape de plus ✔');}));
+  const n=ALL.filter(i=>S.done[i.id]).length,t=ALL.length,r=n/t;
+  $('progTxt').textContent=n+'/'+t;$('progBar').style.width=(r*100)+'%';$('ringTxt').textContent=Math.round(r*100)+' %';$('ringArc').setAttribute('stroke-dashoffset',226.2*(1-r));
+  const nx=ALL.find(i=>!S.done[i.id]);$('nextT').textContent=nx?nx.t:'Plan terminé 🎉';$('nextD').textContent=nx?nx.d:'Garde le cap et fais ton bilan chaque année.';
+}
+$('reset').addEventListener('click',()=>{S.done={};persist();renderTasks();toast('Plan remis à zéro');});
+
+/* ================= ACTU (mise à jour mensuelle possible via la base) ================= */
+let ACTU={
+ asof:"6 novembre 2026",
+ kpis:[{v:"2,50 %",l:"LEP (net, garanti)",tone:"ok"},{v:"1,7 %",l:"Livret A",tone:""},{v:"3,4 %",l:"Inflation (octobre)",tone:"bad"},{v:"2,50 %",l:"Taux BCE",tone:""}],
+ news:[
+  {v:"−4,4 %",l:"S&P 500, 5 nov.",p:"Chute à Wall Street (Nasdaq −5,5 %) : craintes sur la dette des géants de l'IA, pétrole en hausse.",c:"warn"},
+  {v:"3,4 %",l:"Inflation France",p:"Au plus haut depuis janvier 2024, tirée par l'énergie.",c:"gain"},
+  {v:"2,50 %",l:"Taux BCE",p:"Relevés en juin et septembre, pause le 29 octobre. Prochaine décision le 17 décembre.",c:"accent"},
+  {v:"≈ 5 %",l:"Taux État français 10 ans",p:"Plus haut depuis 2002 : le crédit immobilier renchérit.",c:"ink"}],
+ impacts:[
+  {h:"Les chutes de la bourse",p:"Tu en vivras des dizaines en 40 ans. Chaque baisse te fait acheter moins cher. Continue tes versements, ne vends rien."},
+  {h:"Trop d'États-Unis et de tech ?",p:"Un ETF MSCI World, c'est environ 70 % d'entreprises américaines, beaucoup liées à l'IA. Pour un peu plus de diversification, un ETF « All World » ajoute les pays émergents. Ne change pas de stratégie au gré des titres de presse."},
+  {h:"Tes livrets perdent du pouvoir d'achat",p:"1,7 % ou 2,5 % face à 3,4 % d'inflation. Garde-y seulement ton épargne de précaution. Révision du Livret A le 1er février 2027."},
+  {h:"Fiscalité",p:"Flat tax à 31,4 % depuis janvier, prélèvements sociaux à 18,6 % (17,2 % sur l'assurance vie). Le budget 2027 est en discussion : à surveiller."},
+  {h:"Retraites",p:"Réforme de 2023 suspendue jusqu'au 1er janvier 2028. Déficit à long terme revu en hausse par le COR. Sujet central de la présidentielle 2027."}],
+ agenda:[["13 nov.","Inflation définitive d'octobre (Insee)"],["17 déc.","Décision de la BCE sur les taux"],["Fin déc.","Vote du budget 2027 : fiscalité de l'épargne"],["1er fév. 2027","Révision Livret A et LEP"],["Avr.–juin 2027","Déclaration de revenus (ton RFR pour le LEP)"],["Printemps 2027","Présidentielle : programmes retraites"]]
+};
+const CMAP={warn:'var(--warn)',gain:'var(--gain)',accent:'var(--accent)',ink:'var(--ink)',good:'var(--good)'};
+function renderActu(){
+  const A=ACTU;
+  $('asof').textContent='Situation au '+A.asof;
+  $('kpis').innerHTML=(A.kpis||[]).slice(0,4).map(k=>`<div class="kpi ${k.tone==='ok'?'ok':k.tone==='bad'?'bad':''}"><div class="v">${esc(k.v)}</div><div class="l">${esc(k.l)}</div></div>`).join('');
+  $('news').innerHTML=(A.news||[]).slice(0,6).map(n=>`<div class="n" style="--c:${CMAP[n.c]||'var(--accent)'}"><div class="v">${esc(n.v)}</div><div class="l">${esc(n.l)}</div><p>${esc(n.p)}</p></div>`).join('');
+  $('impacts').innerHTML=(A.impacts||[]).slice(0,8).map(i=>`<div class="card"><h4>${esc(i.h)}</h4><p class="small">${esc(i.p)}</p></div>`).join('');
+  $('agenda').innerHTML=(A.agenda||[]).slice(0,10).map(([d,t])=>`<div class="ag"><strong>${esc(d)}</strong><span>${esc(t)}</span></div>`).join('');
+}
+const RULES=["<strong>Le temps compte plus que le montant.</strong> Commence maintenant, même petit.","<strong>Beaucoup de rendement sans risque = arnaque.</strong> Toujours.","<strong>Diversifie</strong> avec un ETF monde plutôt que quelques actions.","<strong>Automatise</strong> virements et achats.","<strong>Ne cherche pas le bon moment</strong> : achète chaque mois.","<strong>Chasse les frais</strong> : 1 % de plus par an = 20 à 30 % de capital en moins sur 40 ans.","<strong>En cas de krach, ne fais rien.</strong> Vendre transforme une baisse temporaire en perte définitive.","<strong>Investis dans toi-même</strong> : formation et progression salariale d'abord."];
+$('rules').innerHTML=RULES.map((r,i)=>`<div class="rule"><b>${i+1}</b><p>${r}</p></div>`).join('');
+const TIPS=["Quand la bourse chute, tu achètes moins cher. Continue tes versements.","Les frais sont ton ennemi : 1 % de plus par an coûte 20 à 30 % de capital sur 40 ans.","Un placement qui promet beaucoup sans risque est une arnaque. Vérifie la liste noire de l'AMF.","Ouvre ton PEA même avec 10 € : c'est la date d'ouverture qui compte pour les impôts.","Regarde ton PEA une fois par mois, pas plus.","L'abondement de ton entreprise, c'est de l'argent offert : prends-le en premier.","Commencer à 20 ans plutôt qu'à 30 peut doubler ton capital final.","Pense à enregistrer ton relevé du mois dans « Mon argent »."];
+$('tip').textContent=TIPS[new Date().getDate()%TIPS.length];
+
+/* ================= QUIZ ================= */
+const QZ=[
+ {q:"Quel placement ouvrir en premier, avant d'investir en bourse ?",o:["Un PEA","Une épargne de précaution sur livret","Un PER","Des cryptomonnaies"],a:1,e:"D'abord 3 à 6 mois de dépenses sur LEP ou Livret A, pour ne jamais devoir vendre ses placements en urgence."},
+ {q:"Que contient un ETF MSCI World ?",o:["Une seule grande entreprise","Environ 1 300 entreprises de pays développés","Des obligations d'État françaises","De l'or"],a:1,e:"Un ETF copie un indice : avec le MSCI World, tu détiens un petit bout de ~1 300 grandes entreprises."},
+ {q:"Après combien d'années les gains d'un PEA échappent-ils à l'impôt sur le revenu ?",o:["2 ans","5 ans","8 ans","10 ans"],a:1,e:"5 ans. Il reste les prélèvements sociaux (18,6 % en 2026)."},
+ {q:"La bourse chute de 30 %. Que fais-tu ?",o:["Je vends tout","J'arrête mes versements","Je continue mes versements programmés","J'achète une action à la mode"],a:2,e:"Tu continues : tu achètes moins cher. Vendre transforme une baisse temporaire en perte définitive."},
+ {q:"Qu'est-ce que l'abondement ?",o:["Une taxe sur l'épargne","L'argent que l'employeur ajoute à tes versements","Les frais d'un courtier","Un type d'ETF"],a:1,e:"C'est de l'argent offert par l'entreprise sur ton PEE ou PERCOL : priorité absolue."},
+ {q:"Pourquoi le PER est-il peu intéressant pour un alternant ?",o:["Il est interdit avant 25 ans","Son avantage est une déduction d'impôt, or l'alternant en paie souvent peu ou pas","Il rapporte moins qu'un livret","Il n'accepte pas les ETF"],a:1,e:"Le PER bloque l'argent jusqu'à la retraite contre une baisse d'impôt : utile seulement si tu es bien imposé."},
+ {q:"Quel ordre d'achat est le plus sûr pour un débutant ?",o:["Ordre au marché","Ordre à cours limité","Vente à découvert","Ordre stop"],a:1,e:"L'ordre à cours limité fixe le prix maximum que tu acceptes de payer."},
+ {q:"Avec 3,4 % d'inflation, un Livret A à 1,7 %…",o:["Te fait gagner du pouvoir d'achat","Te fait perdre un peu de pouvoir d'achat","Est imposé à 31,4 %","Est bloqué 5 ans"],a:1,e:"Rendement réel ≈ −1,7 %. Le livret sert à la sécurité, pas à faire grossir l'épargne longue."},
+ {q:"Quel est le principal ennemi d'un investissement sur 40 ans ?",o:["Les krachs passagers","Les frais élevés","Les dividendes","La Bourse de Paris fermée le week-end"],a:1,e:"Les frais s'accumulent chaque année : 1 % de plus peut coûter 20 à 30 % du capital final."},
+ {q:"Quelqu'un te promet 10 % par mois sans risque. C'est…",o:["Une bonne affaire","Un ETF","Très probablement une arnaque","Un placement réglementé"],a:2,e:"Aucun placement légal ne promet ça. Vérifie toujours la liste noire de l'AMF."}
+];
+let qi=0,qs=0,qAns=false;
+function renderQuiz(){
+  const box=$('quiz');
+  if(qi>=QZ.length){const ok=qs>=8;if(ok&&!S.done.quiz){S.done.quiz=true;persist();renderTasks();}
+    box.innerHTML=`<div class="eyebrow">Résultat</div><div class="bigv">${qs}/${QZ.length}</div><p>${ok?'Excellent, tu maîtrises les bases. Étape « quiz » cochée dans ton plan ✔':'Relis le lexique et retente : vise 8/10.'}</p><button type="button" id="qAgain">Recommencer</button>`;
+    $('qAgain').addEventListener('click',()=>{qi=0;qs=0;renderQuiz();});return;}
+  const Q=QZ[qi];qAns=false;
+  box.innerHTML=`<div class="eyebrow">Question ${qi+1}/${QZ.length} · score ${qs}</div><div class="progress"><i style="width:${qi/QZ.length*100}%"></i></div><h3 style="margin:10px 0 12px">${Q.q}</h3>${Q.o.map((o,i)=>`<button type="button" class="qopt" data-i="${i}">${o}</button>`).join('')}<p class="small" id="qExp" hidden></p><button type="button" id="qNext" hidden>Question suivante</button>`;
+  box.querySelectorAll('.qopt').forEach(b=>b.addEventListener('click',()=>{if(qAns)return;qAns=true;const i=+b.dataset.i;if(i===Q.a)qs++;
+    box.querySelectorAll('.qopt').forEach(x=>{x.disabled=true;if(+x.dataset.i===Q.a)x.classList.add('right');else if(x===b)x.classList.add('wrong');});
+    $('qExp').hidden=false;$('qExp').innerHTML=(i===Q.a?'<strong>Bien vu.</strong> ':'<strong>Pas tout à fait.</strong> ')+Q.e;$('qNext').hidden=false;$('qNext').textContent=qi===QZ.length-1?'Voir mon score':'Question suivante';}));
+  $('qNext').addEventListener('click',()=>{qi++;renderQuiz();});
+}
+
+/* ================= LEXIQUE ================= */
+const G=[
+ ["Épargne","LEP (Livret d'épargne populaire)","Livret réservé aux revenus modestes : 2,50 % net, sans impôt, jusqu'à 10 000 €, retraits à tout moment. Condition : revenu fiscal de référence sous 23 028 € pour une personne seule en 2026."],
+ ["Épargne","Livret A","Ouvert à tous, garanti par l'État, sans impôt. 1,7 % par an, jusqu'à 22 950 €."],
+ ["Épargne","LDDS","Le jumeau du Livret A : même taux, plafond de 12 000 €."],
+ ["Épargne","Épargne de précaution","3 à 6 mois de dépenses, sans risque et disponibles. À constituer avant d'investir en bourse."],
+ ["Épargne","PEL","Plan d'épargne logement : épargne bloquée pour un projet immobilier, taux fixé à l'ouverture."],
+ ["Épargne","Rendement réel","Le rendement après inflation. Livret à 1,7 % avec 3,4 % d'inflation = environ −1,7 % de pouvoir d'achat."],
+ ["Impôts","Revenu fiscal de référence (RFR)","Montant en 1re page de l'avis d'impôt. Sert à vérifier l'éligibilité au LEP."],
+ ["Impôts","Rattachement fiscal","Jusqu'à 21 ans (25 si étudiant), tu peux rester sur la déclaration de tes parents : leur revenu compte alors pour le LEP."],
+ ["Impôts","Salaire d'apprenti","Exonéré d'impôt sur le revenu jusqu'au SMIC annuel. Pas le cas des contrats de professionnalisation."],
+ ["Impôts","TMI","Taux marginal d'imposition : 0, 11, 30, 41 ou 45 %. Plus il est haut, plus le PER est intéressant."],
+ ["Impôts","Prélèvements sociaux","Taxe sur les gains des placements : 18,6 % depuis 2026 (17,2 % pour l'assurance vie)."],
+ ["Impôts","Flat tax (PFU)","31,4 % sur les gains en 2026 : 12,8 % d'impôt + 18,6 % de prélèvements sociaux."],
+ ["Bourse","Action","Une part d'entreprise. Gain si elle prend de la valeur ou verse des dividendes, perte possible."],
+ ["Bourse","Dividende","Part des bénéfices reversée aux actionnaires."],
+ ["Bourse","Obligation","Un prêt à un État ou une entreprise, rémunéré par des intérêts."],
+ ["Bourse","OAT","Obligations de l'État français. Leur taux à 10 ans sert de référence aux crédits immobiliers."],
+ ["Bourse","Indice","Panier d'entreprises qui sert de thermomètre : CAC 40, S&P 500, Nasdaq…"],
+ ["Bourse","MSCI World","Environ 1 300 grandes entreprises de 23 pays développés, dont ~70 % américaines."],
+ ["Bourse","MSCI ACWI / All World","MSCI World + pays émergents. Un peu plus diversifié."],
+ ["Bourse","ETF (tracker)","Fonds qui copie un indice, avec des frais très faibles."],
+ ["Bourse","Capitalisant / distribuant","Capitalisant : dividendes réinvestis automatiquement. Distribuant : versés. Pour le long terme, capitalisant."],
+ ["Bourse","Swap / synthétique","Technique qui rend un ETF monde éligible au PEA. Courante et encadrée."],
+ ["Bourse","TER","Frais annuels d'un ETF. Vise moins de 0,45 % pour un ETF monde."],
+ ["Bourse","Ordre à cours limité","Tu fixes le prix maximum d'achat. Plus sûr que l'ordre au marché."],
+ ["Bourse","Frais de courtage","Facturés à chaque ordre. Plafonnés à 0,5 % en ligne sur un PEA."],
+ ["Bourse","Courtier","Banque en ligne ou plateforme qui tient ton PEA et passe tes ordres."],
+ ["Bourse","Volatilité","Ampleur des variations de prix. Les actions peuvent perdre 30 à 50 % puis remonter."],
+ ["Bourse","Krach","Chute brutale de plus de 20 %. Normal sur le long terme."],
+ ["Bourse","Diversification","Répartir sur beaucoup d'entreprises pour limiter le risque."],
+ ["Économie","Inflation","Hausse générale des prix : 3,4 % en octobre 2026 en France."],
+ ["Économie","BCE","Banque centrale européenne : fixe les taux de la zone euro pour maîtriser l'inflation."],
+ ["Économie","Taux directeur","Taux de référence de la BCE, qui influence crédits, livrets et fonds euros."],
+ ["Méthode","Intérêts composés","Tes gains produisent à leur tour des gains. L'effet explose avec le temps."],
+ ["Méthode","Versement programmé (DCA)","Investir la même somme chaque mois, quel que soit le prix."],
+ ["Méthode","Règle des 4 %","Retirer environ 4 % de ton capital par an à la retraite permet en général de le faire durer 30 ans."],
+ ["Méthode","Répartition (allocation)","Le partage de ton argent entre actions, fonds euros et livrets. Elle fixe ton couple rendement/risque."],
+ ["Méthode","Taux d'endettement","Mensualités de crédit ÷ revenus. Les banques le limitent à 35 %."],
+ ["Enveloppes","PEA","Après 5 ans, gains sans impôt sur le revenu. 150 000 € de versements max. Un seul par personne."],
+ ["Enveloppes","Assurance vie","Fonds euros ou unités de compte. Après 8 ans, 4 600 € de gains par an sans impôt sur le revenu."],
+ ["Enveloppes","Fonds euros","Partie sans risque de l'assurance vie, capital garanti. Les meilleurs ont servi 3 à 4 % en 2025."],
+ ["Enveloppes","Unités de compte","Partie investie en bourse de l'assurance vie. Pas de garantie."],
+ ["Enveloppes","Clause bénéficiaire","Qui reçoit ton assurance vie en cas de décès."],
+ ["Enveloppes","PER","Plan d'épargne retraite, bloqué jusqu'à la retraite. Déduction d'impôt intéressante seulement si tu es bien imposé."],
+ ["Entreprise","PEE","Plan d'épargne entreprise, bloqué 5 ans (déblocages possibles : achat de logement, mariage…)."],
+ ["Entreprise","PERCOL","PER d'entreprise, souvent abondé par l'employeur."],
+ ["Entreprise","Abondement","L'argent que l'employeur ajoute à tes versements. Priorité absolue."],
+ ["Retraite","Répartition (retraite)","Les cotisations des actifs paient les pensions des retraités actuels."],
+ ["Retraite","Capitalisation","Chacun épargne et place pour sa propre retraite."],
+ ["Retraite","Âge légal","Figé à 62 ans et 9 mois jusqu'au 1er janvier 2028 (suspension de la réforme de 2023)."],
+ ["Retraite","Taux de remplacement","Pension ÷ dernier salaire. Devrait baisser pour les jeunes générations."],
+ ["Retraite","Notaire (frais de)","Taxes et frais payés à l'achat d'un logement : ~7–8 % dans l'ancien, ~2–3 % dans le neuf."],
+ ["Conseil","CGP","Conseiller en gestion de patrimoine. Souvent payé par commissions sur ce qu'il vend."],
+ ["Conseil","AMF","Autorité des marchés financiers. Publie une liste noire des arnaques."],
+ ["Conseil","ORIAS / REGAFI","Registres officiels des conseillers et des banques agréées. Vérifie toujours."]
+];
+const CATS=['Tout',...new Set(G.map(g=>g[0]))];let cat='Tout';
+$('cats').innerHTML=CATS.map(c=>`<button type="button" data-c="${c}" aria-pressed="${c==='Tout'}">${c}</button>`).join('');
+$('cats').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.c;$('cats').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));gl();}));
+function gl(){const q=$('q').value.trim().toLowerCase();const it=G.filter(([c,t,d])=>(cat==='Tout'||c===cat)&&(!q||t.toLowerCase().includes(q)||d.toLowerCase().includes(q)));
+  $('gloss').innerHTML=it.map(([c,t,d])=>`<div class="term"><dt>${t}<span class="cat">${c}</span></dt><dd>${d}</dd></div>`).join('');$('empty').hidden=it.length>0;}
+$('q').addEventListener('input',gl);
+
+/* ================= RENDU GLOBAL ================= */
+function fillInputs(){
+  $('sal').value=S.profil.salaire;$('dep').value=S.profil.depenses;$('rfr').value=S.profil.rfr;$('parts').value=S.profil.parts;
+  SIMK.forEach(k=>{if(S.sim[k]!==undefined&&$(k))$(k).value=S.sim[k];});
+}
+function renderAll(){fillInputs();renderAccounts();renderMoney();renderHist();budget();lep();renderTasks();update();drawHist();}
+renderAll();renderActu();renderQuiz();gl();repart();immo();route();
+window.addEventListener('resize',refreshCanvases);
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',refreshCanvases);}catch(e){}
+new MutationObserver(refreshCanvases).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+/* ================= APPLI INSTALLABLE ================= */
+const standalone=window.navigator.standalone===true||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);
+if(!standalone&&/iPhone|iPad|iPod/.test(navigator.userAgent)) $('install').hidden=false;
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
+function showBk(){try{const t=localStorage.getItem('prt-lastbk');$('lastBk').textContent=t?'Dernière copie : '+new Date(+t).toLocaleDateString('fr-FR'):'Aucune copie pour l\'instant.';}catch(e){}}
+$('exp').addEventListener('click',()=>{try{localStorage.setItem('prt-lastbk',Date.now());}catch(e){}showBk();});
+showBk();
+</script>
+</body>
+</html>
