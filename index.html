@@ -125,6 +125,25 @@ canvas{width:100%;height:220px;display:block}
 .hist .h{display:grid;grid-template-columns:72px 1fr 1fr 1fr;gap:6px;padding:7px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
 .hist .h.head{font-weight:700;color:var(--muted);font-size:.78rem}
 .pos{color:var(--good)} .neg{color:var(--warn)}
+/* comptes façon banque */
+.grp{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.grp .gh{display:flex;justify-content:space-between;align-items:baseline;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--bg)}
+.grp .gh b{font-family:var(--font-display);font-size:1rem}
+.grp .gh span{font-weight:700;font-variant-numeric:tabular-nums}
+.arow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.arow:last-child{border-bottom:0}
+.arow .nm{font-weight:700}
+.arow .mj{font-size:.78rem;color:var(--muted)}
+.arow .am{font-family:var(--font-display);font-size:1.15rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.arow .am.neg{color:var(--warn)}
+.aedit{padding:12px 16px;border-bottom:1px solid var(--line)}
+.aedit:last-child{border-bottom:0}
+.aedit .top{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.aedit .top input{flex:1;min-height:40px;font-weight:700}
+.aedit .del{width:40px;min-height:40px;padding:0;background:var(--warn-soft);color:var(--warn);flex:0 0 40px;font-size:1.1rem}
+.aedit .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.aedit label{font-size:.76rem;color:var(--muted);font-weight:700;display:block;margin-bottom:2px}
+.aedit input{min-height:42px}
 /* checklist */
 .phase{margin:18px 0 8px;display:flex;justify-content:space-between;align-items:baseline}
 .phase h3{font-size:1rem}
@@ -229,30 +248,39 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
 
   <div class="pane on" data-pane="argent:comptes">
     <div class="card">
-      <div class="eyebrow">Total</div>
+      <div class="eyebrow">Patrimoine total</div>
       <div class="bigv" id="accTotal">0 €</div>
-      <p class="small muted" id="accMonthly"></p>
+      <p class="small muted" id="accSub"></p>
       <div class="bars" id="bars"></div>
     </div>
+    <div class="card amber small" id="courantTip" hidden></div>
+    <div class="btns" style="margin-bottom:12px">
+      <button type="button" id="editToggle">Mettre à jour mes soldes</button>
+      <button type="button" class="ghost" id="addToggle">+ Ajouter un compte</button>
+    </div>
+    <div class="card" id="addBox" hidden>
+      <h3>Nouveau compte</h3>
+      <div class="field" style="margin-top:8px"><label for="newName">Nom du compte</label><input type="text" id="newName" maxlength="40" placeholder="ex. Livret Jeune, PEL, Crypto…"></div>
+      <div class="field"><label for="newCat">Type</label>
+        <select id="newCat"><option value="courant">Compte courant</option><option value="secu" selected>Épargne de précaution (livret)</option><option value="inv">Placement long terme</option><option value="autre">Risqué / autre (crypto…)</option></select></div>
+      <div class="field"><label for="newSolde">Solde actuel (€)</label><input type="number" id="newSolde" inputmode="decimal" step="10" placeholder="0"></div>
+      <button type="button" id="addGo">Ajouter</button>
+    </div>
+    <div id="accList"></div>
     <div class="card" id="matCard">
       <h3>Mon matelas de sécurité</h3>
       <div class="progress gain"><i id="matBar" style="width:0"></i></div>
       <p class="small" id="matTxt"></p>
     </div>
-    <div class="card">
-      <h3>Mes soldes</h3>
-      <p class="small muted">Indique ce qu'il y a sur chaque compte aujourd'hui et ce que tu y verses chaque mois. Tout est enregistré automatiquement.</p>
-      <div id="accounts"></div>
-    </div>
     <button type="button" id="snap">Enregistrer le relevé de ce mois</button>
-    <p class="small muted" style="text-align:center">Fais-le une fois par mois pour suivre ta progression.</p>
+    <p class="small muted" style="text-align:center">Une fois par mois, après avoir mis tes soldes à jour.</p>
   </div>
 
   <div class="pane" data-pane="argent:suivi">
     <div class="card">
       <h3>Ma progression réelle</h3>
-      <p class="small muted">Valeur de tous tes comptes comparée à l'argent que tu as versé. L'écart, ce sont tes gains (ou pertes) réels.</p>
-      <div class="legend"><span style="--c:var(--accent)">Valeur totale</span><span style="--c:var(--gain)">Argent versé</span></div>
+      <p class="small muted">Valeur de ton épargne (hors compte courant) comparée à l'argent que tu y as versé. L'écart, ce sont tes gains (ou pertes) réels.</p>
+      <div class="legend"><span style="--c:var(--accent)">Valeur de l'épargne</span><span style="--c:var(--gain)">Argent versé</span></div>
       <canvas id="cHist" role="img" aria-label="Progression réelle"></canvas>
       <p class="small" id="histSum"></p>
     </div>
@@ -528,23 +556,26 @@ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'
 function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),2000);}
 
 /* ================= ÉTAT ================= */
-const ACCS=[
- {id:'lep',n:'LEP',k:'secu',c:'var(--good)'},
- {id:'livretA',n:'Livret A / LDDS',k:'secu',c:'var(--good)'},
- {id:'pea',n:'PEA',k:'inv',c:'var(--accent)'},
- {id:'av',n:'Assurance vie',k:'inv',c:'var(--accent)'},
- {id:'pee',n:'Épargne salariale',k:'inv',c:'var(--accent)'},
- {id:'autre',n:'Autre (crypto…)',k:'autre',c:'var(--gain)'}
-];
-function defState(){return{v:1,profil:{salaire:1100,depenses:600,rfr:'',parts:'1'},comptes:Object.fromEntries(ACCS.map(a=>[a.id,{solde:0,mensuel:0}])),historique:[],done:{},sim:{}};}
+const KIND={courant:{n:'Comptes courants',c:'var(--ink)'},secu:{n:'Épargne de précaution',c:'var(--good)'},inv:{n:'Placements long terme',c:'var(--accent)'},autre:{n:'Risqué / autre',c:'var(--gain)'}};
+const KORDER=['courant','secu','inv','autre'];
+const DEF_ACC=[['courant','Compte courant','courant'],['lep','LEP','secu'],['livretA','Livret A / LDDS','secu'],['pea','PEA','inv'],['av','Assurance vie','inv'],['pee','Épargne salariale','inv']];
+const newAcc=(id,n,k)=>({id,n,k,solde:0,mensuel:0,maj:0});
+function defState(){return{v:2,profil:{salaire:1100,depenses:600,rfr:'',parts:'1'},accounts:DEF_ACC.map(([id,n,k])=>newAcc(id,n,k)),historique:[],done:{},sim:{}};}
 let S=defState();
-function clean(d){ // valide un état venu de l'extérieur
+const num=(v,min)=>{const x=+v;return isFinite(x)?(min===undefined?x:Math.max(min,x)):0;};
+function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau format)
   const s=defState(); if(!d||typeof d!=='object') return s;
   if(d.profil) for(const k of ['salaire','depenses']) if(isFinite(+d.profil[k])) s.profil[k]=+d.profil[k];
   if(d.profil&&d.profil.rfr!==undefined) s.profil.rfr=String(d.profil.rfr).replace(/[^\d]/g,'');
   if(d.profil&&['1','1.5','2','2.5','3'].includes(String(d.profil.parts))) s.profil.parts=String(d.profil.parts);
-  if(d.comptes) for(const a of ACCS){const c=d.comptes[a.id]; if(c){s.comptes[a.id]={solde:Math.max(0,+c.solde||0),mensuel:Math.max(0,+c.mensuel||0)};}}
-  if(Array.isArray(d.historique)) s.historique=d.historique.filter(h=>h&&/^\d{4}-\d{2}$/.test(h.m)).map(h=>({m:h.m,total:+h.total||0,verse:+h.verse||0,inv:+h.inv||0})).slice(-240);
+  if(Array.isArray(d.accounts)){
+    const seen=new Set();
+    s.accounts=d.accounts.filter(a=>a&&KIND[a.k]&&a.id&&!seen.has(String(a.id))&&seen.add(String(a.id))).slice(0,30).map(a=>({id:String(a.id).slice(0,40),n:String(a.n||'Compte').slice(0,40),k:a.k,solde:a.k==='courant'?num(a.solde):num(a.solde,0),mensuel:num(a.mensuel,0),maj:num(a.maj,0)}));
+  } else if(d.comptes&&typeof d.comptes==='object'){ // ancien format
+    for(const a of s.accounts){const c=d.comptes[a.id]; if(c){a.solde=num(c.solde,0);a.mensuel=num(c.mensuel,0);}}
+    const o=d.comptes.autre; if(o&&(+o.solde||+o.mensuel)){const x=newAcc('autre','Autre (crypto…)','autre');x.solde=num(o.solde,0);x.mensuel=num(o.mensuel,0);s.accounts.push(x);}
+  }
+  if(Array.isArray(d.historique)) s.historique=d.historique.filter(h=>h&&/^\d{4}-\d{2}$/.test(h.m)).map(h=>({m:h.m,total:num(h.total),verse:num(h.verse),inv:num(h.inv),courant:num(h.courant)})).slice(-240);
   if(d.done&&typeof d.done==='object') for(const k in d.done) if(d.done[k]===true) s.done[k]=true;
   if(d.sim&&typeof d.sim==='object') for(const k in d.sim) if(isFinite(+d.sim[k])) s.sim[k]=+d.sim[k];
   return s;
@@ -587,44 +618,79 @@ function refreshCanvases(){requestAnimationFrame(()=>{update();drawHist();});}
 
 /* ================= COMPTES ================= */
 function totals(){
-  let t=0,secu=0,inv=0,autre=0,mInv=0,mAll=0;
-  for(const a of ACCS){const c=S.comptes[a.id]; t+=c.solde; mAll+=c.mensuel; if(a.k==='secu')secu+=c.solde; else if(a.k==='inv'){inv+=c.solde;mInv+=c.mensuel;} else autre+=c.solde;}
-  return{t,secu,inv,autre,mInv,mAll};
+  const T={t:0,courant:0,secu:0,inv:0,autre:0,epargne:0,mInv:0,mAll:0};
+  for(const a of S.accounts){T.t+=a.solde;T[a.k]+=a.solde;if(a.k!=='courant'){T.epargne+=a.solde;T.mAll+=a.mensuel;}if(a.k==='inv')T.mInv+=a.mensuel;}
+  return T;
 }
+let editing=false;
+const fmtD=t=>t?new Date(t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'jamais';
 function renderAccounts(){
-  $('accounts').innerHTML=ACCS.map(a=>`<div class="acc"><div class="name">${a.n}<span>${a.k==='secu'?'Sécurité':a.k==='inv'?'Long terme':'Risqué'}</span></div>
-   <div><label for="s-${a.id}">Solde (€)</label><input type="number" inputmode="decimal" min="0" step="10" id="s-${a.id}" value="${S.comptes[a.id].solde||''}" placeholder="0"></div>
-   <div><label for="m-${a.id}">Versé / mois (€)</label><input type="number" inputmode="decimal" min="0" step="10" id="m-${a.id}" value="${S.comptes[a.id].mensuel||''}" placeholder="0"></div></div>`).join('');
-  ACCS.forEach(a=>{
-    $('s-'+a.id).addEventListener('input',e=>{S.comptes[a.id].solde=Math.max(0,+e.target.value||0);persist();renderMoney();});
-    $('m-'+a.id).addEventListener('input',e=>{S.comptes[a.id].mensuel=Math.max(0,+e.target.value||0);persist();renderMoney();});
-  });
+  $('accList').innerHTML=KORDER.map(k=>{
+    const list=S.accounts.filter(a=>a.k===k); if(!list.length) return '';
+    const sum=list.reduce((x,a)=>x+a.solde,0);
+    const rows=list.map(a=>editing?
+      `<div class="aedit"><div class="top"><input type="text" maxlength="40" data-f="n" data-id="${esc(a.id)}" value="${esc(a.n)}" aria-label="Nom du compte"><button type="button" class="del" data-del="${esc(a.id)}" aria-label="Supprimer ${esc(a.n)}">×</button></div>
+       <div class="two"><div><label>Solde (€)</label><input type="number" inputmode="decimal" step="10" data-f="solde" data-id="${esc(a.id)}" value="${a.solde||''}" placeholder="0"></div>`+
+       (k==='courant'?`<div><label>&nbsp;</label><p class="small muted" style="margin:8px 0 0">Négatif si découvert</p></div>`:`<div><label>Versé / mois (€)</label><input type="number" inputmode="decimal" min="0" step="10" data-f="mensuel" data-id="${esc(a.id)}" value="${a.mensuel||''}" placeholder="0"></div>`)+`</div></div>`
+      :`<div class="arow"><div><div class="nm">${esc(a.n)}</div><div class="mj">${a.mensuel&&k!=='courant'?`+${eur(a.mensuel)}/mois · `:''}mis à jour ${fmtD(a.maj)}</div></div><div class="am${a.solde<0?' neg':''}" data-amt="${esc(a.id)}">${eur(a.solde)}</div></div>`).join('');
+    return `<div class="grp"><div class="gh"><b>${KIND[k].n}</b><span data-gsum="${k}">${eur(sum)}</span></div>${rows}</div>`;
+  }).join('')||'<div class="card small muted">Aucun compte. Ajoute ton premier compte.</div>';
+  $('editToggle').textContent=editing?'Terminé ✓ (enregistré automatiquement)':'Mettre à jour mes soldes';
+  if(!editing) return;
+  $('accList').querySelectorAll('input[data-id]').forEach(inp=>inp.addEventListener('input',e=>{
+    const a=S.accounts.find(x=>x.id===e.target.dataset.id); if(!a) return; const f=e.target.dataset.f;
+    if(f==='n') a.n=e.target.value.slice(0,40)||'Compte';
+    else if(f==='solde'){a.solde=a.k==='courant'?num(e.target.value):num(e.target.value,0);a.maj=Date.now();}
+    else {a.mensuel=num(e.target.value,0);}
+    persist(); renderMoney();
+  }));
+  $('accList').querySelectorAll('button[data-del]').forEach(btn=>btn.addEventListener('click',()=>{
+    const a=S.accounts.find(x=>x.id===btn.dataset.del); if(!a) return;
+    if(!window.confirm(`Supprimer « ${a.n} » ? Son solde ne sera plus compté.`)) return;
+    S.accounts=S.accounts.filter(x=>x!==a); persist(); renderAccounts(); renderMoney(); toast('Compte supprimé');
+  }));
 }
+$('editToggle').addEventListener('click',()=>{editing=!editing;renderAccounts();renderMoney();if(!editing){toast('Soldes enregistrés ✔');}});
+$('addToggle').addEventListener('click',()=>{$('addBox').hidden=!$('addBox').hidden;if(!$('addBox').hidden)$('newName').focus();});
+$('addGo').addEventListener('click',()=>{
+  const n=$('newName').value.trim(); if(!n){toast('Donne un nom au compte');return;}
+  if(S.accounts.length>=30){toast('30 comptes maximum');return;}
+  const k=$('newCat').value, a=newAcc('c'+Date.now().toString(36),n.slice(0,40),k);
+  a.solde=k==='courant'?num($('newSolde').value):num($('newSolde').value,0); if($('newSolde').value!=='') a.maj=Date.now();
+  const last=S.accounts.map((x,i)=>x.k===k?i:-1).filter(i=>i>=0).pop();
+  if(last===undefined) S.accounts.push(a); else S.accounts.splice(last+1,0,a);
+  persist(); $('addBox').hidden=true; $('newName').value='';$('newSolde').value=''; renderAccounts(); renderMoney(); toast('Compte ajouté ✔');
+});
 function renderMoney(){
   const T=totals(), dep=S.profil.depenses||0, goal=dep*3;
   $('accTotal').textContent=eur(T.t); $('homeTotal').textContent=eur(T.t);
-  $('accMonthly').textContent=`Tu épargnes ${eur(T.mAll)} par mois, dont ${eur(T.mInv)} investis à long terme.`;
-  $('homeSplit').textContent=T.t?`Sécurité ${eur(T.secu)} · Long terme ${eur(T.inv)}${T.autre?` · Risqué ${eur(T.autre)}`:''}`:'Renseigne tes comptes dans « Mon argent ».';
-  const max=Math.max(...ACCS.map(a=>S.comptes[a.id].solde),1);
-  $('bars').innerHTML=ACCS.filter(a=>S.comptes[a.id].solde>0).map(a=>`<div class="b"><span>${a.n}</span><span class="track"><i style="width:${S.comptes[a.id].solde/max*100}%;background:${a.c}"></i></span><span class="amt">${eur(S.comptes[a.id].solde)}</span></div>`).join('')||'<p class="small muted">Aucun solde pour l\'instant.</p>';
+  $('accSub').textContent=`Dont ${eur(T.epargne)} d'épargne. Tu épargnes ${eur(T.mAll)} par mois, dont ${eur(T.mInv)} à long terme.`;
+  $('homeSplit').textContent=T.t?KORDER.filter(k=>T[k]).map(k=>({courant:'Courant',secu:'Sécurité',inv:'Long terme',autre:'Risqué'})[k]+' '+eur(T[k])).join(' · '):'Renseigne tes comptes dans « Mon argent ».';
+  const pos=KORDER.map(k=>Math.max(0,T[k])), max=Math.max(...pos,1);
+  $('bars').innerHTML=KORDER.filter(k=>T[k]).map(k=>`<div class="b"><span>${({courant:'Courant',secu:'Sécurité',inv:'Long terme',autre:'Risqué'})[k]}</span><span class="track"><i style="width:${Math.max(0,T[k])/max*100}%;background:${KIND[k].c}"></i></span><span class="amt">${eur(T[k])}</span></div>`).join('')||'<p class="small muted">Appuie sur « Mettre à jour mes soldes » pour commencer.</p>';
+  KORDER.forEach(k=>{const el=document.querySelector(`[data-gsum="${k}"]`);if(el)el.textContent=eur(S.accounts.filter(a=>a.k===k).reduce((x,a)=>x+a.solde,0));});
   const r=goal?Math.min(1,T.secu/goal):0;
   $('matBar').style.width=$('homeMat').style.width=(r*100)+'%';
-  const txt=!dep?'Indique tes dépenses fixes dans « Budget & LEP » pour calculer ton objectif.':T.secu>=dep*6?`Matelas complet (${eur(T.secu)}, plus de 6 mois). Tout le reste peut aller vers le long terme.`:T.secu>=goal?`Objectif de 3 mois atteint (${eur(T.secu)}). Tu peux viser 6 mois (${eur(dep*6)}) ou investir davantage.`:`${eur(T.secu)} sur ${eur(goal)} (3 mois de dépenses). Il manque ${eur(goal-T.secu)}.`;
-  $('matTxt').textContent=$('homeMatTxt').textContent=txt;
-  if(T.autre>0&&T.t>0&&T.autre/T.t>0.1) $('matTxt').textContent+=` Attention : ${Math.round(T.autre/T.t*100)} % de ton argent est sur des placements très risqués.`;
+  let txt=!dep?'Indique tes dépenses fixes dans « Budget & LEP » pour calculer ton objectif.':T.secu>=dep*6?`Matelas complet (${eur(T.secu)}, plus de 6 mois). Tout le reste peut aller vers le long terme.`:T.secu>=goal?`Objectif de 3 mois atteint (${eur(T.secu)}). Tu peux viser 6 mois (${eur(dep*6)}) ou investir davantage.`:`${eur(T.secu)} sur ${eur(goal)} (3 mois de dépenses). Il manque ${eur(goal-T.secu)}.`;
+  $('homeMatTxt').textContent=txt;
+  if(T.autre>0&&T.epargne>0&&T.autre/T.epargne>0.1) txt+=` Attention : ${Math.round(T.autre/T.epargne*100)} % de ton épargne est sur des placements très risqués.`;
+  $('matTxt').textContent=txt;
+  const tip=$('courantTip'), surplus=T.courant-Math.max(dep,300)*1.5;
+  if(T.courant<0){tip.hidden=false;tip.innerHTML=`<strong>Compte courant à découvert (${eur(T.courant)}).</strong> Priorité : revenir au positif avant d'épargner, les agios coûtent cher.`;}
+  else if(dep&&surplus>100){tip.hidden=false;tip.innerHTML=`<strong>${eur(surplus)} dorment sur ton compte courant</strong> au-delà d'un mois et demi de dépenses. Sur ton livret, ils rapporteraient des intérêts sans risque.`;}
+  else tip.hidden=true;
 }
 $('snap').addEventListener('click',()=>{
+  if(editing){editing=false;renderAccounts();}
   const T=totals(), d=new Date(), m=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
   const H=S.historique, last=H[H.length-1];
-  let verse;
-  if(!last) verse=T.t;
-  else if(last.m===m) verse=last.verse;
-  else { const [y1,m1]=last.m.split('-').map(Number); const months=(d.getFullYear()-y1)*12+(d.getMonth()+1-m1); verse=last.verse+T.mAll*Math.max(1,months); }
-  const entry={m,total:T.t,verse,inv:T.inv};
-  if(last&&last.m===m){
-    // relevé du mois déjà fait : on met à jour la valeur, le versé reste celui calculé à partir du mois précédent
-    const prev=H[H.length-2]; entry.verse=prev?prev.verse+T.mAll:T.t; H[H.length-1]=entry; toast('Relevé du mois mis à jour');
-  } else { H.push(entry); toast('Relevé enregistré ✔'); }
+  const entry={m,total:T.epargne,verse:0,inv:T.inv,courant:T.courant};
+  if(last&&last.m===m){const prev=H[H.length-2];entry.verse=prev?prev.verse+T.mAll:T.epargne;H[H.length-1]=entry;toast('Relevé du mois mis à jour');}
+  else{
+    if(!last) entry.verse=T.epargne;
+    else{const[y1,m1]=last.m.split('-').map(Number);const months=(d.getFullYear()-y1)*12+(d.getMonth()+1-m1);entry.verse=last.verse+T.mAll*Math.max(1,months);}
+    H.push(entry);toast('Relevé enregistré ✔');
+  }
   persist(); renderHist(); drawHist();
 });
 const MOIS=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
@@ -781,7 +847,7 @@ function immo(){
 const PLAN=[
  {phase:"1. Préparer",items:[
   {id:"budget",t:"Faire mon budget",d:"Salaire, dépenses fixes, ce qui reste.",how:`<p>Utilise « Mon argent » → « Budget & LEP ». Vise 10 à 20 % d'épargne. Même 30 € par mois suffisent pour démarrer.</p>`},
-  {id:"comptes",t:"Renseigner mes comptes dans l'appli",d:"Soldes et versements mensuels.",how:`<p>« Mon argent » → « Mes comptes ». Puis « Enregistrer le relevé de ce mois » : c'est ton point de départ.</p>`},
+  {id:"comptes",t:"Renseigner mes comptes dans l'appli",d:"Compte courant, livrets, placements.",how:`<p>« Mon argent » → « Mettre à jour mes soldes ». Ajoute tes comptes manquants avec « + Ajouter un compte ». Puis « Enregistrer le relevé de ce mois » : c'est ton point de départ.</p>`},
   {id:"montant",t:"Fixer mon montant mensuel",d:"Un montant que je tiendrai.",how:`<p>Mieux vaut 50 € tenus chaque mois que 200 € abandonnés au bout de trois mois.</p>`}]},
  {phase:"2. Matelas de sécurité",items:[
   {id:"rfr",t:"Vérifier si j'ai droit au LEP",d:"Avec mon revenu fiscal de référence.",how:`<ol><li>impots.gouv.fr → Documents → dernier avis d'impôt.</li><li>Ligne « Revenu fiscal de référence ».</li><li>Teste-le dans « Budget & LEP ». Plafond 2026 : 23 028 € (personne seule).</li></ol><p class="muted">Rattaché à tes parents ? C'est leur revenu qui compte. Ta propre déclaration peut te rendre éligible.</p>`},
