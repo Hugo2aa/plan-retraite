@@ -144,6 +144,33 @@ canvas{width:100%;height:220px;display:block}
 .aedit .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .aedit label{font-size:.76rem;color:var(--muted);font-weight:700;display:block;margin-bottom:2px}
 .aedit input{min-height:42px}
+/* coach */
+.tip{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c,var(--accent));border-radius:14px;padding:12px 14px;margin-bottom:8px}
+.tip .ic{flex:0 0 30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:1rem}
+.tip .tt{font-weight:700;margin-bottom:2px}
+.tip p{margin:0;font-size:.92rem}
+.tip a.go{display:inline-block;margin-top:6px;font-weight:700;font-size:.9rem;text-decoration:none}
+.tip .lv{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--c)}
+.mp .row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.mp .row:last-child{border-bottom:0}
+.mp .row b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mp .row small{display:block;color:var(--muted)}
+/* projets */
+.proj .hd{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.proj .hd input{flex:1;font-weight:700;min-height:40px}
+.proj .del{width:40px;min-height:40px;padding:0;background:var(--warn-soft);color:var(--warn);flex:0 0 40px}
+.proj .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.proj label{font-size:.74rem;color:var(--muted);font-weight:700;display:block;margin-bottom:2px}
+.proj input{min-height:42px;padding:8px}
+.proj .out{margin-top:10px;font-size:.92rem}
+/* conseiller */
+.qa{margin-bottom:14px}
+.qa .qq{font-weight:700;margin-bottom:6px}
+.qa .opts{display:grid;gap:6px}
+.qa .opts button{background:var(--bg);color:var(--ink);border:1.5px solid var(--line);justify-content:flex-start;text-align:left;font-weight:600;min-height:44px}
+.qa .opts button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.alloc{display:flex;height:16px;border-radius:99px;overflow:hidden;margin:8px 0}
+.alloc i{display:block;height:100%}
 /* checklist */
 .phase{margin:18px 0 8px;display:flex;justify-content:space-between;align-items:baseline}
 .phase h3{font-size:1rem}
@@ -223,6 +250,10 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
     </div>
     <div style="margin-top:12px"><a class="btn" href="#plan">Voir mon plan</a></div>
   </div>
+  <h3 style="margin:16px 0 8px">Mes conseils du moment</h3>
+  <p class="small muted" style="margin:-4px 0 10px" id="coachSub"></p>
+  <div id="coach"></div>
+  <div class="card" id="monthPlan"></div>
   <div class="card">
     <div class="eyebrow">Mon patrimoine</div>
     <div class="bigv" id="homeTotal">0 €</div>
@@ -243,6 +274,7 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
   <div class="seg" role="group" aria-label="Sections">
     <button type="button" data-seg="argent" data-p="comptes" aria-pressed="true">Mes comptes</button>
     <button type="button" data-seg="argent" data-p="suivi" aria-pressed="false">Suivi</button>
+    <button type="button" data-seg="argent" data-p="projets" aria-pressed="false">Projets</button>
     <button type="button" data-seg="argent" data-p="budget" aria-pressed="false">Budget &amp; LEP</button>
   </div>
 
@@ -300,6 +332,13 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
     </div>
   </div>
 
+  <div class="pane" data-pane="argent:projets">
+    <p class="lead">L'argent de tes projets à moins de 5 ans ne va pas en bourse : il doit être là le jour J. Ajuste les montants et les dates, l'appli calcule combien mettre de côté chaque mois et où.</p>
+    <div class="card tint small" id="projSum"></div>
+    <div id="projList"></div>
+    <button type="button" class="ghost" id="projAdd">+ Ajouter un projet</button>
+  </div>
+
   <div class="pane" data-pane="argent:budget">
     <div class="card">
       <h3>Mon budget en 30 secondes</h3>
@@ -315,6 +354,12 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
       </div>
       <p class="small" id="bMsg"></p>
       <p class="small" id="precMsg"></p>
+    </div>
+    <div class="card">
+      <h3>Mes réglages</h3>
+      <div class="field" style="margin-top:8px"><label for="capa">Ce que je peux épargner chaque mois (€)</label><input type="number" id="capa" inputmode="numeric" min="0" step="10"><small>Utilisé pour te proposer la répartition de chaque paie.</small></div>
+      <div class="field"><label for="paie">Ma paie arrive</label><select id="paie"><option value="fin">En fin de mois (25 au 31)</option><option value="debut">En début de mois (1er au 5)</option><option value="milieu">En milieu de mois (10 au 15)</option></select></div>
+      <div class="field"><label for="peeSt">Épargne salariale de mon entreprise</label><select id="peeSt"><option value="inconnu">Je ne sais pas encore</option><option value="abond">Oui, avec abondement</option><option value="sans">Oui, sans abondement</option><option value="non">Non</option></select></div>
     </div>
     <div class="card">
       <h3>Ai-je droit au LEP ?</h3>
@@ -453,6 +498,7 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
   <h2>Mon plan</h2>
   <div class="seg" role="group" aria-label="Plan">
     <button type="button" data-seg="plan" data-p="etapes" aria-pressed="true">Étapes</button>
+    <button type="button" data-seg="plan" data-p="conseil" aria-pressed="false">Conseiller</button>
     <button type="button" data-seg="plan" data-p="compar" aria-pressed="false">Comparatif</button>
     <button type="button" data-seg="plan" data-p="apres" aria-pressed="false">Après l'alternance</button>
   </div>
@@ -460,6 +506,10 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
     <div class="card" style="padding:12px 14px"><div style="display:flex;justify-content:space-between;font-weight:700"><span>Progression</span><span id="progTxt">0/0</span></div><div class="progress"><i id="progBar" style="width:0"></i></div></div>
     <div id="tasks"></div>
     <button type="button" class="ghost" id="reset" style="margin-top:8px">Tout décocher</button>
+  </div>
+
+  <div class="pane" data-pane="plan:conseil">
+    <div id="advisor"></div>
   </div>
 
   <div class="pane" data-pane="plan:compar">
@@ -560,7 +610,8 @@ const KIND={courant:{n:'Comptes courants',c:'var(--ink)'},secu:{n:'Épargne de p
 const KORDER=['courant','secu','inv','autre'];
 const DEF_ACC=[['courant','Compte courant','courant'],['lep','LEP','secu'],['livretA','Livret A / LDDS','secu'],['pea','PEA','inv'],['av','Assurance vie','inv'],['pee','Épargne salariale','inv']];
 const newAcc=(id,n,k)=>({id,n,k,solde:0,mensuel:0,maj:0});
-function defState(){return{v:2,profil:{salaire:1100,depenses:600,rfr:'',parts:'1'},accounts:DEF_ACC.map(([id,n,k])=>newAcc(id,n,k)),historique:[],done:{},sim:{}};}
+const DEF_PROJ=()=>[{id:'p1',n:'Permis + voiture',montant:6000,date:'2028-06',deja:0},{id:'p2',n:'Voyage / déménagement',montant:2000,date:'2027-09',deja:0},{id:'p3',n:'Apport logement',montant:25000,date:'2032-06',deja:0}];
+function defState(){return{v:3,profil:{salaire:1100,depenses:600,rfr:'',parts:'1',capa:null,paie:'fin',pee:'inconnu'},risk:null,projets:DEF_PROJ(),accounts:DEF_ACC.map(([id,n,k])=>newAcc(id,n,k)),historique:[],done:{},sim:{}};}
 let S=defState();
 const num=(v,min)=>{const x=+v;return isFinite(x)?(min===undefined?x:Math.max(min,x)):0;};
 function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau format)
@@ -568,6 +619,11 @@ function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau fo
   if(d.profil) for(const k of ['salaire','depenses']) if(isFinite(+d.profil[k])) s.profil[k]=+d.profil[k];
   if(d.profil&&d.profil.rfr!==undefined) s.profil.rfr=String(d.profil.rfr).replace(/[^\d]/g,'');
   if(d.profil&&['1','1.5','2','2.5','3'].includes(String(d.profil.parts))) s.profil.parts=String(d.profil.parts);
+  if(d.profil&&d.profil.capa!==null&&d.profil.capa!==undefined&&isFinite(+d.profil.capa)) s.profil.capa=Math.max(0,+d.profil.capa);
+  if(d.profil&&['fin','debut','milieu'].includes(d.profil.paie)) s.profil.paie=d.profil.paie;
+  if(d.profil&&['inconnu','abond','sans','non'].includes(d.profil.pee)) s.profil.pee=d.profil.pee;
+  if(d.risk&&typeof d.risk==='object'&&isFinite(+d.risk.score)&&d.risk.ans&&typeof d.risk.ans==='object'){s.risk={score:+d.risk.score,date:num(d.risk.date,0),ans:{}};for(const k in d.risk.ans)if(isFinite(+d.risk.ans[k]))s.risk.ans[k]=+d.risk.ans[k];}
+  if(Array.isArray(d.projets)) s.projets=d.projets.filter(p=>p&&p.id).slice(0,12).map(p=>({id:String(p.id).slice(0,40),n:String(p.n||'Projet').slice(0,40),montant:num(p.montant,0),date:/^\d{4}-\d{2}$/.test(p.date)?p.date:'2028-01',deja:num(p.deja,0)}));
   if(Array.isArray(d.accounts)){
     const seen=new Set();
     s.accounts=d.accounts.filter(a=>a&&KIND[a.k]&&a.id&&!seen.has(String(a.id))&&seen.add(String(a.id))).slice(0,30).map(a=>({id:String(a.id).slice(0,40),n:String(a.n||'Compte').slice(0,40),k:a.k,solde:a.k==='courant'?num(a.solde):num(a.solde,0),mensuel:num(a.mensuel,0),maj:num(a.maj,0)}));
@@ -642,7 +698,7 @@ function renderAccounts(){
     if(f==='n') a.n=e.target.value.slice(0,40)||'Compte';
     else if(f==='solde'){a.solde=a.k==='courant'?num(e.target.value):num(e.target.value,0);a.maj=Date.now();}
     else {a.mensuel=num(e.target.value,0);}
-    persist(); renderMoney();
+    persist(); renderMoney(); renderCoach();
   }));
   $('accList').querySelectorAll('button[data-del]').forEach(btn=>btn.addEventListener('click',()=>{
     const a=S.accounts.find(x=>x.id===btn.dataset.del); if(!a) return;
@@ -732,14 +788,17 @@ function budget(){
   $('bMsg').innerHTML=d>s*.5?`Tes dépenses fixes dépassent 50 % de ton salaire : vise plutôt <strong>${eur(Math.max(0,Math.min(s*.2,(s-d)*.4)))}</strong> d'épargne par mois pour commencer.`:`Il te reste ${eur(s-d)} après tes dépenses fixes : <strong>${eur(s*.2)}</strong> d'épargne par mois est réaliste.`;
   $('precMsg').innerHTML=`Épargne de précaution à viser : <strong>${eur(d*3)}</strong> (3 mois) à <strong>${eur(d*6)}</strong> (6 mois).`;
 }
-$('sal').addEventListener('input',e=>{S.profil.salaire=Math.max(0,+e.target.value||0);persist();budget();renderMoney();});
-$('dep').addEventListener('input',e=>{S.profil.depenses=Math.max(0,+e.target.value||0);persist();budget();renderMoney();});
+$('sal').addEventListener('input',e=>{S.profil.salaire=Math.max(0,+e.target.value||0);persist();budget();renderMoney();$('capa').placeholder=String(Math.round(S.profil.salaire*0.2/10)*10);renderCoach();projSummary();});
+$('dep').addEventListener('input',e=>{S.profil.depenses=Math.max(0,+e.target.value||0);persist();budget();renderMoney();renderCoach();});
 function lep(){
   const r=S.profil.rfr,p=+S.profil.parts,v=$('lepV'); if(r===''){v.hidden=true;return;}
   const lim=23028+(p-1)*2*6149; v.hidden=false;
   if(+r<=lim){v.className='verdict yes';v.textContent=`✔ Tu peux ouvrir un LEP (plafond : ${eur(lim)}). 2,50 % net, jusqu'à 10 000 €.`;}
   else{v.className='verdict no';v.textContent=`Plafond dépassé (${eur(lim)}). Ouvre plutôt un Livret A. Si tu es rattaché à tes parents, ta propre déclaration pourrait changer la donne.`;}
 }
+$('capa').addEventListener('input',e=>{S.profil.capa=e.target.value===''?null:Math.max(0,+e.target.value||0);persist();renderCoach();});
+$('paie').addEventListener('change',e=>{S.profil.paie=e.target.value;persist();renderCoach();});
+$('peeSt').addEventListener('change',e=>{S.profil.pee=e.target.value;persist();renderCoach();});
 $('rfr').addEventListener('input',e=>{S.profil.rfr=e.target.value.replace(/[^\d]/g,'');persist();lep();});
 $('parts').addEventListener('change',e=>{S.profil.parts=e.target.value;persist();lep();});
 
@@ -848,6 +907,7 @@ const PLAN=[
  {phase:"1. Préparer",items:[
   {id:"budget",t:"Faire mon budget",d:"Salaire, dépenses fixes, ce qui reste.",how:`<p>Utilise « Mon argent » → « Budget & LEP ». Vise 10 à 20 % d'épargne. Même 30 € par mois suffisent pour démarrer.</p>`},
   {id:"comptes",t:"Renseigner mes comptes dans l'appli",d:"Compte courant, livrets, placements.",how:`<p>« Mon argent » → « Mettre à jour mes soldes ». Ajoute tes comptes manquants avec « + Ajouter un compte ». Puis « Enregistrer le relevé de ce mois » : c'est ton point de départ.</p>`},
+  {id:"profil",t:"Faire le test de profil investisseur",d:"Plan → Conseiller, 1 minute.",how:`<p>7 questions pour savoir comment répartir ton argent long terme entre ETF monde, fonds euros et livrets.</p>`},
   {id:"montant",t:"Fixer mon montant mensuel",d:"Un montant que je tiendrai.",how:`<p>Mieux vaut 50 € tenus chaque mois que 200 € abandonnés au bout de trois mois.</p>`}]},
  {phase:"2. Matelas de sécurité",items:[
   {id:"rfr",t:"Vérifier si j'ai droit au LEP",d:"Avec mon revenu fiscal de référence.",how:`<ol><li>impots.gouv.fr → Documents → dernier avis d'impôt.</li><li>Ligne « Revenu fiscal de référence ».</li><li>Teste-le dans « Budget & LEP ». Plafond 2026 : 23 028 € (personne seule).</li></ol><p class="muted">Rattaché à tes parents ? C'est leur revenu qui compte. Ta propre déclaration peut te rendre éligible.</p>`},
@@ -1003,13 +1063,149 @@ function gl(){const q=$('q').value.trim().toLowerCase();const it=G.filter(([c,t,
   $('gloss').innerHTML=it.map(([c,t,d])=>`<div class="term"><dt>${t}<span class="cat">${c}</span></dt><dd>${d}</dd></div>`).join('');$('empty').hidden=it.length>0;}
 $('q').addEventListener('input',gl);
 
+/* ================= PROJETS ================= */
+function monthsTo(ym){const[y,m]=ym.split('-').map(Number);const d=new Date();return Math.max(1,(y-d.getFullYear())*12+(m-1-d.getMonth()));}
+function projCalc(p){const n=monthsTo(p.date),rest=Math.max(0,p.montant-p.deja);const need=Math.ceil(rest/n);
+  const sup=n<24?'Livret A / LEP (disponible, sans risque)':n<=60?'Livret ou fonds euros d\'assurance vie (sans risque)':'Fonds euros, avec éventuellement une petite part en ETF selon ton profil';
+  return{n,rest,need,sup,r:p.montant?Math.min(1,p.deja/p.montant):0};}
+function renderProjets(){
+  $('projList').innerHTML=S.projets.map(p=>{const c=projCalc(p);return`<div class="card proj"><div class="hd"><input type="text" maxlength="40" data-pf="n" data-pid="${esc(p.id)}" value="${esc(p.n)}" aria-label="Nom du projet"><button type="button" class="del" data-pdel="${esc(p.id)}" aria-label="Supprimer ${esc(p.n)}">×</button></div>
+    <div class="three"><div><label>Montant (€)</label><input type="number" inputmode="numeric" min="0" step="100" data-pf="montant" data-pid="${esc(p.id)}" value="${p.montant||''}"></div>
+    <div><label>Pour quand</label><input type="month" data-pf="date" data-pid="${esc(p.id)}" value="${p.date}"></div>
+    <div><label>Déjà de côté</label><input type="number" inputmode="numeric" min="0" step="50" data-pf="deja" data-pid="${esc(p.id)}" value="${p.deja||''}" placeholder="0"></div></div>
+    <div class="progress gain" style="margin-top:10px"><i style="width:${c.r*100}%"></i></div>
+    <div class="out" data-pout="${esc(p.id)}">${projText(p,c)}</div></div>`;}).join('')||'<div class="card small muted">Aucun projet.</div>';
+  $('projList').querySelectorAll('input[data-pid]').forEach(i=>i.addEventListener('input',e=>{const p=S.projets.find(x=>x.id===e.target.dataset.pid);if(!p)return;const f=e.target.dataset.pf;
+    if(f==='n')p.n=e.target.value.slice(0,40)||'Projet';else if(f==='date'){if(/^\d{4}-\d{2}$/.test(e.target.value))p.date=e.target.value;}else p[f]=num(e.target.value,0);
+    persist();const c=projCalc(p);const o=document.querySelector(`[data-pout="${CSS.escape(p.id)}"]`);if(o){o.innerHTML=projText(p,c);o.previousElementSibling.firstElementChild.style.width=(c.r*100)+'%';}projSummary();renderCoach();}));
+  $('projList').querySelectorAll('button[data-pdel]').forEach(b=>b.addEventListener('click',()=>{const p=S.projets.find(x=>x.id===b.dataset.pdel);if(!p||!window.confirm(`Supprimer le projet « ${p.n} » ?`))return;S.projets=S.projets.filter(x=>x!==p);persist();renderProjets();renderCoach();}));
+  projSummary();
+}
+function projText(p,c){if(!c.rest)return'<strong class="pos">Objectif atteint ✔</strong> Garde cet argent au chaud jusqu\'au jour J.';
+  return`Mets de côté <strong>${eur(c.need)}/mois</strong> pendant ${c.n} mois.<br><span class="muted">Où : ${c.sup}.</span>`;}
+function projSummary(){const tot=S.projets.reduce((x,p)=>x+projCalc(p).need*(projCalc(p).rest>0),0);
+  $('projSum').innerHTML=S.projets.length?`Tes projets demandent <strong>${eur(tot)} par mois</strong> au total. Ta capacité d'épargne : <strong>${eur(capa())}</strong>.`+(tot>capa()?' <strong>C\'est plus que ce que tu peux mettre de côté :</strong> repousse une date ou baisse un montant.':''):'Ajoute tes projets pour les planifier.';}
+$('projAdd').addEventListener('click',()=>{if(S.projets.length>=12)return;const d=new Date();S.projets.push({id:'p'+Date.now().toString(36),n:'Nouveau projet',montant:1000,date:(d.getFullYear()+1)+'-'+String(d.getMonth()+1).padStart(2,'0'),deja:0});persist();renderProjets();renderCoach();});
+function capa(){const p=S.profil;return p.capa!==null&&p.capa!==undefined?p.capa:Math.round((p.salaire||0)*0.2/10)*10;}
+
+/* ================= CONSEILLER (profil de risque) ================= */
+const RQ=[
+ {id:'h',q:"Dans combien de temps auras-tu besoin de l'argent que tu places à long terme ?",o:[["Moins de 3 ans",0],["3 à 8 ans",1],["8 à 15 ans",2],["Pas avant la retraite",3]]},
+ {id:'k',q:"Ton placement perd 30 % en quelques semaines. Tu…",o:[["Vends tout pour arrêter les pertes",0],["Arrêtes tes versements en attendant",1],["Continues comme si de rien n'était",2],["En profites pour investir un peu plus",3]]},
+ {id:'v',q:"Voir ton épargne monter et descendre chaque jour, ça te fait…",o:[["Beaucoup stresser, je regarderais tout le temps",0],["Un peu peur, mais je peux m'y faire",1],["Rien, je ne regarderai qu'une fois par mois",2]]},
+ {id:'m',q:"As-tu une épargne de précaution (3 mois de dépenses) en dehors de tes placements ?",o:[["Non",0],["En partie",1],["Oui",2]]},
+ {id:'s',q:"Tes revenus des prochaines années te semblent…",o:[["Incertains",0],["Assez stables",1],["Stables et en hausse probable",2]]},
+ {id:'c',q:"Tes connaissances en placements ?",o:[["Je débute complètement",0],["J'ai compris les bases (ETF, krach, frais)",1],["Je suis à l'aise",2]]},
+ {id:'g',q:"Ton objectif principal pour ton épargne long terme ?",o:[["Ne jamais perdre d'argent",0],["Un compromis rendement / sécurité",1],["Le maximum sur le long terme, j'accepte les secousses",3]]}
+];
+let rAns={};
+function riskProfile(score){
+  if(score<=6) return{n:'Prudent',a:40,f:45,l:15,c:'var(--good)',d:"Tu privilégies la tranquillité. Moins de rendement, mais des secousses plus faibles."};
+  if(score<=12) return{n:'Équilibré',a:70,f:25,l:5,c:'var(--gain)',d:"Un bon compromis : la bourse fait le travail sur le long terme, le fonds euros amortit les chocs."};
+  return{n:'Dynamique',a:90,f:10,l:0,c:'var(--accent)',d:"Tu as le temps et les nerfs : la bourse peut faire l'essentiel du travail pour ta retraite."};
+}
+function renderAdvisor(){
+  const box=$('advisor');
+  if(S.risk&&!advisorEditing){
+    const P=riskProfile(S.risk.score), mat=totals().secu>=(S.profil.depenses||0)*3;
+    box.innerHTML=`<div class="card"><div class="eyebrow">Ton profil</div><div class="bigv" style="color:${P.c}">${P.n}</div><p>${P.d}</p>
+      <div class="alloc" aria-hidden="true"><i style="width:${P.a}%;background:var(--accent)"></i><i style="width:${P.f}%;background:var(--gain)"></i><i style="width:${P.l}%;background:var(--good)"></i></div>
+      <div class="legend"><span style="--c:var(--accent)">ETF monde ${P.a} %</span><span style="--c:var(--gain)">Fonds euros ${P.f} %</span>${P.l?`<span style="--c:var(--good)">Livrets ${P.l} %</span>`:''}</div>
+      <p class="small muted">Cette répartition concerne ton argent <strong>à long terme</strong> (retraite). Ton matelas de sécurité et l'argent de tes projets restent à part, sans risque.</p></div>
+      <div class="card"><h3>Concrètement, chaque mois</h3>
+      <p class="small">Sur l'argent que tu destines au long terme :</p><ul class="small"><li><strong>${P.a} %</strong> en achat programmé d'ETF monde sur ton PEA.</li>${P.f?`<li><strong>${P.f} %</strong> sur le fonds euros de ton assurance vie.</li>`:''}${P.l?`<li><strong>${P.l} %</strong> sur ton livret.</li>`:''}</ul>
+      <p class="small">Rendement moyen attendu : environ <strong>${pct(Math.round((P.a*7+P.f*2.5+P.l*2)/10)/10)}</strong> par an. Pire année possible : environ <strong class="neg">−${Math.round(P.a*0.4)} %</strong>.</p>
+      ${mat?'':'<p class="small"><strong>Mais d\'abord :</strong> termine ton matelas de sécurité (3 mois de dépenses). Tant qu\'il n\'est pas complet, la priorité va au livret.</p>'}
+      <div class="btns"><button type="button" id="advApply">Appliquer au simulateur</button><button type="button" class="ghost" id="advRedo">Refaire le test</button></div></div>
+      <div class="card tint small">Ton profil peut changer : refais le test une fois par an, ou après un krach (c'est là qu'on découvre vraiment sa tolérance). Ce test est un repère pédagogique, pas un conseil réglementé.</div>`;
+    $('advApply').addEventListener('click',()=>{$('aAct').value=P.a;$('aFe').value=P.f;const r=repart();$('rdt').value=Math.round(r*2)/2;update();location.hash='simuler';showPane('simuler','repart');toast('Profil '+P.n+' appliqué');});
+    $('advRedo').addEventListener('click',()=>{advisorEditing=true;rAns={...(S.risk.ans||{})};renderAdvisor();});
+    return;
+  }
+  box.innerHTML=`<div class="card"><div class="eyebrow">Ton conseiller</div><h3 style="margin:4px 0 6px">Quel investisseur es-tu ?</h3><p class="small muted">7 questions, 1 minute. Il n'y a pas de bonne réponse : réponds honnêtement, c'est ce qui te protège de mauvaises décisions plus tard.</p></div>`+
+    RQ.map((q,i)=>`<div class="card qa"><div class="qq">${i+1}. ${q.q}</div><div class="opts">${q.o.map(([t,v],j)=>`<button type="button" data-q="${q.id}" data-j="${j}" aria-pressed="${rAns[q.id]===j}">${t}</button>`).join('')}</div></div>`).join('')+
+    `<button type="button" id="advGo">Voir mon profil</button><p class="small muted" id="advMiss" style="text-align:center"></p>`;
+  box.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{rAns[b.dataset.q]=+b.dataset.j;box.querySelectorAll(`button[data-q="${b.dataset.q}"]`).forEach(x=>x.setAttribute('aria-pressed',x===b));}));
+  $('advGo').addEventListener('click',()=>{const miss=RQ.filter(q=>rAns[q.id]===undefined).length;if(miss){$('advMiss').textContent=`Il reste ${miss} question${miss>1?'s':''}.`;return;}
+    const score=RQ.reduce((x,q)=>x+q.o[rAns[q.id]][1],0);S.risk={score,date:Date.now(),ans:{...rAns}};S.done.profil=true;advisorEditing=false;persist();renderTasks();renderAdvisor();renderCoach();window.scrollTo(0,0);toast('Profil enregistré ✔');});
+}
+let advisorEditing=false;
+
+/* ================= COACH ================= */
+function monthlyPlan(){
+  const C=capa(),T=totals(),dep=S.profil.depenses||0,goal=dep*3,out=[];let rest=C;
+  const gap=Math.max(0,goal-T.secu);
+  if(gap>0&&rest>0){const m=Math.min(rest,gap,Math.max(Math.round(C*0.5/10)*10,Math.ceil(gap/12/10)*10));out.push({n:'Matelas de sécurité',w:'LEP, puis Livret A',v:m});rest-=m;}
+  const needs=S.projets.map(p=>({p,c:projCalc(p)})).filter(x=>x.c.rest>0);
+  const tot=needs.reduce((x,y)=>x+y.c.need,0);
+  if(tot>0&&rest>0){const k=Math.min(1,rest/tot);needs.forEach(({p,c})=>{const v=Math.round(c.need*k);if(v>0){out.push({n:p.n,w:c.n<24?'Livret A':'Livret ou fonds euros',v});rest-=v;}});}
+  if(rest>0){const P=S.risk?riskProfile(S.risk.score):null;out.push({n:'Retraite (long terme)',w:P?`PEA ETF monde ${P.a} %${P.f?` · fonds euros ${P.f} %`:''}`:'PEA, achat programmé d\'ETF monde',v:rest});rest=0;}
+  return{C,out,short:tot>0&&C-(gap>0?out[0].v:0)<tot};
+}
+function renderMonthPlan(){
+  const M=monthlyPlan(),box=$('monthPlan'),paie={fin:'fin de mois',debut:'début de mois',milieu:'milieu de mois'}[S.profil.paie];
+  if(!M.C){box.innerHTML=`<h3>Ma répartition du mois</h3><p class="small muted">Indique ton salaire ou ta capacité d'épargne dans « Mon argent → Budget & LEP ».</p>`;return;}
+  box.innerHTML=`<h3>Ma répartition à chaque paie</h3><p class="small muted">Ta paie de ${paie} : programme ces virements automatiques le lendemain.</p><div class="mp">`+
+    M.out.map(o=>`<div class="row"><span>${esc(o.n)}<small>${esc(o.w)}</small></span><b>${eur(o.v)}</b></div>`).join('')+`</div>`+
+    `<p class="small muted" style="margin-top:8px">Total : ${eur(M.C)} par mois. ${M.short?'Tes projets ne sont pas entièrement couverts : voir l\'onglet Projets.':''} <a href="#argent" data-go="argent:budget">Modifier</a></p>`;
+}
+const LV={u:['Urgent','var(--warn)','⚠️'],a:['À faire','var(--accent)','✅'],c:['Conseil','var(--gain)','💡'],i:['Info','var(--muted)','ℹ️']};
+function coachTips(){
+  const T=totals(),d=new Date(),day=d.getDate(),mo=d.getMonth()+1,dep=S.profil.depenses||0,goal=dep*3,P=S.profil,tips=[];
+  const ym=d.getFullYear()+'-'+String(mo).padStart(2,'0'),H=S.historique,last=H[H.length-1];
+  const add=(lv,t,p,go,gt,pr)=>tips.push({lv,t,p,go,gt,pr:pr??({u:0,a:1,c:2,i:3})[lv]});
+  // paie
+  const payWin=P.paie==='fin'?(day>=25):P.paie==='debut'?(day<=5):(day>=10&&day<=15);
+  const afterPay=P.paie==='fin'?(day<=7):P.paie==='debut'?(day>=6&&day<=12):(day>=16&&day<=22);
+  if(T.courant<0) add('u','Ton compte courant est à découvert',`Il est à ${eur(T.courant)}. Avant toute épargne, reviens au positif : les agios coûtent bien plus que ce que rapporte un placement.`,'argent:comptes','Voir mes comptes',-1);
+  if(!S.accounts.some(a=>a.solde)) add('a','Renseigne tes comptes',`Mets le solde de ton compte courant, de tes livrets et placements. Le coach s'adaptera à tes vrais chiffres.`,'argent:comptes','Mettre à jour mes soldes');
+  if(payWin) add('a','Ta paie arrive : prépare tes virements',`Dès qu'elle tombe, répartis ${eur(capa())} comme indiqué dans « Ma répartition à chaque paie » ci-dessous. Fais-le en premier, avant les dépenses.`,null,null,0.5);
+  if(afterPay) add('a','Vérifie que ton achat programmé est passé',`Ouvre l'appli de ton courtier : l'achat d'ETF du mois doit apparaître. S'il manque, vérifie que le virement vers le PEA est bien arrivé.`);
+  if(S.accounts.some(a=>a.solde)&&(!last||last.m!==ym)&&(afterPay||day>=8)) add('a','Enregistre ton relevé du mois',`Mets à jour tes soldes puis appuie sur « Enregistrer le relevé de ce mois » pour suivre ta progression.`,'argent:comptes','Faire mon relevé');
+  if(!S.risk) add('a','Découvre ton profil d\'investisseur',`7 questions pour savoir comment répartir ton argent long terme entre bourse et sécurité.`,'plan:conseil','Faire le test',1.2);
+  if(P.pee==='inconnu') add('a','Demande aux RH s\'il y a un abondement',`Si ton entreprise ajoute de l'argent à tes versements (PEE/PERCOL), c'est le meilleur placement possible. Le modèle d'e-mail est dans Plan → Étapes.`,'plan:etapes','Voir les questions à poser',1.3);
+  if(P.pee==='abond') add('c','Touche tout l\'abondement',`Verse au moins ce qu'il faut sur ton PEE/PERCOL pour recevoir le maximum offert par ton employeur. C'est 50 à 100 % de rendement immédiat.`);
+  // matelas
+  if(dep&&T.secu<goal&&T.courant>=0) add('c',`Matelas : il manque ${eur(goal-T.secu)}`,`Priorité à ton LEP puis Livret A jusqu'à ${eur(goal)} (3 mois de dépenses). Ensuite, l'essentiel ira vers tes projets et ta retraite.`,'argent:comptes','Voir mon matelas');
+  if(dep&&T.secu>=dep*6&&T.mInv===0) add('c','Ton matelas est complet : passe au long terme',`Tu as plus de 6 mois de dépenses de côté. Ouvre ton PEA et programme un achat mensuel d'ETF monde.`,'plan:etapes','Voir comment');
+  const surplus=T.courant-Math.max(dep,300)*1.5;
+  if(dep&&surplus>100) add('c',`Déplace ${eur(Math.floor(surplus/50)*50)} vers ton livret`,`C'est ce qui dort sur ton compte courant au-delà d'un mois et demi de dépenses. Sur un livret, ça rapporte sans risque et ça reste disponible.`,'argent:comptes','Voir mes comptes');
+  const lepA=S.accounts.find(a=>a.id==='lep');if(lepA&&lepA.solde>=10000) add('i','LEP plein',`Le LEP est plafonné à 10 000 € de versements. Dirige tes versements vers le Livret A ou ton PEA.`);
+  const la=S.accounts.find(a=>a.id==='livretA');if(la&&la.solde>=22950) add('i','Livret A plein',`Plafond de 22 950 € atteint. Le surplus peut aller sur un LDDS, une assurance vie (fonds euros) ou ton PEA.`);
+  if(T.autre>0&&T.epargne>0&&T.autre/T.epargne>0.1) add('c','Beaucoup de placements risqués',`${Math.round(T.autre/T.epargne*100)} % de ton épargne est sur des placements très risqués. Garde cette part sous 5 à 10 %.`,'argent:comptes','Voir mes comptes');
+  // projets
+  S.projets.forEach(p=>{const c=projCalc(p);if(c.rest>0&&c.n<=6) add('c',`${p.n} : J−${c.n} mois`,`Il reste ${eur(c.rest)} à réunir, soit ${eur(c.need)} par mois. Cet argent doit rester sur un livret, jamais en bourse.`,'argent:projets','Voir le projet',1.8);});
+  const M=monthlyPlan();if(M.short) add('c','Tes projets dépassent ta capacité d\'épargne',`Repousse une date, baisse un montant, ou augmente ton épargne mensuelle si ton budget le permet.`,'argent:projets','Ajuster mes projets');
+  // marché (données de l'onglet Actu)
+  const drop=(ACTU.news||[]).find(n=>n.c==='warn'&&/[−-]\s?\d/.test(n.v));
+  if(drop) add('i','Les marchés ont baissé récemment',`${drop.l} : ${drop.v}. Ne vends rien et garde tes achats programmés : tu achètes moins cher. Mais l'argent de tes projets à court terme ne doit pas être en bourse.`,'plus:actu','Lire l\'actu');
+  const infl=(ACTU.kpis||[]).find(k=>/inflation/i.test(k.l)),livA=(ACTU.kpis||[]).find(k=>/livret a/i.test(k.l));
+  if(infl&&livA&&parseFloat(infl.v.replace(',','.'))>parseFloat(livA.v.replace(',','.'))) add('i','L\'inflation dépasse le Livret A',`Inflation ${infl.v}, Livret A ${livA.v} : ton argent sur livret perd un peu de pouvoir d'achat. Garde-y seulement ton matelas et tes projets proches.`);
+  // calendrier
+  if(mo===11||mo===12) add('i','Fin d\'année',`Rien d'urgent pour toi avant le 31 décembre (le PER n'a pas d'intérêt tant que tu paies peu d'impôt). Si tu reçois une prime ou de l'argent à Noël : matelas d'abord, puis projets, puis PEA.`);
+  if(mo===1) add('a','Nouvelle année : ton bilan annuel',`Augmente ton versement si ton salaire a monté, refais le test de profil si besoin, et vérifie tes projets.`,'plan:etapes','Voir mon plan');
+  if(mo===1&&day<=31) add('i','Le 1er février, nouveau taux du Livret A et du LEP',`Il est calculé à partir de l'inflation. Rien à faire, c'est automatique.`);
+  if(mo>=4&&mo<=6) add('a','Déclaration de revenus',`Si tu es encore rattaché à tes parents, faire ta propre déclaration peut te rendre éligible au LEP (2,5 % net). Ton salaire d'apprenti est exonéré jusqu'au niveau du SMIC.`,'argent:budget','Tester mon droit au LEP');
+  if(!S.done.quiz) add('i','Teste tes connaissances',`10 questions pour vérifier que tu maîtrises les bases avant d'investir plus.`,'plus:quiz','Faire le quiz',3.5);
+  return tips.sort((a,b)=>a.pr-b.pr);
+}
+function renderCoach(){
+  const tips=coachTips(),d=new Date();
+  $('coachSub').textContent=`Mis à jour à chaque ouverture · ${d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}`;
+  $('coach').innerHTML=tips.slice(0,6).map(t=>{const[l,c,ic]=LV[t.lv];return`<div class="tip" style="--c:${c}"><div class="ic" aria-hidden="true">${ic}</div><div><div class="lv">${l}</div><div class="tt">${esc(t.t)}</div><p>${esc(t.p)}</p>${t.go?`<a class="go" href="#${t.go.split(':')[0]}" data-go="${t.go}">${esc(t.gt)} →</a>`:''}</div></div>`;}).join('')||'<div class="card green small">Tout est en ordre ce mois-ci. Garde le cap 👍</div>';
+  if(tips.length>6) $('coach').innerHTML+=`<p class="small muted">+ ${tips.length-6} autre${tips.length-6>1?'s':''} conseil${tips.length-6>1?'s':''} une fois ceux-ci réglés.</p>`;
+  renderMonthPlan();
+}
+document.addEventListener('click',e=>{const a=e.target.closest('a[data-go]');if(!a)return;const[v,p]=a.dataset.go.split(':');if(p)setTimeout(()=>showPane(v,p),0);});
+
 /* ================= RENDU GLOBAL ================= */
 function fillInputs(){
+  $('capa').value=S.profil.capa??'';$('capa').placeholder=String(Math.round((S.profil.salaire||0)*0.2/10)*10);$('paie').value=S.profil.paie;$('peeSt').value=S.profil.pee;
   $('sal').value=S.profil.salaire;$('dep').value=S.profil.depenses;$('rfr').value=S.profil.rfr;$('parts').value=S.profil.parts;
   SIMK.forEach(k=>{if(S.sim[k]!==undefined&&$(k))$(k).value=S.sim[k];});
 }
-function renderAll(){fillInputs();renderAccounts();renderMoney();renderHist();budget();lep();renderTasks();update();drawHist();}
-renderAll();renderActu();renderQuiz();gl();repart();immo();route();
+function renderAll(){fillInputs();renderAccounts();renderMoney();renderHist();budget();lep();renderTasks();update();drawHist();renderProjets();renderAdvisor();renderCoach();}
+renderActu();renderAll();renderQuiz();gl();repart();immo();route();
 window.addEventListener('resize',refreshCanvases);
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',refreshCanvases);}catch(e){}
 new MutationObserver(refreshCanvases).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
