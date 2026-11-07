@@ -16,9 +16,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+/* v4 : refonte. Cartes plus douces, héros dégradé, onglet central Conseiller, menu Plus en tuiles. */
 /* Appli mobile : en-tête collant, 5 onglets fixes en bas, sous-onglets segmentés dans chaque vue. Colonne max 560px. */
 :root{
-  --bg:#eef2f1; --surface:#ffffff; --ink:#16232a; --muted:#5b6a70; --line:#dbe2e0;
+  --bg:#f1f4f3; --surface:#ffffff; --shadow:0 1px 2px rgba(16,40,40,.05),0 6px 20px rgba(16,40,40,.06); --ink:#16232a; --muted:#5b6a70; --line:#dbe2e0;
   --accent:#0f6e6a; --accent-soft:#d6ecea; --gain:#c7801a; --gain-soft:#f6e7cf;
   --warn:#a8402b; --warn-soft:#f6dfd8; --good:#2f7d3a; --good-soft:#dcefdf;
   --font-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
@@ -228,12 +229,123 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
 .toast{position:fixed;left:50%;bottom:calc(var(--tabh) + 16px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:.9rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;max-width:90vw;text-align:center}
 .toast.show{opacity:1}
 @media (prefers-reduced-motion: reduce){.progress i,.toast{transition:none}}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.card{border:0;box-shadow:var(--shadow);border-radius:18px}
+.card.tint,.card.amber,.card.red,.card.green{box-shadow:none}
+header.bar h1{display:flex;align-items:center;gap:8px;font-size:1.15rem}
+.logo{width:30px;height:30px;border-radius:9px;background:var(--accent);display:grid;place-items:center}
+.logo svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.hero{display:block;background:linear-gradient(135deg,#0f6e6a 0%,#0b5551 60%,#0a4a47 100%);color:#fff;border-radius:22px;padding:18px 18px 16px;margin:4px 0 14px;box-shadow:0 10px 30px rgba(15,110,106,.25)}
+.hero .hd{font-size:.8rem;opacity:.85;text-transform:capitalize}
+.hero h2{color:#fff;font-size:1.5rem;margin:2px 0 12px}
+.hero .hl{font-size:.78rem;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:.05em}
+.hero .hv{font-family:var(--font-display);font-size:2.4rem;font-variant-numeric:tabular-nums;line-height:1.05}
+.hero .hs{font-size:.86rem;opacity:.9;margin-top:4px}
+.hero .hb{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;margin-top:14px}
+.hbtn{display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:12px;background:#fff;color:#0f6e6a;font-weight:700;text-decoration:none;font-size:.93rem}
+.hbtn.alt{background:rgba(255,255,255,.14);color:#fff}
+.nextc{display:flex;gap:14px;align-items:center}
+.nextc .ring{flex:0 0 76px;height:76px}.nextc .ring svg{width:76px;height:76px}
+a.go{display:inline-block;margin-top:6px;font-weight:700;font-size:.9rem;text-decoration:none;color:var(--accent)}
+.sect{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:20px 0 10px}
+.sect h3{font-size:1.1rem}.sect span{font-size:.78rem;color:var(--muted);text-align:right}
+.tip{border:0;box-shadow:var(--shadow);border-left:5px solid var(--c,var(--accent))}
+.kpi,.res .sm,.grp,.news .n,.rule,.term{border:0;box-shadow:var(--shadow)}
+.grp .gh{background:transparent}
+/* onglets */
+nav.tabs{box-shadow:0 -4px 20px rgba(16,40,40,.06);border-top:0}
+nav.tabs a.center{position:relative}
+nav.tabs a.center .bub{width:52px;height:52px;border-radius:50%;background:var(--accent);display:grid;place-items:center;margin-top:-26px;box-shadow:0 6px 16px rgba(15,110,106,.35);border:4px solid var(--surface)}
+nav.tabs a.center .bub svg{stroke:#fff;width:24px;height:24px}
+nav.tabs a.center[aria-current="page"] .bub{background:#0b5551}
+/* tuiles Plus */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);border-radius:18px;min-height:112px;padding:14px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;gap:10px}
+.tile .ti{width:38px;height:38px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center}
+.tile .ti svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tile b{display:block;font-size:.98rem}.tile small{display:block;color:var(--muted);font-weight:600;font-size:.8rem;line-height:1.3}
+.back{width:auto;min-height:36px;padding:4px 0;background:none;color:var(--accent);font-size:.95rem;margin-bottom:2px}
+/* simulateur */
+.plainbox{background:var(--accent-soft);box-shadow:none}
+.plain{font-size:1.02rem;line-height:1.55;margin:4px 0 0}
+details.adv summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between}
+details.adv summary::-webkit-details-marker{display:none}
+details.adv summary::after{content:"+";font-size:1.3rem;line-height:1;color:var(--accent)}
+details.adv[open] summary::after{content:"−"}
+/* guides */
+details.guide{padding:0;overflow:hidden}
+details.guide summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:14px 16px}
+details.guide summary::-webkit-details-marker{display:none}
+details.guide summary b{display:block}details.guide summary small{display:block;color:var(--muted);font-weight:600;font-size:.82rem}
+.gn{flex:0 0 32px;height:32px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700}
+.gb{padding:0 16px 16px;font-size:.95rem}
+.gb h4{margin:12px 0 4px}
+ol.steps{list-style:none;padding:0;counter-reset:st;margin:8px 0}
+ol.steps>li{counter-increment:st;position:relative;padding:0 0 12px 38px;margin:0}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:grid;place-items:center;font-size:.85rem}
+ol.steps>li>b{display:block}
+.ask{margin-top:12px}
+/* conseiller */
+#v-conseiller.on{display:flex;flex-direction:column;min-height:calc(100dvh - 140px)}
+.chathead{display:flex;align-items:center;gap:10px;margin:4px 0 10px}
+.chathead .av{width:40px;height:40px;border-radius:12px;background:var(--accent);display:grid;place-items:center;flex:0 0 40px}
+.chathead .av svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.chathead>div:nth-child(2){flex:1}.chathead b{display:block}.chathead small{display:block;color:var(--accent);font-size:.8rem;font-weight:700;cursor:pointer;text-decoration:underline}
+#chat{display:flex;flex-direction:column;gap:10px;padding-bottom:6px}
+.msg{max-width:88%;padding:10px 14px;border-radius:18px;font-size:.95rem;line-height:1.5;overflow-wrap:anywhere}
+.msg.u{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:6px;white-space:pre-wrap}
+.msg.a{align-self:flex-start;background:var(--surface);box-shadow:var(--shadow);border-bottom-left-radius:6px}
+.msg.a p{margin:0 0 8px}.msg.a p:last-child{margin:0}.msg.a ul,.msg.a ol{margin:4px 0 8px;padding-left:20px}.msg.a li{margin:3px 0}
+.msg.a h5{font-size:.95rem;margin:8px 0 4px;font-family:var(--font-display)}
+.msg.err{background:var(--warn-soft);box-shadow:none}
+.typing{color:var(--muted);font-style:italic}
+.sugg{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
+.sugg button{flex:0 0 auto;width:auto;min-height:38px;padding:8px 12px;font-size:.86rem;background:var(--surface);color:var(--accent);border:1.5px solid var(--accent-soft);border-radius:999px;font-weight:700;white-space:nowrap}
+.chatform{position:sticky;bottom:calc(var(--tabh) + env(safe-area-inset-bottom) + 8px);display:flex;gap:8px;align-items:flex-end;background:var(--surface);border-radius:22px;padding:6px 6px 6px 14px;box-shadow:0 4px 20px rgba(16,40,40,.12);margin-top:auto}
+.chatform textarea{flex:1;border:0;background:transparent;min-height:40px;max-height:140px;resize:none;font-family:var(--font-body);font-size:16px;padding:9px 0}
+.chatform textarea:focus-visible{outline:none}
+.chatform button{width:42px;min-height:42px;height:42px;border-radius:50%;padding:0;flex:0 0 42px}
+.chatform button svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.chatnote{text-align:center;margin:8px 0 0}
+.hero2{background:linear-gradient(135deg,#0f6e6a,#0a4a47);color:#fff}
+#sitBox textarea{min-height:110px}
+.mission{border-left:5px solid var(--gain)}
+.mtop{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.mtime{font-size:.78rem;font-weight:700;color:var(--muted)}
+.mission textarea{min-height:150px;font-size:13px}
+.linkbtn{background:none;color:var(--muted);font-weight:600;font-size:.86rem;min-height:36px;text-decoration:underline;margin-top:6px}
+.bstrip{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.bdg{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--line);flex:0 0 34px}
+.bdg svg{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bdg.on{background:linear-gradient(135deg,#e2a54a,#c7801a)}
+.bdg.on svg{stroke:#fff}
+.bcard{display:flex;gap:12px;align-items:center;background:var(--surface);box-shadow:var(--shadow);border-radius:16px;padding:12px 14px;margin-bottom:8px;opacity:.75}
+.bcard.on{opacity:1}
+.bcard .bdg{width:44px;height:44px;flex:0 0 44px}.bcard .bdg svg{width:22px;height:22px}
+.bcard>div{flex:1}.bcard b{display:block}.bcard small{display:block;color:var(--muted);font-size:.82rem}
+.ph{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.ph b{display:block;font-size:1.02rem}.ph small{color:var(--muted);font-size:.8rem}
+.pos-card .del,.buy .del{width:36px;min-height:36px;padding:0;background:var(--warn-soft);color:var(--warn);flex:0 0 36px}
+.buy .del.sm{width:30px;min-height:30px;flex:0 0 30px}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.pgrid small{display:block;color:var(--muted);font-size:.76rem;font-weight:700}
+.pgrid b{font-family:var(--font-display);font-size:1.15rem;font-variant-numeric:tabular-nums}
+details.buys{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+details.buys summary{cursor:pointer;font-weight:700;color:var(--accent);font-size:.92rem}
+.buy{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.9rem;font-variant-numeric:tabular-nums}
+.buy:last-child{border-bottom:0}
+.buy>span:first-child{flex:1}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.three label{font-size:.74rem;color:var(--muted);font-weight:700;display:block;margin-bottom:2px}
+.three input{min-height:42px;padding:8px}
+label.btn{cursor:pointer}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="bar">
-  <h1>Mon Plan Retraite</h1>
+  <h1><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17l4-4 3 3 6-7"/><circle cx="18" cy="9" r="1.6"/></svg></span>Mon Plan Retraite</h1>
   <span class="pill ok" id="sync">Sur ce téléphone</span>
 </header>
 <main>
@@ -241,29 +353,29 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
 <!-- ================= ACCUEIL ================= -->
 <section class="view" id="v-accueil">
   <div class="card tint" id="install" hidden><h3>Installe l'appli</h3><p class="small">Dans Safari, touche <strong>Partager</strong> (carré avec flèche) puis <strong>« Sur l'écran d'accueil »</strong>. Tu auras l'icône Plan Retraite, en plein écran et hors ligne.</p></div>
-  <h2>Bonjour 👋</h2>
-  <p class="lead">Ton tableau de bord. Mets tes vrais chiffres dans « Mon argent », coche tes étapes dans « Plan ».</p>
-  <div class="card">
-    <div class="hero">
-      <div class="ring" aria-hidden="true"><svg viewBox="0 0 88 88"><circle cx="44" cy="44" r="36" stroke="var(--line)" stroke-width="10" fill="none"/><circle id="ringArc" cx="44" cy="44" r="36" stroke="var(--accent)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="226.2" stroke-dashoffset="226.2"/></svg><div class="t" id="ringTxt">0 %</div></div>
-      <div><div class="eyebrow">Prochaine étape</div><div id="nextT" style="font-weight:700;font-size:1.05rem"></div><div id="nextD" class="small muted"></div></div>
-    </div>
-    <div style="margin-top:12px"><a class="btn" href="#plan">Voir mon plan</a></div>
+  <div class="hero">
+    <div class="hd"><span id="heroDate"></span></div>
+    <h2>Bonjour Hugo</h2>
+    <div class="hl">Mon patrimoine</div>
+    <div class="hv" id="homeTotal">0 €</div>
+    <div class="hs" id="homeSplit"></div>
+    <div class="hb"><a href="#conseiller" class="hbtn">Parler à mon conseiller</a><a href="#argent" class="hbtn alt">Mes comptes</a></div>
   </div>
-  <h3 style="margin:16px 0 8px">Mes conseils du moment</h3>
-  <p class="small muted" style="margin:-4px 0 10px" id="coachSub"></p>
+  <div class="card mission" id="mission" hidden></div>
+  <div class="card nextc">
+    <div class="ring" aria-hidden="true"><svg viewBox="0 0 88 88"><circle cx="44" cy="44" r="36" stroke="var(--line)" stroke-width="10" fill="none"/><circle id="ringArc" cx="44" cy="44" r="36" stroke="var(--accent)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="226.2" stroke-dashoffset="226.2"/></svg><div class="t" id="ringTxt">0 %</div></div>
+    <div><div class="eyebrow">Prochaine étape</div><div id="nextT" style="font-weight:700;font-size:1.05rem"></div><div id="nextD" class="small muted"></div><a class="go" href="#plus" data-go="plus:etapes">Voir mon plan →</a></div>
+  </div>
+  <div class="sect"><h3>Mes conseils du moment</h3><span id="coachSub"></span></div>
   <div id="coach"></div>
   <div class="card" id="monthPlan"></div>
   <div class="card">
-    <div class="eyebrow">Mon patrimoine</div>
-    <div class="bigv" id="homeTotal">0 €</div>
-    <p class="small muted" id="homeSplit"></p>
-    <div class="small" style="font-weight:700;margin-top:8px">Matelas de sécurité</div>
+    <h3>Matelas de sécurité</h3>
     <div class="progress gain"><i id="homeMat" style="width:0"></i></div>
     <p class="small muted" id="homeMatTxt" style="margin:0"></p>
-    <div style="margin-top:12px"><a class="btn ghost" href="#argent">Mettre à jour mes comptes</a></div>
   </div>
-  <h3 style="margin:16px 0 8px">Les chiffres du moment</h3>
+  <div id="badgeStrip"></div>
+  <div class="sect"><h3>Les chiffres du moment</h3></div>
   <div class="kpis" id="kpis"></div>
   <div class="card amber"><h3>Le rappel du jour</h3><p id="tip"></p></div>
 </section>
@@ -273,8 +385,10 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
   <h2>Mon argent</h2>
   <div class="seg" role="group" aria-label="Sections">
     <button type="button" data-seg="argent" data-p="comptes" aria-pressed="true">Mes comptes</button>
+    <button type="button" data-seg="argent" data-p="placements" aria-pressed="false">Placements</button>
     <button type="button" data-seg="argent" data-p="suivi" aria-pressed="false">Suivi</button>
     <button type="button" data-seg="argent" data-p="projets" aria-pressed="false">Projets</button>
+    <button type="button" data-seg="argent" data-p="depenses" aria-pressed="false">Dépenses</button>
     <button type="button" data-seg="argent" data-p="budget" aria-pressed="false">Budget &amp; LEP</button>
   </div>
 
@@ -339,6 +453,33 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
     <button type="button" class="ghost" id="projAdd">+ Ajouter un projet</button>
   </div>
 
+  <div class="pane" data-pane="argent:placements">
+    <div class="card" id="posTot"></div>
+    <div id="posList"></div>
+    <button type="button" class="ghost" id="posAdd">+ Ajouter un ETF</button>
+    <div class="card" id="posForm" hidden style="margin-top:12px">
+      <h3>Nouvel ETF</h3>
+      <div class="field" style="margin-top:8px"><label for="posNom">Nom de l'ETF</label><input type="text" id="posNom" maxlength="60" placeholder="ex. ETF MSCI World PEA"></div>
+      <div class="row2"><div class="field"><label for="posIsin">Code ISIN (facultatif)</label><input type="text" id="posIsin" maxlength="12" placeholder="12 caractères" autocapitalize="characters"></div><div class="field"><label for="posCompte">Sur quel compte</label><select id="posCompte"></select></div></div>
+      <button type="button" id="posGo">Ajouter</button>
+    </div>
+    <p class="small muted" style="margin-top:10px">Recopie le cours affiché dans l'appli de ton courtier quand tu fais ton relevé. Dans la version Claude de l'appli, le cours de tes ETF (avec leur ISIN) est aussi mis à jour chaque mois automatiquement.</p>
+  </div>
+
+  <div class="pane" data-pane="argent:depenses">
+    <div class="card">
+      <h3>Analyser mon relevé bancaire</h3>
+      <p class="small">L'appli classe tes dépenses, repère tes abonnements et tes frais, et te montre où épargner plus. <strong>Ton fichier est lu uniquement sur ton téléphone</strong> : seul le résumé est gardé.</p>
+      <ol class="small"><li>Sur ordinateur, connecte-toi au site de la Société Générale et ouvre ton compte courant.</li><li>Utilise l'option de téléchargement ou d'export des opérations (format <strong>CSV</strong> ou Excel), sur 2 à 3 mois. L'intitulé exact peut varier selon la version du site.</li><li>Envoie-toi le fichier (mail, AirDrop, iCloud) puis choisis-le ci-dessous.</li></ol>
+      <label class="btn" for="anaFile" style="margin-top:8px">Choisir mon fichier de relevé</label>
+      <input type="file" id="anaFile" accept=".csv,.txt,text/csv,text/plain" class="sr">
+      <div id="anaImgWrap" hidden style="margin-top:8px"><label class="btn ghost" for="anaImg">Ou analyser une capture d'écran (avec Claude)</label><input type="file" id="anaImg" accept="image/*" class="sr"><p class="small muted" style="margin:4px 0 0">La capture est envoyée à Claude pour être lue. Masque ton numéro de compte avant.</p></div>
+      <p class="small" id="anaMsg"></p>
+    </div>
+    <div id="anaOut"></div>
+    <button type="button" class="linkbtn" id="anaClear">Effacer l'analyse</button>
+  </div>
+
   <div class="pane" data-pane="argent:budget">
     <div class="card">
       <h3>Mon budget en 30 secondes</h3>
@@ -359,6 +500,9 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
       <h3>Mes réglages</h3>
       <div class="field" style="margin-top:8px"><label for="capa">Ce que je peux épargner chaque mois (€)</label><input type="number" id="capa" inputmode="numeric" min="0" step="10"><small>Utilisé pour te proposer la répartition de chaque paie.</small></div>
       <div class="field"><label for="paie">Ma paie arrive</label><select id="paie"><option value="fin">En fin de mois (25 au 31)</option><option value="debut">En début de mois (1er au 5)</option><option value="milieu">En milieu de mois (10 au 15)</option></select></div>
+      <div class="field"><label for="jour">Jour de ma paie</label><input type="number" id="jour" inputmode="numeric" min="1" max="31" step="1"><small>Le rappel arrive la veille au soir.</small></div>
+      <button type="button" class="ghost" id="icsBtn" style="margin-bottom:12px">Ajouter le rappel à mon calendrier</button>
+      <label class="switch" for="debutant">Afficher le parcours « Je débute » <input type="checkbox" id="debutant"></label>
       <div class="field"><label for="peeSt">Épargne salariale de mon entreprise</label><select id="peeSt"><option value="inconnu">Je ne sais pas encore</option><option value="abond">Oui, avec abondement</option><option value="sans">Oui, sans abondement</option><option value="non">Non</option></select></div>
     </div>
     <div class="card">
@@ -370,6 +514,37 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
       </div>
       <div class="verdict" id="lepV" hidden></div>
     </div>
+  </div>
+</section>
+
+<!-- ================= CONSEILLER ================= -->
+<section class="view" id="v-conseiller">
+  <div id="chatWrap" hidden>
+    <div class="chathead"><div class="av" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg></div><div><b>Ton conseiller</b><small id="chatSit">Je connais ta situation dans l'appli</small></div><button type="button" class="sm ghost" id="chatNew">Nouvelle discussion</button></div>
+    <div id="chat" aria-live="polite"></div>
+    <div class="sugg" id="sugg"></div>
+    <form id="chatForm" class="chatform" autocomplete="off"><label for="chatIn" class="sr">Ta question</label><textarea id="chatIn" rows="1" placeholder="Pose ta question…" maxlength="1500"></textarea><button type="submit" id="chatSend" aria-label="Envoyer"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+    <p class="small muted chatnote">Conseiller pédagogique basé sur Claude : il explique et t'aide à décider, mais ne remplace pas un conseiller financier agréé. Il ne voit pas les cours de bourse en direct.</p>
+  </div>
+  <div id="chatOff">
+    <h2>Ton conseiller</h2>
+    <div class="card hero2">
+      <p style="margin:0 0 6px;font-weight:700;font-size:1.05rem">Pose tes questions à un vrai conseiller IA</p>
+      <p class="small" style="margin:0">« Comment j'achète mon premier ETF ? », « J'ai reçu une prime, j'en fais quoi ? », « Je ne comprends pas le simulateur »… Il connaît ta situation et t'explique quoi faire, étape par étape.</p>
+    </div>
+    <div class="card">
+      <h3>Comment ça marche</h3>
+      <ol class="small"><li>Touche le bouton ci-dessous : tes chiffres sont copiés et la version Claude de ton appli s'ouvre (connecte-toi à claude.ai si besoin).</li><li>Dans le conseiller, touche <strong>« Mettre à jour ma situation »</strong> et colle (appui long → Coller).</li><li>Pose tes questions. La discussion reste enregistrée.</li></ol>
+      <button type="button" id="openAdvisor">Ouvrir mon conseiller</button>
+      <p class="small muted" style="margin-top:8px" id="openAdvisorNote"></p>
+    </div>
+    <div class="card tint small">En attendant, les réponses aux questions les plus fréquentes sont dans <a href="#plus" data-go="plus:guides">Plus → Guides pas à pas</a>.</div>
+  </div>
+  <div class="card" id="sitBox" hidden>
+    <h3>Mettre à jour ma situation</h3>
+    <p class="small muted">Colle ici les données copiées depuis l'appli de ton iPhone (Mon argent → Suivi → Copier mes données, ou le bouton « Ouvrir mon conseiller »).</p>
+    <textarea id="sitTxt" aria-label="Données de l'appli"></textarea>
+    <div class="btns" style="margin-top:8px"><button type="button" id="sitGo">Mettre à jour</button><button type="button" class="ghost" id="sitCancel">Annuler</button></div>
   </div>
 </section>
 
@@ -385,44 +560,52 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
 
   <!-- Épargne -->
   <div class="pane on" data-pane="simuler:epargne">
-    <button type="button" class="ghost" id="useReal" style="margin-bottom:12px">Partir de mes vrais comptes</button>
-    <div class="chips" role="group" aria-label="Mode"><button type="button" id="mProj" aria-pressed="true">Combien j'aurai ?</button><button type="button" id="mGoal" aria-pressed="false">Combien verser ?</button></div>
-    <div id="goalBox" hidden class="card tint">
-      <div class="field" style="margin-bottom:8px"><label for="goal">Revenu en plus voulu à la retraite <output id="goalO"></output></label><input type="range" id="goal" min="100" max="3000" step="50" value="800"></div>
-      <p style="margin:0">Il te faut verser environ <strong id="needM" style="font-size:1.3rem">–</strong> par mois dès maintenant <span class="small muted">(euros d'aujourd'hui)</span>.</p>
+    <div class="card plainbox">
+      <div class="eyebrow">En clair</div>
+      <p id="plain" class="plain"></p>
+      <a class="go" href="#plus" data-go="plus:guides" data-guide="g3">Comment lire ce simulateur ? →</a>
+    </div>
+    <div class="card">
+      <div class="field"><label for="mens">Combien je mets de côté chaque mois</label><input type="number" id="mens" inputmode="numeric" min="0" step="10" value="100"></div>
+      <div class="field"><label for="ret">Jusqu'à quel âge <output id="retO"></output></label><input type="range" id="ret" min="40" max="70" value="64"></div>
+      <div class="field" style="margin-bottom:4px"><label for="rdt">Comment c'est placé <output id="rdtO"></output></label>
+        <div class="chips" role="group" aria-label="Profils" id="rchips"><button type="button" data-r="2">Livret 2 %</button><button type="button" data-r="5">Équilibré 5 %</button><button type="button" data-r="7">ETF monde 7 %</button></div>
+        <small id="rdtHelp">Le pourcentage est ce que l'argent rapporte en moyenne chaque année, sur très longue durée.</small>
+      </div>
+      <button type="button" class="ghost" id="useReal" style="margin-top:12px">Partir de mes vrais comptes</button>
     </div>
     <div class="res">
-      <div class="big"><div class="l">Capital à <span id="tAge">64</span> ans (euros d'aujourd'hui)</div><div class="v" id="vFinal">–</div><div class="l" id="vFinalN"></div></div>
+      <div class="big"><div class="l">Capital à <span id="tAge">64</span> ans</div><div class="v" id="vFinal">–</div><div class="l" id="vFinalN"></div></div>
       <div class="sm"><div class="l">Tu auras versé</div><div class="v" id="vVerse">–</div></div>
       <div class="sm"><div class="l">Revenu en plus / mois</div><div class="v" id="vRente">–</div></div>
     </div>
-    <div class="card" style="padding:12px"><div class="legend"><span style="--c:var(--accent)">Versé</span><span style="--c:var(--gain)">Gains</span></div><canvas id="c" role="img" aria-label="Évolution du capital"></canvas></div>
+    <div class="card" style="padding:12px"><div class="legend"><span style="--c:var(--accent)">Ce que tu as versé</span><span style="--c:var(--gain)">Ce que ça a rapporté</span></div><canvas id="c" role="img" aria-label="Évolution du capital"></canvas></div>
     <div class="card amber small" id="wait"></div>
     <div class="card red small" id="crashMsg" hidden></div>
-    <div class="card">
-      <div class="row2">
-        <div class="field"><label for="mens">Versement / mois</label><input type="number" id="mens" inputmode="numeric" min="0" step="10" value="100"></div>
+    <div class="chips" role="group" aria-label="Mode" style="margin-bottom:10px"><button type="button" id="mProj" aria-pressed="true">Combien j'aurai ?</button><button type="button" id="mGoal" aria-pressed="false">Combien je dois verser ?</button></div>
+    <div id="goalBox" hidden class="card tint">
+      <div class="field" style="margin-bottom:8px"><label for="goal">Revenu en plus voulu à la retraite <output id="goalO"></output></label><input type="range" id="goal" min="100" max="3000" step="50" value="800"></div>
+      <p style="margin:0">Il te faut verser environ <strong id="needM" style="font-size:1.3rem">–</strong> par mois dès maintenant.</p>
+    </div>
+    <details class="card adv">
+      <summary>Réglages avancés</summary>
+      <div class="row2" style="margin-top:12px">
+        <div class="field"><label for="age">Mon âge <output id="ageO"></output></label><input type="range" id="age" min="16" max="60" value="20"></div>
         <div class="field"><label for="init">Déjà placé (€)</label><input type="number" id="init" inputmode="numeric" min="0" step="100" value="0"></div>
       </div>
+      <div class="field"><label for="rdt">Rendement précis <output id="rdtO2"></output></label><input type="range" id="rdt" min="0" max="10" step="0.5" value="7" aria-label="Rendement par an"></div>
       <div class="row2">
-        <div class="field"><label for="age">Âge <output id="ageO"></output></label><input type="range" id="age" min="16" max="60" value="20"></div>
-        <div class="field"><label for="ret">Jusqu'à <output id="retO"></output></label><input type="range" id="ret" min="40" max="70" value="64"></div>
+        <div class="field"><label for="frais">Frais / an <output id="fraisO"></output></label><input type="range" id="frais" min="0" max="3" step="0.1" value="0.3"></div>
+        <div class="field"><label for="hausse">Hausse du versement / an <output id="hausseO"></output></label><input type="range" id="hausse" min="0" max="5" step="0.5" value="2"></div>
       </div>
-      <div class="field"><label for="rdt">Rendement / an <output id="rdtO"></output></label>
-        <div class="chips" role="group" aria-label="Profils" id="rchips"><button type="button" data-r="3">Prudent 3 %</button><button type="button" data-r="5">Équilibré 5 %</button><button type="button" data-r="7">ETF monde 7 %</button></div>
-        <input type="range" id="rdt" min="0" max="10" step="0.5" value="7" aria-label="Rendement par an"></div>
-      <div class="row2">
-        <div class="field"><label for="frais">Frais <output id="fraisO"></output></label><input type="range" id="frais" min="0" max="3" step="0.1" value="0.3"></div>
-        <div class="field"><label for="hausse">Hausse/an <output id="hausseO"></output></label><input type="range" id="hausse" min="0" max="5" step="0.5" value="2"></div>
-      </div>
-      <div class="field"><label for="infl">Inflation moyenne <output id="inflO"></output></label><input type="range" id="infl" min="0" max="5" step="0.5" value="2"></div>
+      <div class="field"><label for="infl">Inflation moyenne <output id="inflO"></output></label><input type="range" id="infl" min="0" max="5" step="0.5" value="2"><small>Les montants sont affichés en euros d'aujourd'hui : l'inflation est déjà retirée.</small></div>
       <label class="switch" for="crash">Simuler un krach <input type="checkbox" id="crash"></label>
       <div id="crashbox" hidden><div class="row2">
         <div class="field"><label for="crashAge">À <output id="crashAgeO"></output></label><input type="range" id="crashAge" min="21" max="63" value="40"></div>
         <div class="field"><label for="crashPct">Chute <output id="crashPctO"></output></label><input type="range" id="crashPct" min="10" max="55" step="5" value="35"></div>
       </div></div>
-      <p class="small muted">Estimation, pas une promesse. Impôts non déduits. 7 % ≈ moyenne historique des actions mondiales, avec des années à −30 %.</p>
-    </div>
+    </details>
+    <p class="small muted">Estimation, pas une promesse. Impôts non déduits.</p>
   </div>
 
   <!-- Répartition -->
@@ -494,25 +677,109 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
 </section>
 
 <!-- ================= PLAN ================= -->
-<section class="view" id="v-plan">
-  <h2>Mon plan</h2>
-  <div class="seg" role="group" aria-label="Plan">
-    <button type="button" data-seg="plan" data-p="etapes" aria-pressed="true">Étapes</button>
-    <button type="button" data-seg="plan" data-p="conseil" aria-pressed="false">Conseiller</button>
-    <button type="button" data-seg="plan" data-p="compar" aria-pressed="false">Comparatif</button>
-    <button type="button" data-seg="plan" data-p="apres" aria-pressed="false">Après l'alternance</button>
-  </div>
-  <div class="pane on" data-pane="plan:etapes">
+<section class="view" id="v-plus">
+  <div id="plusHome"><h2>Plus</h2><p class="lead">Ton plan, tes guides et tout pour comprendre.</p><div class="tiles"><button type="button" class="tile" data-seg="plus" data-p="etapes"><span class="ti"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span><b>Mon plan</b><small>Ta checklist, étape par étape</small></span></button><button type="button" class="tile" data-seg="plus" data-p="conseil"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span><b>Mon profil investisseur</b><small>Le test en 7 questions</small></span></button><button type="button" class="tile" data-seg="plus" data-p="badges"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></span><span><b>Mes badges</b><small>Tes objectifs et récompenses</small></span></button><button type="button" class="tile" data-seg="plus" data-p="guides"><span class="ti"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5zM12 6v14"/></svg></span><span><b>Guides pas à pas</b><small>Acheter un ETF, krach, prime…</small></span></button><button type="button" class="tile" data-seg="plus" data-p="compar"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Comparatif</b><small>Courtiers et assurances vie</small></span></button><button type="button" class="tile" data-seg="plus" data-p="apres"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span><b>Après l'alternance</b><small>Fin d'alternance, 1er CDI</small></span></button><button type="button" class="tile" data-seg="plus" data-p="actu"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v13a1 1 0 0 0 2 0V8M5 4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14M8 8h6M8 12h6M8 16h4"/></svg></span><span><b>Actualité</b><small>Les marchés ce mois-ci</small></span></button><button type="button" class="tile" data-seg="plus" data-p="quiz"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17.5v.01"/></svg></span><span><b>Quiz</b><small>Teste tes bases</small></span></button><button type="button" class="tile" data-seg="plus" data-p="lexique"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M19 19v2H6"/></svg></span><span><b>Lexique</b><small>Tous les mots expliqués</small></span></button></div>
+  <p class="foot">Sources : COR (rapport juin 2026), Insee (inflation oct. 2026), BCE (29 oct. 2026), LFSS 2026, service-public.fr, grilles tarifaires des courtiers (nov. 2026). Outil pédagogique, pas un conseil financier personnalisé.</p></div>
+  <div class="pane" data-pane="plus:etapes">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Mon plan</h2>
+
     <div class="card" style="padding:12px 14px"><div style="display:flex;justify-content:space-between;font-weight:700"><span>Progression</span><span id="progTxt">0/0</span></div><div class="progress"><i id="progBar" style="width:0"></i></div></div>
     <div id="tasks"></div>
     <button type="button" class="ghost" id="reset" style="margin-top:8px">Tout décocher</button>
+  
   </div>
+  <div class="pane" data-pane="plus:conseil">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Mon profil investisseur</h2>
 
-  <div class="pane" data-pane="plan:conseil">
     <div id="advisor"></div>
+  
   </div>
+  <div class="pane" data-pane="plus:guides">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Guides pas à pas</h2>
+    <p class="lead">Les réponses aux questions qu'on se pose vraiment, étape par étape. Une question en plus ? Le conseiller est là.</p>
+    <details class="card guide" id="g1">
+      <summary><span class="gn">1</span><span><b>Acheter mon premier ETF</b><small>Le pas-à-pas complet, de zéro au premier achat</small></span></summary>
+      <div class="gb">
+        <p><strong>Avant de commencer :</strong> ton matelas de sécurité est en place, et tu as un PEA ouvert chez un courtier en ligne (voir Plus → Mon plan, étape 4).</p>
+        <ol class="steps">
+          <li><b>Alimente ton PEA.</b> Dans l'appli de ta banque, fais un virement de ton compte courant vers le RIB de ton PEA (il est dans l'appli du courtier, rubrique « Espèces » ou « Alimenter »). Compte 1 à 3 jours ouvrés.</li>
+          <li><b>Cherche l'ETF.</b> Dans l'appli du courtier, tape « MSCI World » ou « All World » dans la recherche. Plusieurs résultats apparaissent.</li>
+          <li><b>Vérifie la fiche</b> avant de choisir. Coche ces 4 points :
+            <ul><li>« Éligible PEA » est écrit (sinon, il ne peut pas aller dans ton PEA) ;</li><li>« Acc » ou « Capitalisation » dans le nom (les dividendes sont réinvestis tout seuls) ;</li><li>frais courants (TER) sous 0,45 % par an ;</li><li>encours de plusieurs centaines de millions d'euros.</li></ul>
+            Note le code ISIN (12 caractères, ex. commençant par FR, LU ou IE) : c'est la « plaque d'immatriculation » de l'ETF.</li>
+          <li><b>Regarde le prix d'une part.</b> Certains ETF coûtent 5 €, d'autres 500 €. Si ton courtier propose les fractions, tu peux investir un montant en euros (ex. 100 €) sans t'en soucier.</li>
+          <li><b>Option simple, recommandée : l'investissement programmé.</b> Dans la fiche de l'ETF, choisis « Plan d'investissement » ou « Investissement programmé ». Mets ton montant (ex. 100 €), fréquence mensuelle, et une date 2 à 3 jours après ta paie. Valide. C'est tout : l'achat se fera seul chaque mois.</li>
+          <li><b>Option manuelle : passer un ordre.</b> Touche « Acheter », puis remplis :
+            <div class="ordre"><div><b>Type d'ordre</b>À cours limité</div><div><b>Limite</b>Dernier prix + 0,5 %</div><div><b>Quantité</b>Nombre de parts</div><div><b>Validité</b>Jour</div></div>
+            Vérifie le récapitulatif (montant total et frais), puis valide. Fais-le en semaine entre 10 h et 17 h.</li>
+          <li><b>Vérifie que c'est fait.</b> La ligne apparaît dans « Portefeuille » ou « Positions ». C'est normal qu'elle affiche un petit moins au début : ce sont les frais et l'écart entre prix d'achat et de vente.</li>
+          <li><b>Ensuite : ne fais rien.</b> Un coup d'œil par mois pour vérifier que l'achat programmé est passé. Pas plus.</li>
+        </ol>
+        <div class="card red small" style="margin:10px 0 0"><strong>Les pièges à éviter :</strong> un ETF avec « x2 », « Leveraged », « Daily » ou « Short » dans le nom (produits à effet de levier, très risqués) ; acheter sur un compte-titres au lieu du PEA ; un ordre « au marché » à l'ouverture ; vendre dans la panique.</div>
+        <button type="button" class="ghost ask" data-ask="Je veux acheter mon premier ETF. Guide-moi étape par étape selon ma situation.">Me faire guider par le conseiller</button>
+      </div>
+    </details>
+    <details class="card guide" id="g2">
+      <summary><span class="gn">2</span><span><b>Un ETF monde, vraiment une bonne idée ?</b><small>La réponse honnête, avantages et risques</small></span></summary>
+      <div class="gb">
+        <p><strong>En bref :</strong> pour l'argent de ta retraite (dans 40 ans), un ETF monde acheté chaque mois est l'une des méthodes les plus simples et les moins chères pour investir à long terme. Mais ce n'est pas une garantie : c'est un pari raisonnable sur la croissance de l'économie mondiale sur des décennies.</p>
+        <h4>Pourquoi c'est souvent conseillé</h4>
+        <ul><li><strong>Diversifié :</strong> environ 1 300 entreprises dans 23 pays. Si l'une fait faillite, tu ne le sens presque pas.</li><li><strong>Pas cher :</strong> 0,2 à 0,4 % de frais par an, contre 2 à 3 % pour beaucoup de fonds de banque.</li><li><strong>Simple :</strong> pas besoin de choisir des actions ni de suivre la bourse.</li><li><strong>Historique :</strong> sur très longue période, les actions mondiales ont rapporté en moyenne autour de 7 % par an, avec de très mauvaises années au milieu.</li></ul>
+        <h4>Les vrais risques</h4>
+        <ul><li><strong>Ça peut beaucoup baisser :</strong> −30 à −50 % lors des krachs (2008, 2020), et rester bas plusieurs années. Après l'an 2000, certains indices ont mis plus de dix ans à retrouver leur niveau.</li><li><strong>Concentré :</strong> environ 70 % d'entreprises américaines, beaucoup de géants de la tech. Un ETF « All World » ajoute les pays émergents pour diversifier un peu plus.</li><li><strong>Le dollar :</strong> les variations de change jouent, à la hausse comme à la baisse.</li></ul>
+        <h4>Quand ce n'est PAS une bonne idée</h4>
+        <ul><li>Pour l'argent de tes projets à moins de 5 ans (permis, voyage, apport) : il doit rester sur un livret.</li><li>Si ton matelas de sécurité n'est pas fait, ou si tu es à découvert.</li><li>Si tu sais que tu vendrais tout en cas de krach : choisis plutôt un profil plus prudent (Plus → Mon profil investisseur).</li></ul>
+        <h4>Les alternatives</h4>
+        <p>Le fonds euros d'une assurance vie (sans risque, autour de 2,5 à 3,5 % par an), les livrets (sans risque, moins de rendement), ou un mélange des deux avec un ETF selon ton profil.</p>
+        <button type="button" class="ghost ask" data-ask="Est-ce vraiment une bonne idée pour moi d'acheter un ETF monde, vu ma situation et mes projets ? Sois honnête sur les risques.">En parler avec le conseiller</button>
+      </div>
+    </details>
+    <details class="card guide" id="g3">
+      <summary><span class="gn">3</span><span><b>Comprendre le simulateur</b><small>En 2 minutes, sans jargon</small></span></summary>
+      <div class="gb">
+        <p><strong>Ce qu'il fait :</strong> il prend ce que tu mets de côté chaque mois, le fait grandir d'un certain pourcentage chaque année, et additionne tout jusqu'à l'âge choisi.</p>
+        <h4>Les 3 réglages</h4>
+        <ul><li><strong>Combien je mets de côté chaque mois</strong> : ton versement mensuel.</li><li><strong>Jusqu'à quel âge</strong> : quand tu arrêtes d'épargner (ta retraite).</li><li><strong>Comment c'est placé</strong> : Livret 2 % (sans risque), Équilibré 5 % (un mélange), ETF monde 7 % (en moyenne, avec des années négatives).</li></ul>
+        <h4>Les résultats</h4>
+        <ul><li><strong>Capital</strong> : ce que tu auras, exprimé en euros d'aujourd'hui. Avec l'inflation, 100 000 € dans 40 ans n'achèteront pas autant que 100 000 € aujourd'hui : le simulateur corrige ça pour que le chiffre te parle.</li><li><strong>Tu auras versé</strong> : l'argent sorti de ta poche, au total.</li><li><strong>Revenu en plus / mois</strong> : ce que ce capital peut te verser chaque mois à la retraite, en en retirant 4 % par an.</li></ul>
+        <h4>Le graphique</h4>
+        <p>La partie verte, c'est ton argent. La partie orange, c'est ce qu'il a rapporté. Remarque comme l'orange explose à la fin : ce sont les <strong>intérêts composés</strong>. Tes gains rapportent eux-mêmes des gains, et plus c'est long, plus l'effet est fort. C'est pour ça que commencer à 20 ans change tout.</p>
+        <h4>Les boutons utiles</h4>
+        <ul><li><strong>Partir de mes vrais comptes</strong> : reprend ton argent placé à long terme et tes versements.</li><li><strong>Combien je dois verser ?</strong> : tu choisis le revenu voulu à la retraite, il calcule le versement nécessaire.</li><li><strong>Réglages avancés</strong> : frais, inflation, et simuler un krach pour voir que ça remonte si tu continues.</li></ul>
+        <p class="small muted">C'est une estimation, pas une promesse : la vraie vie aura des hauts et des bas.</p>
+        <button type="button" class="ghost ask" data-ask="Explique-moi le simulateur avec mes propres chiffres, simplement.">Le conseiller m'explique avec mes chiffres</button>
+      </div>
+    </details>
+    <details class="card guide" id="g4">
+      <summary><span class="gn">4</span><span><b>La bourse chute : que faire ?</b><small>Le plan à suivre pour ne pas paniquer</small></span></summary>
+      <div class="gb">
+        <ol class="steps"><li><b>Ne vends rien.</b> Une baisse n'est une perte que si tu vends. Les actions mondiales se sont toujours relevées jusqu'ici, parfois en plusieurs années.</li><li><b>Laisse tes achats programmés tourner.</b> Tu achètes des parts moins chères : c'est ce qui accélère la remontée de ton portefeuille.</li><li><b>Arrête de regarder.</b> Supprime les notifications du courtier si besoin. Une fois par mois suffit.</li><li><b>Vérifie ton matelas et tes projets.</b> Si l'argent dont tu as besoin bientôt est sur un livret, tu n'as aucune raison de toucher à la bourse.</li><li><b>Fais le simulateur avec un krach</b> (Simuler → Réglages avancés) pour voir que, sur 40 ans, il ne change pas grand-chose.</li><li><b>Refais le test de profil</b> une fois le calme revenu : c'est là qu'on découvre sa vraie tolérance au risque.</li></ol>
+        <button type="button" class="ghost ask" data-ask="La bourse baisse fort et ça m'inquiète. Qu'est-ce que je dois faire concrètement ?">J'ai peur, j'en parle au conseiller</button>
+      </div>
+    </details>
+    <details class="card guide" id="g5">
+      <summary><span class="gn">5</span><span><b>J'ai reçu une prime ou de l'argent</b><small>Dans quel ordre le répartir</small></span></summary>
+      <div class="gb">
+        <ol class="steps"><li><b>Garde 10 à 20 % pour te faire plaisir.</b> C'est ce qui rend un plan tenable dans le temps.</li><li><b>Découvert ou dette ?</b> Rembourse d'abord.</li><li><b>Complète ton matelas</b> (LEP puis Livret A) jusqu'à 3 mois de dépenses.</li><li><b>Avance tes projets proches</b> (permis, voyage) sur ton livret.</li><li><b>Prime d'intéressement ou de participation ?</b> Place-la sur ton PEE ou PERCOL : elle échappe à l'impôt sur le revenu, et parfois l'entreprise abonde.</li><li><b>Le reste va sur ton PEA</b>, en une fois ou étalé sur quelques mois si ça te rassure.</li></ol>
+        <button type="button" class="ghost ask" data-ask="Je viens de recevoir de l'argent (une prime). Comment le répartir selon ma situation ? Je te donne le montant : ">Calculer ma répartition avec le conseiller</button>
+      </div>
+    </details>
+    <details class="card guide" id="g6">
+      <summary><span class="gn">6</span><span><b>Programmer mes virements automatiques</b><small>Pour épargner sans y penser</small></span></summary>
+      <div class="gb">
+        <ol class="steps"><li><b>Ouvre l'appli de ta banque</b> (par exemple Société Générale) → Virements → <strong>Virement permanent</strong> (ou « programmé »).</li><li><b>Choisis le compte de destination</b> : ton LEP ou Livret A s'ils sont dans la même banque. Pour un PEA chez un autre courtier, ajoute d'abord son RIB comme bénéficiaire (validation par SMS ou appli, parfois 24 à 72 h).</li><li><b>Montant et date</b> : ceux de « Ma répartition à chaque paie » sur l'accueil, le lendemain de ta paie.</li><li><b>Fréquence</b> : mensuelle, sans date de fin.</li><li><b>Côté courtier</b> : programme l'achat d'ETF 2 à 3 jours après ce virement.</li></ol>
+        <button type="button" class="ghost ask" data-ask="Aide-moi à programmer mes virements automatiques depuis la Société Générale vers mon livret et mon PEA, avec les montants adaptés à ma situation.">Le faire avec le conseiller</button>
+      </div>
+    </details>
 
-  <div class="pane" data-pane="plan:compar">
+  </div>
+  <div class="pane" data-pane="plus:compar">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Comparatif</h2>
+
     <span class="asof">Tarifs relevés le 6 novembre 2026</span>
     <p class="lead">Quelques offres souvent citées pour un petit investissement mensuel. Ce n'est ni exhaustif ni une recommandation : les tarifs changent souvent, vérifie toujours la grille officielle avant d'ouvrir.</p>
     <div class="card">
@@ -533,9 +800,12 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
       <div class="broker"><div class="n"><b>Placement-direct Euro+</b><span class="tag">Fonds € 3,60 %</span></div><ul><li>Fonds euros parmi les meilleurs en 2025, accessible sans obligation d'unités de compte.</li></ul></div>
     </div>
     <div class="card amber small"><strong>À éviter :</strong> contrats et PEA de banque traditionnelle avec frais sur versement (jusqu'à 3–5 %), droits de garde, et gestion pilotée à plus de 1,5 %/an pour un petit montant.</div>
+  
   </div>
+  <div class="pane" data-pane="plus:apres">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Après l'alternance</h2>
 
-  <div class="pane" data-pane="plan:apres">
     <p class="lead">Ce qui change quand ton alternance se termine, et comment adapter ton plan.</p>
     <div class="card"><h3>Les 3 derniers mois</h3><ul>
       <li>Gonfle ton épargne de précaution vers 6 mois de dépenses : la recherche d'emploi peut prendre du temps.</li>
@@ -553,18 +823,12 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
       <li>PEA rempli ou besoin de souplesse : alimente davantage ton <strong>assurance vie</strong>.</li>
       <li>Projet de logement : utilise l'onglet Immobilier pour planifier l'apport, garde cet argent hors bourse s'il sert dans moins de 5 ans.</li></ul></div>
     <div class="card tint"><h3>Ce qui ne change jamais</h3><p class="small">Un ETF monde, des versements automatiques, un matelas de sécurité, des frais bas, et ne jamais vendre dans la panique.</p></div>
+  
   </div>
-</section>
+  <div class="pane" data-pane="plus:actu">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Actualité</h2>
 
-<!-- ================= PLUS ================= -->
-<section class="view" id="v-plus">
-  <h2>Apprendre</h2>
-  <div class="seg" role="group" aria-label="Apprendre">
-    <button type="button" data-seg="plus" data-p="actu" aria-pressed="true">Actu</button>
-    <button type="button" data-seg="plus" data-p="quiz" aria-pressed="false">Quiz</button>
-    <button type="button" data-seg="plus" data-p="lexique" aria-pressed="false">Lexique</button>
-  </div>
-  <div class="pane on" data-pane="plus:actu">
     <span class="asof" id="asof"></span>
     <div class="news" id="news"></div>
     <h3 style="margin:14px 0 8px">Ce que ça change pour toi</h3>
@@ -574,17 +838,31 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
     <h3 style="margin:18px 0 8px">Les règles d'or</h3>
     <div id="rules"></div>
     <div class="card tint small"><strong>Suivre l'actu sans te faire piéger :</strong> un point par mois suffit. Sources neutres : lafinancepourtous.com, amf-france.org (et sa liste noire des arnaques), service-public.fr.</div>
+  
   </div>
   <div class="pane" data-pane="plus:quiz">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Quiz</h2>
+
     <div class="card" id="quiz"></div>
+  
+  </div>
+  <div class="pane" data-pane="plus:badges">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Mes badges</h2>
+    <p class="lead">Chaque bonne habitude te rapporte un badge. Ceux en gris sont à débloquer.</p>
+    <div id="badgeGrid"></div>
   </div>
   <div class="pane" data-pane="plus:lexique">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Lexique</h2>
+
     <div class="field"><label for="q">Chercher un mot</label><input type="text" id="q" placeholder="PEA, abondement, ETF…" autocomplete="off"></div>
     <div class="catbar" id="cats" role="group" aria-label="Catégories"></div>
     <dl id="gloss" style="margin:0"></dl>
     <p class="muted" id="empty" hidden>Aucun terme trouvé.</p>
+  
   </div>
-  <p class="foot">Sources : COR (rapport juin 2026), Insee (inflation oct. 2026), BCE (29 oct. 2026), LFSS 2026, service-public.fr, grilles tarifaires des courtiers (nov. 2026). Outil pédagogique, pas un conseil financier personnalisé.</p>
 </section>
 </main>
 </div>
@@ -592,9 +870,9 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
 <nav class="tabs" aria-label="Navigation"><div class="in">
   <a href="#accueil" data-v="accueil"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Accueil</a>
   <a href="#argent" data-v="argent"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 15h2"/></svg>Mon argent</a>
+  <a href="#conseiller" data-v="conseiller" class="center"><span class="bub"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></span>Conseiller</a>
   <a href="#simuler" data-v="simuler"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>Simuler</a>
-  <a href="#plan" data-v="plan"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Plan</a>
-  <a href="#plus" data-v="plus"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M19 19v2H6"/></svg>Apprendre</a>
+  <a href="#plus" data-v="plus"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>Plus</a>
 </div></nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -611,7 +889,7 @@ const KORDER=['courant','secu','inv','autre'];
 const DEF_ACC=[['courant','Compte courant','courant'],['lep','LEP','secu'],['livretA','Livret A / LDDS','secu'],['pea','PEA','inv'],['av','Assurance vie','inv'],['pee','Épargne salariale','inv']];
 const newAcc=(id,n,k)=>({id,n,k,solde:0,mensuel:0,maj:0});
 const DEF_PROJ=()=>[{id:'p1',n:'Permis + voiture',montant:6000,date:'2028-06',deja:0},{id:'p2',n:'Voyage / déménagement',montant:2000,date:'2027-09',deja:0},{id:'p3',n:'Apport logement',montant:25000,date:'2032-06',deja:0}];
-function defState(){return{v:3,profil:{salaire:1100,depenses:600,rfr:'',parts:'1',capa:null,paie:'fin',pee:'inconnu'},risk:null,projets:DEF_PROJ(),accounts:DEF_ACC.map(([id,n,k])=>newAcc(id,n,k)),historique:[],done:{},sim:{}};}
+function defState(){return{v:3,profil:{salaire:1100,depenses:600,rfr:'',parts:'1',capa:null,paie:'fin',pee:'inconnu',jour:28,debutant:true},risk:null,projets:DEF_PROJ(),positions:[],analyse:null,badges:{},accounts:DEF_ACC.map(([id,n,k])=>newAcc(id,n,k)),historique:[],done:{},sim:{}};}
 let S=defState();
 const num=(v,min)=>{const x=+v;return isFinite(x)?(min===undefined?x:Math.max(min,x)):0;};
 function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau format)
@@ -623,6 +901,14 @@ function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau fo
   if(d.profil&&['fin','debut','milieu'].includes(d.profil.paie)) s.profil.paie=d.profil.paie;
   if(d.profil&&['inconnu','abond','sans','non'].includes(d.profil.pee)) s.profil.pee=d.profil.pee;
   if(d.risk&&typeof d.risk==='object'&&isFinite(+d.risk.score)&&d.risk.ans&&typeof d.risk.ans==='object'){s.risk={score:+d.risk.score,date:num(d.risk.date,0),ans:{}};for(const k in d.risk.ans)if(isFinite(+d.risk.ans[k]))s.risk.ans[k]=+d.risk.ans[k];}
+  if(d.profil&&isFinite(+d.profil.jour)&&+d.profil.jour>=1&&+d.profil.jour<=31) s.profil.jour=Math.round(+d.profil.jour);
+  if(d.profil&&typeof d.profil.debutant==='boolean') s.profil.debutant=d.profil.debutant;
+  const str=(v,n)=>String(v==null?'':v).slice(0,n), isD=v=>/^\d{4}-\d{2}-\d{2}$/.test(v);
+  if(Array.isArray(d.positions)) s.positions=d.positions.filter(p=>p&&p.id).slice(0,10).map(p=>({id:str(p.id,40),nom:str(p.nom||'ETF',60),isin:str(p.isin,12).toUpperCase(),compte:str(p.compte,40),cours:num(p.cours,0),coursDate:num(p.coursDate,0),coursAuto:!!p.coursAuto,
+    achats:Array.isArray(p.achats)?p.achats.filter(a=>a&&isD(a.d)).slice(0,600).map(a=>({id:str(a.id||Math.random().toString(36).slice(2),40),d:a.d,parts:num(a.parts,0),prix:num(a.prix,0)})).filter(a=>a.parts>0&&a.prix>0):[]}));
+  if(d.analyse&&typeof d.analyse==='object'&&Array.isArray(d.analyse.cats)){const A=d.analyse;s.analyse={date:num(A.date,0),from:isD(A.from)?A.from:'',to:isD(A.to)?A.to:'',months:Math.max(1,num(A.months,1)),n:num(A.n,0),rev:num(A.rev),dep:num(A.dep),ep:num(A.ep),frais:num(A.frais,0),
+    cats:A.cats.slice(0,20).map(c=>({c:str(c.c,40),v:num(c.v),m:num(c.m)})),top:(A.top||[]).slice(0,10).map(t=>({n:str(t.n,40),v:num(t.v),c:str(t.c,40),k:num(t.k,0)})),abos:(A.abos||[]).slice(0,12).map(a=>({n:str(a.n,40),v:num(a.v)}))};}
+  if(d.badges&&typeof d.badges==='object') for(const k in d.badges) if(isFinite(+d.badges[k])) s.badges[str(k,20)]=+d.badges[k];
   if(Array.isArray(d.projets)) s.projets=d.projets.filter(p=>p&&p.id).slice(0,12).map(p=>({id:String(p.id).slice(0,40),n:String(p.n||'Projet').slice(0,40),montant:num(p.montant,0),date:/^\d{4}-\d{2}$/.test(p.date)?p.date:'2028-01',deja:num(p.deja,0)}));
   if(Array.isArray(d.accounts)){
     const seen=new Set();
@@ -653,19 +939,24 @@ async function flush(){
   catch(e){ if(e&&e.code==='invalid_argument'){DBDOC=null;setSync('local');} else setSync('err'); }
   saving=false; if(pending){pending=false;flush();}
 }
-function setSync(k){const p=$('sync'); p.className='pill'+(k==='ok'?' ok':''); p.textContent=k==='ok'?'Synchronisé ✓':k==='load'?'Connexion…':k==='err'?'Hors ligne, gardé ici':'Sur cet appareil';}
+function setSync(k){const p=$('sync'); p.className='pill'+(k==='ok'?' ok':''); p.textContent=k==='ok'?'Synchronisé ✓':k==='load'?'Connexion…':k==='err'?'Hors ligne, gardé ici':'Sur ce téléphone';}
 
 /* ================= NAVIGATION ================= */
-const VIEWS=['accueil','argent','simuler','plan','plus'];
+const VIEWS=['accueil','argent','conseiller','simuler','plus'];
 function route(){
   let v=(location.hash||'').slice(1); if(!VIEWS.includes(v)) v='accueil';
   VIEWS.forEach(n=>$('v-'+n).classList.toggle('on',n===v));
   document.querySelectorAll('nav.tabs a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  if(v==='plus'&&!document.querySelector('[data-pane^="plus:"].on'))plusHome();
+  if(v==='conseiller')onChatView();
   window.scrollTo(0,0); refreshCanvases();
 }
 window.addEventListener('hashchange',route);
-document.querySelectorAll('.seg button[data-seg]').forEach(b=>b.addEventListener('click',()=>showPane(b.dataset.seg,b.dataset.p)));
+document.querySelectorAll('button[data-seg]').forEach(b=>b.addEventListener('click',()=>showPane(b.dataset.seg,b.dataset.p)));
+function plusHome(){document.querySelectorAll('[data-pane^="plus:"]').forEach(x=>x.classList.remove('on'));$('plusHome').hidden=false;}
+document.addEventListener('click',e=>{if(e.target.closest('[data-back]')){plusHome();window.scrollTo(0,0);}const t=e.target.closest('nav.tabs a[data-v="plus"]');if(t&&location.hash==='#plus')plusHome();});
 function showPane(seg,p){
+  if(seg==='plus'){$('plusHome').hidden=true;window.scrollTo(0,0);}
   document.querySelectorAll(`.seg button[data-seg="${seg}"]`).forEach(x=>x.setAttribute('aria-pressed',x.dataset.p===p));
   document.querySelectorAll(`[data-pane^="${seg}:"]`).forEach(x=>x.classList.toggle('on',x.dataset.pane===seg+':'+p));
   refreshCanvases();
@@ -721,6 +1012,7 @@ function renderMoney(){
   const T=totals(), dep=S.profil.depenses||0, goal=dep*3;
   $('accTotal').textContent=eur(T.t); $('homeTotal').textContent=eur(T.t);
   $('accSub').textContent=`Dont ${eur(T.epargne)} d'épargne. Tu épargnes ${eur(T.mAll)} par mois, dont ${eur(T.mInv)} à long terme.`;
+  $('heroDate').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
   $('homeSplit').textContent=T.t?KORDER.filter(k=>T[k]).map(k=>({courant:'Courant',secu:'Sécurité',inv:'Long terme',autre:'Risqué'})[k]+' '+eur(T[k])).join(' · '):'Renseigne tes comptes dans « Mon argent ».';
   const pos=KORDER.map(k=>Math.max(0,T[k])), max=Math.max(...pos,1);
   $('bars').innerHTML=KORDER.filter(k=>T[k]).map(k=>`<div class="b"><span>${({courant:'Courant',secu:'Sécurité',inv:'Long terme',autre:'Risqué'})[k]}</span><span class="track"><i style="width:${Math.max(0,T[k])/max*100}%;background:${KIND[k].c}"></i></span><span class="amt">${eur(T[k])}</span></div>`).join('')||'<p class="small muted">Appuie sur « Mettre à jour mes soldes » pour commencer.</p>';
@@ -818,7 +1110,7 @@ function update(){
   if(p.ret<=p.age){p.ret=p.age+1;$('ret').value=p.ret;}
   $('crashAge').min=p.age+1;$('crashAge').max=p.ret;
   if(p.crashAge<=p.age||p.crashAge>p.ret){p.crashAge=Math.round((p.age+p.ret)/2);$('crashAge').value=p.crashAge;}
-  $('ageO').textContent=p.age+' ans';$('retO').textContent=p.ret+' ans';$('rdtO').textContent=pct(p.rdt);$('fraisO').textContent=pct(p.frais);$('hausseO').textContent=pct(p.hausse);$('inflO').textContent=pct(p.infl);
+  $('ageO').textContent=p.age+' ans';$('retO').textContent=p.ret+' ans';$('rdtO').textContent=pct(p.rdt);$('rdtO2').textContent=pct(p.rdt);$('fraisO').textContent=pct(p.frais);$('hausseO').textContent=pct(p.hausse);$('inflO').textContent=pct(p.infl);
   $('crashAgeO').textContent=p.crashAge+' ans';$('crashPctO').textContent='−'+p.crashPct+' %';$('crashbox').hidden=!p.crash;
   document.querySelectorAll('#rchips button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.r===p.rdt));
   const defl=y=>Math.pow(1+p.infl/100,y);
@@ -830,8 +1122,10 @@ function update(){
     const need=Math.ceil(Math.max(0,(target-bc)/uc)/5)*5;$('needM').textContent=eur(need);$('mens').value=need;p.mens=need;
   }
   const pts=simulate(p),last=pts[pts.length-1],yrs=last.y,capR=last.cap/defl(yrs); lastCapR=capR;
-  $('tAge').textContent=p.ret;$('vFinal').textContent=eur(capR);$('vFinalN').textContent=`soit ${eur(last.cap)} en euros de l'époque`;
+  $('tAge').textContent=p.ret;$('vFinal').textContent=eur(capR);$('vFinalN').textContent=`en euros d'aujourd'hui (${eur(last.cap)} affichés à l'époque)`;
   $('vVerse').textContent=eur(last.verse);$('vRente').textContent=eur(capR*0.04/12);
+  const gainsR=Math.max(0,capR-last.verse/defl(yrs));
+  $('plain').innerHTML=`Si tu mets <strong>${eur(p.mens)} par mois</strong>${p.hausse?` (un peu plus chaque année, comme ton salaire)`:''} de ${p.age} à ${p.ret} ans, placés à <strong>${pct(p.rdt)} par an</strong> en moyenne, tu auras environ <strong>${eur(capR)}</strong>. C'est ce que vaudrait cette somme <em>aujourd'hui</em>, inflation retirée. En la retirant doucement (4 % par an), elle t'ajoute environ <strong>${eur(capR*0.04/12)} par mois</strong> à ta retraite.`;
   if(p.age+10<p.ret){const ll=simulate({...p,age:p.age+10}),capL=ll[ll.length-1].cap/defl(yrs);$('wait').innerHTML=`<strong>Le coût d'attendre :</strong> en commençant à ${p.age+10} ans, tu finirais avec ${eur(capL)}, soit <strong>${Math.max(0,Math.round((1-capL/capR)*100))} % de moins</strong>.`;}
   else $('wait').textContent='Plus la durée est longue, plus les intérêts composés travaillent pour toi.';
   const cm=$('crashMsg');
@@ -907,7 +1201,7 @@ const PLAN=[
  {phase:"1. Préparer",items:[
   {id:"budget",t:"Faire mon budget",d:"Salaire, dépenses fixes, ce qui reste.",how:`<p>Utilise « Mon argent » → « Budget & LEP ». Vise 10 à 20 % d'épargne. Même 30 € par mois suffisent pour démarrer.</p>`},
   {id:"comptes",t:"Renseigner mes comptes dans l'appli",d:"Compte courant, livrets, placements.",how:`<p>« Mon argent » → « Mettre à jour mes soldes ». Ajoute tes comptes manquants avec « + Ajouter un compte ». Puis « Enregistrer le relevé de ce mois » : c'est ton point de départ.</p>`},
-  {id:"profil",t:"Faire le test de profil investisseur",d:"Plan → Conseiller, 1 minute.",how:`<p>7 questions pour savoir comment répartir ton argent long terme entre ETF monde, fonds euros et livrets.</p>`},
+  {id:"profil",t:"Faire le test de profil investisseur",d:"Plus → Mon profil investisseur, 1 minute.",how:`<p>7 questions pour savoir comment répartir ton argent long terme entre ETF monde, fonds euros et livrets.</p>`},
   {id:"montant",t:"Fixer mon montant mensuel",d:"Un montant que je tiendrai.",how:`<p>Mieux vaut 50 € tenus chaque mois que 200 € abandonnés au bout de trois mois.</p>`}]},
  {phase:"2. Matelas de sécurité",items:[
   {id:"rfr",t:"Vérifier si j'ai droit au LEP",d:"Avec mon revenu fiscal de référence.",how:`<ol><li>impots.gouv.fr → Documents → dernier avis d'impôt.</li><li>Ligne « Revenu fiscal de référence ».</li><li>Teste-le dans « Budget & LEP ». Plafond 2026 : 23 028 € (personne seule).</li></ol><p class="muted">Rattaché à tes parents ? C'est leur revenu qui compte. Ta propre déclaration peut te rendre éligible.</p>`},
@@ -918,14 +1212,14 @@ const PLAN=[
   {id:"rh",t:"Envoyer un e-mail aux RH",d:"PEE, PERCOL, abondement ?",how:`<ol><li>Y a-t-il un PEE ou un PERCOL, accessible aux alternants ?</li><li>Un abondement ? Taux et plafond ?</li><li>Intéressement ou participation ?</li><li>Quel fonds a les frais les plus bas (actions monde, indiciel) ?</li><li>Comment accéder à mon espace ?</li></ol>`},
   {id:"abond",t:"Verser pour toucher tout l'abondement",d:"De l'argent offert : priorité.",how:`<p>Verse au moins ce qu'il faut pour atteindre le plafond d'abondement.</p>`}]},
  {phase:"4. PEA : le cœur du plan",items:[
-  {id:"courtier",t:"Choisir mon courtier en ligne",d:"Voir l'onglet « Comparatif ».",how:`<ul><li>Tenue de compte : 0 €.</li><li>Achats programmés gratuits ou presque.</li><li>ETF monde éligible PEA disponible.</li><li>Fractions de parts : un plus.</li><li>Établissement agréé (registre REGAFI).</li></ul>`},
+  {id:"courtier",t:"Choisir mon courtier en ligne",d:"Plus → Comparatif.",how:`<ul><li>Tenue de compte : 0 €.</li><li>Achats programmés gratuits ou presque.</li><li>ETF monde éligible PEA disponible.</li><li>Fractions de parts : un plus.</li><li>Établissement agréé (registre REGAFI).</li></ul>`},
   {id:"pea",t:"Ouvrir mon PEA et verser 10 €",d:"Le compteur des 5 ans démarre.",how:`<ol><li>Site du courtier → « Ouvrir un PEA ».</li><li>Pièce d'identité, justificatif de domicile (moins de 3 mois), RIB.</li><li>Questionnaire de connaissances : réponds honnêtement.</li><li>Premier virement, même 10 €.</li></ol>`},
   {id:"etf",t:"Choisir mon ETF monde",d:"Un seul, et le garder.",how:`<ul><li>MSCI World ou MSCI ACWI / All World.</li><li>« Éligible PEA ».</li><li>Frais (TER) sous 0,45 %.</li><li>Capitalisant (« Acc » ou « C »).</li><li>Encours élevé.</li><li>« Swap » ou « synthétique » : normal sur un PEA.</li></ul>`},
   {id:"ordre",t:"Passer mon premier ordre d'achat",d:"Ordre à cours limité.",how:`<div class="ordre"><div><b>Sens</b>Achat</div><div><b>Type</b>À cours limité</div><div><b>Limite</b>Dernier prix + 0,5 %</div><div><b>Validité</b>Jour</div></div><p>Bourse ouverte 9 h–17 h 30. Évite la première demi-heure et les dernières minutes.</p>`},
   {id:"auto",t:"Programmer l'achat mensuel",d:"Et ne plus y toucher.",how:`<ol><li>Investissement programmé : même montant, même jour, 2–3 jours après la paie.</li><li>Virement automatique compte courant → PEA juste avant.</li></ol>`}]},
  {phase:"5. Compléter",items:[
   {id:"av",t:"Ouvrir une assurance vie en ligne",d:"Pour lancer le compteur des 8 ans.",how:`<ul><li>0 % de frais sur versement.</li><li>Frais UC sous 0,6 %/an.</li><li>ETF + bon fonds euros.</li><li>Gestion libre.</li><li>Remplis la clause bénéficiaire.</li></ul>`},
-  {id:"quiz",t:"Réussir le quiz (8/10 ou plus)",d:"Onglet « Apprendre ».",how:`<p>Pour être sûr de maîtriser les bases avant d'investir plus.</p>`},
+  {id:"quiz",t:"Réussir le quiz (8/10 ou plus)",d:"Plus → Quiz.",how:`<p>Pour être sûr de maîtriser les bases avant d'investir plus.</p>`},
   {id:"carriere",t:"Vérifier mon relevé de carrière",d:"Sur info-retraite.fr.",how:`<p>Connexion via FranceConnect. Vérifie que tes trimestres d'alternance sont comptés.</p>`},
   {id:"bilan",t:"Faire mon bilan annuel",d:"Augmenter mes versements.",how:`<p>Une fois par an : augmente ton versement si ton salaire a monté, vérifie ton matelas, pense au PER quand tu seras imposé à 30 %.</p>`}]}
 ];
@@ -1155,19 +1449,23 @@ function coachTips(){
   const ym=d.getFullYear()+'-'+String(mo).padStart(2,'0'),H=S.historique,last=H[H.length-1];
   const add=(lv,t,p,go,gt,pr)=>tips.push({lv,t,p,go,gt,pr:pr??({u:0,a:1,c:2,i:3})[lv]});
   // paie
-  const payWin=P.paie==='fin'?(day>=25):P.paie==='debut'?(day<=5):(day>=10&&day<=15);
-  const afterPay=P.paie==='fin'?(day<=7):P.paie==='debut'?(day>=6&&day<=12):(day>=16&&day<=22);
+  const J=P.jour||28,payDate=(y,m)=>new Date(y,m,Math.min(J,new Date(y,m+1,0).getDate()));
+  const today=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  let nextPay=payDate(d.getFullYear(),d.getMonth());if(nextPay<today)nextPay=payDate(d.getFullYear(),d.getMonth()+1);
+  let lastPay=payDate(d.getFullYear(),d.getMonth());if(lastPay>today)lastPay=payDate(d.getFullYear(),d.getMonth()-1);
+  const toPay=Math.round((nextPay-today)/864e5),sincePay=Math.round((today-lastPay)/864e5);
+  const payWin=toPay<=3,afterPay=sincePay>=1&&sincePay<=9;
   if(T.courant<0) add('u','Ton compte courant est à découvert',`Il est à ${eur(T.courant)}. Avant toute épargne, reviens au positif : les agios coûtent bien plus que ce que rapporte un placement.`,'argent:comptes','Voir mes comptes',-1);
   if(!S.accounts.some(a=>a.solde)) add('a','Renseigne tes comptes',`Mets le solde de ton compte courant, de tes livrets et placements. Le coach s'adaptera à tes vrais chiffres.`,'argent:comptes','Mettre à jour mes soldes');
-  if(payWin) add('a','Ta paie arrive : prépare tes virements',`Dès qu'elle tombe, répartis ${eur(capa())} comme indiqué dans « Ma répartition à chaque paie » ci-dessous. Fais-le en premier, avant les dépenses.`,null,null,0.5);
-  if(afterPay) add('a','Vérifie que ton achat programmé est passé',`Ouvre l'appli de ton courtier : l'achat d'ETF du mois doit apparaître. S'il manque, vérifie que le virement vers le PEA est bien arrivé.`);
+  if(payWin) add('a',toPay===0?'C\'est le jour de paie : fais tes virements':toPay===1?'Ta paie tombe demain':`Ta paie arrive dans ${toPay} jours`,`Dès qu'elle tombe, répartis ${eur(capa())} comme indiqué dans « Ma répartition à chaque paie » ci-dessous. Fais-le en premier, avant les dépenses.`,null,null,0.5);
+  if(afterPay&&(S.positions.length||S.done.auto||S.done.m10)) add('a','Vérifie que ton achat programmé est passé',`Ouvre l'appli de ton courtier : l'achat d'ETF du mois doit apparaître. S'il manque, vérifie que le virement vers le PEA est bien arrivé.`);
   if(S.accounts.some(a=>a.solde)&&(!last||last.m!==ym)&&(afterPay||day>=8)) add('a','Enregistre ton relevé du mois',`Mets à jour tes soldes puis appuie sur « Enregistrer le relevé de ce mois » pour suivre ta progression.`,'argent:comptes','Faire mon relevé');
-  if(!S.risk) add('a','Découvre ton profil d\'investisseur',`7 questions pour savoir comment répartir ton argent long terme entre bourse et sécurité.`,'plan:conseil','Faire le test',1.2);
-  if(P.pee==='inconnu') add('a','Demande aux RH s\'il y a un abondement',`Si ton entreprise ajoute de l'argent à tes versements (PEE/PERCOL), c'est le meilleur placement possible. Le modèle d'e-mail est dans Plan → Étapes.`,'plan:etapes','Voir les questions à poser',1.3);
+  if(!S.risk) add('a','Découvre ton profil d\'investisseur',`7 questions pour savoir comment répartir ton argent long terme entre bourse et sécurité.`,'plus:conseil','Faire le test',1.2);
+  if(P.pee==='inconnu') add('a','Demande aux RH s\'il y a un abondement',`Si ton entreprise ajoute de l'argent à tes versements (PEE/PERCOL), c'est le meilleur placement possible. Le modèle d'e-mail est dans Plus → Mon plan.`,'plus:etapes','Voir les questions à poser',1.3);
   if(P.pee==='abond') add('c','Touche tout l\'abondement',`Verse au moins ce qu'il faut sur ton PEE/PERCOL pour recevoir le maximum offert par ton employeur. C'est 50 à 100 % de rendement immédiat.`);
   // matelas
   if(dep&&T.secu<goal&&T.courant>=0) add('c',`Matelas : il manque ${eur(goal-T.secu)}`,`Priorité à ton LEP puis Livret A jusqu'à ${eur(goal)} (3 mois de dépenses). Ensuite, l'essentiel ira vers tes projets et ta retraite.`,'argent:comptes','Voir mon matelas');
-  if(dep&&T.secu>=dep*6&&T.mInv===0) add('c','Ton matelas est complet : passe au long terme',`Tu as plus de 6 mois de dépenses de côté. Ouvre ton PEA et programme un achat mensuel d'ETF monde.`,'plan:etapes','Voir comment');
+  if(dep&&T.secu>=dep*6&&T.mInv===0) add('c','Ton matelas est complet : passe au long terme',`Tu as plus de 6 mois de dépenses de côté. Ouvre ton PEA et programme un achat mensuel d'ETF monde.`,'plus:etapes','Voir comment');
   const surplus=T.courant-Math.max(dep,300)*1.5;
   if(dep&&surplus>100) add('c',`Déplace ${eur(Math.floor(surplus/50)*50)} vers ton livret`,`C'est ce qui dort sur ton compte courant au-delà d'un mois et demi de dépenses. Sur un livret, ça rapporte sans risque et ça reste disponible.`,'argent:comptes','Voir mes comptes');
   const lepA=S.accounts.find(a=>a.id==='lep');if(lepA&&lepA.solde>=10000) add('i','LEP plein',`Le LEP est plafonné à 10 000 € de versements. Dirige tes versements vers le Livret A ou ton PEA.`);
@@ -1183,7 +1481,7 @@ function coachTips(){
   if(infl&&livA&&parseFloat(infl.v.replace(',','.'))>parseFloat(livA.v.replace(',','.'))) add('i','L\'inflation dépasse le Livret A',`Inflation ${infl.v}, Livret A ${livA.v} : ton argent sur livret perd un peu de pouvoir d'achat. Garde-y seulement ton matelas et tes projets proches.`);
   // calendrier
   if(mo===11||mo===12) add('i','Fin d\'année',`Rien d'urgent pour toi avant le 31 décembre (le PER n'a pas d'intérêt tant que tu paies peu d'impôt). Si tu reçois une prime ou de l'argent à Noël : matelas d'abord, puis projets, puis PEA.`);
-  if(mo===1) add('a','Nouvelle année : ton bilan annuel',`Augmente ton versement si ton salaire a monté, refais le test de profil si besoin, et vérifie tes projets.`,'plan:etapes','Voir mon plan');
+  if(mo===1) add('a','Nouvelle année : ton bilan annuel',`Augmente ton versement si ton salaire a monté, refais le test de profil si besoin, et vérifie tes projets.`,'plus:etapes','Voir mon plan');
   if(mo===1&&day<=31) add('i','Le 1er février, nouveau taux du Livret A et du LEP',`Il est calculé à partir de l'inflation. Rien à faire, c'est automatique.`);
   if(mo>=4&&mo<=6) add('a','Déclaration de revenus',`Si tu es encore rattaché à tes parents, faire ta propre déclaration peut te rendre éligible au LEP (2,5 % net). Ton salaire d'apprenti est exonéré jusqu'au niveau du SMIC.`,'argent:budget','Tester mon droit au LEP');
   if(!S.done.quiz) add('i','Teste tes connaissances',`10 questions pour vérifier que tu maîtrises les bases avant d'investir plus.`,'plus:quiz','Faire le quiz',3.5);
@@ -1191,29 +1489,446 @@ function coachTips(){
 }
 function renderCoach(){
   const tips=coachTips(),d=new Date();
-  $('coachSub').textContent=`Mis à jour à chaque ouverture · ${d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}`;
+  $('coachSub').textContent='Recalculés à chaque ouverture';
   $('coach').innerHTML=tips.slice(0,6).map(t=>{const[l,c,ic]=LV[t.lv];return`<div class="tip" style="--c:${c}"><div class="ic" aria-hidden="true">${ic}</div><div><div class="lv">${l}</div><div class="tt">${esc(t.t)}</div><p>${esc(t.p)}</p>${t.go?`<a class="go" href="#${t.go.split(':')[0]}" data-go="${t.go}">${esc(t.gt)} →</a>`:''}</div></div>`;}).join('')||'<div class="card green small">Tout est en ordre ce mois-ci. Garde le cap 👍</div>';
   if(tips.length>6) $('coach').innerHTML+=`<p class="small muted">+ ${tips.length-6} autre${tips.length-6>1?'s':''} conseil${tips.length-6>1?'s':''} une fois ceux-ci réglés.</p>`;
   renderMonthPlan();
+  try{renderMission();checkBadges();}catch(e){}
 }
-document.addEventListener('click',e=>{const a=e.target.closest('a[data-go]');if(!a)return;const[v,p]=a.dataset.go.split(':');if(p)setTimeout(()=>showPane(v,p),0);});
+document.addEventListener('click',e=>{const a=e.target.closest('a[data-go]');if(!a)return;const[v,p]=a.dataset.go.split(':');if(p)setTimeout(()=>{showPane(v,p);if(a.dataset.guide){const g=$(a.dataset.guide);if(g){g.open=true;g.scrollIntoView({block:'start'});}}},0);});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-ask]');if(!b)return;askAdvisor(b.dataset.ask);});
+
+/* ================= CONSEILLER (Claude) ================= */
+const ADVISOR_URL='https://claude.ai/artifact/MBY25nRSgZGaV1FFYh8SHm';
+const IN_CLAUDE=!!(window.claude&&typeof window.claude.use==='function');
+let SAMPLE=null,CONV=[],chatBusy=false,chatCtrl=null,convLoaded=false,pendingAsk=null,CONVDOC=null;
+const SUGG=["Que dois-je faire ce mois-ci ?","Comment j'achète mon premier ETF ?","Un ETF, c'est vraiment une bonne idée pour moi ?","Explique-moi le simulateur simplement","J'ai reçu une prime, j'en fais quoi ?","Comment ouvrir un LEP à la Société Générale ?"];
+function md(t){
+  const lines=esc(t).split(/\n/);let h='',list=null;
+  const inline=x=>x.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*(?!\s)(.+?)\*(?!\*)/g,'$1<em>$2</em>').replace(/`([^`]+)`/g,'<code>$1</code>');
+  const close=()=>{if(list){h+=`</${list}>`;list=null;}};
+  for(const raw of lines){const l=raw.trim();
+    let m;
+    if(!l){close();continue;}
+    if((m=l.match(/^#{1,4}\s+(.*)/))){close();h+=`<h5>${inline(m[1])}</h5>`;continue;}
+    if((m=l.match(/^[-•*]\s+(.*)/))){if(list!=='ul'){close();h+='<ul>';list='ul';}h+=`<li>${inline(m[1])}</li>`;continue;}
+    if((m=l.match(/^\d+[.)]\s+(.*)/))){if(list!=='ol'){close();h+='<ol>';list='ol';}h+=`<li>${inline(m[1])}</li>`;continue;}
+    close();h+=`<p>${inline(l)}</p>`;}
+  close();return h;
+}
+function situation(){
+  const T=totals(),P=S.risk?riskProfile(S.risk.score):null,M=monthlyPlan(),H=S.historique,last=H[H.length-1];
+  return{date:new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}),
+    age:+$('age').value||20,statut:'alternant (apprenti), salarié en France',banque_principale:'Société Générale',
+    salaire_net_mensuel:S.profil.salaire,depenses_fixes_mensuelles:S.profil.depenses,capacite_epargne_mensuelle:capa(),paie:S.profil.paie,
+    revenu_fiscal_reference:S.profil.rfr||'inconnu',epargne_salariale:S.profil.pee,
+    comptes:S.accounts.map(a=>({nom:a.n,type:a.k,solde:a.solde,verse_par_mois:a.k==='courant'?undefined:a.mensuel})),
+    totaux:{patrimoine:T.t,compte_courant:T.courant,securite_livrets:T.secu,long_terme:T.inv,risque:T.autre,objectif_matelas_3_mois:(S.profil.depenses||0)*3},
+    profil_risque:P?{nom:P.n,actions_pct:P.a,fonds_euros_pct:P.f,livrets_pct:P.l}:'test non fait',
+    projets:S.projets.map(p=>{const c=projCalc(p);return{nom:p.n,montant:p.montant,echeance:p.date,deja:p.deja,mois_restants:c.n,a_mettre_de_cote_par_mois:c.need};}),
+    repartition_mensuelle_proposee:M.out.map(o=>({poste:o.n,ou:o.w,montant:o.v})),
+    etapes_faites:ALL.filter(i=>S.done[i.id]).map(i=>i.t),etapes_restantes:ALL.filter(i=>!S.done[i.id]).map(i=>i.t),
+    dernier_releve:last||null,
+    etf_detenus:S.positions.map(p=>{const c=posCalc(p);return{nom:p.nom,isin:p.isin,parts:+c.parts.toFixed(4),prix_moyen:+c.pru.toFixed(2),cours:p.cours||null,valeur:Math.round(c.val),gain:Math.round(c.pv),nb_achats:p.achats.length};}),
+    analyse_releve_bancaire:S.analyse?{periode:S.analyse.from+' au '+S.analyse.to,revenus_par_mois:Math.round(S.analyse.rev/S.analyse.months),depenses_par_mois:Math.round(S.analyse.dep/S.analyse.months),epargne_par_mois:Math.round(S.analyse.ep/S.analyse.months),frais_bancaires_par_mois:Math.round(S.analyse.frais/S.analyse.months),categories_par_mois:S.analyse.cats.map(c=>c.c+' '+c.m+' €'),abonnements:S.analyse.abos.map(a=>a.n+' '+a.v+' €')}:'pas encore faite',
+    jour_de_paie:S.profil.jour,
+    parcours_debutant:{mission_actuelle:(MISSIONS.find(m=>!missionDone(m))||{t:'terminé'}).t,missions_faites:MISSIONS.filter(missionDone).length+'/'+MISSIONS.length},
+    badges:BADGES.filter(b=>S.badges&&S.badges[b.id]).map(b=>b.n)};
+}
+function sysPrompt(){
+  return `Tu es « Ton conseiller », le conseiller financier pédagogique intégré à l'appli « Mon Plan Retraite » de Hugo, 20 ans, alternant en France. Tu parles français, tu le tutoies, avec un ton chaleureux, simple et direct, comme un grand frère qui s'y connaît.
+
+TA MISSION : l'aider à décider et à agir, étape par étape. Il débute : explique chaque mot technique la première fois, donne des étapes concrètes (où cliquer, quoi remplir), des montants adaptés à SA situation, et dis-lui quoi faire maintenant.
+
+RÈGLES :
+- Réponses courtes et lisibles sur téléphone : 80 à 200 mots en général, listes numérotées pour les marches à suivre, **gras** pour l'essentiel. Plus long seulement s'il le demande.
+- Termine souvent par une question simple pour avancer (ex. « Tu as déjà ouvert ton PEA ? »), ou par la prochaine action précise.
+- Sois honnête : avantages ET risques, jamais de promesse de gain. Les rendements passés ne garantissent rien.
+- Tu n'es pas un conseiller agréé : tu informes et expliques, la décision lui revient. Ne le répète pas à chaque message, seulement quand il s'agit d'un choix important.
+- Ne recommande jamais d'action individuelle, de crypto spéculative, de produit à effet de levier, ni de « bon moment » pour acheter. Méthode : matelas de sécurité d'abord, projets à moins de 5 ans sur livret, retraite en ETF monde en versements programmés selon son profil.
+- Tu ne vois pas les cours de bourse en direct ni internet : appuie-toi sur les données ci-dessous et dis-le si on te demande un cours actuel.
+- Si une info manque (montant d'une prime, courtier choisi…), demande-la.
+- Pour un calcul (simulation, projet), utilise les outils fournis plutôt que de calculer de tête.
+- Tu peux renvoyer vers les écrans de l'appli : Accueil (conseils du moment, répartition à chaque paie), Mon argent (Mes comptes, Suivi, Projets, Budget & LEP), Simuler (Épargne, Répartition, Retraite totale, Immobilier), Plus (Mon plan, Mon profil investisseur, Guides pas à pas, Comparatif, Après l'alternance, Actualité, Quiz, Lexique).
+- En cas de détresse financière (découvert important, dettes, arnaque), priorité à la sécurité : arrêter de payer un « placement miracle », contacter sa banque, signaler sur le site de l'AMF.
+
+FAITS UTILES (novembre 2026, à vérifier si besoin) :
+- Livret A 1,7 % (plafond 22 950 €), LDDS même taux (12 000 €), LEP 2,50 % net (10 000 €, revenu fiscal de référence max 23 028 € pour 1 part). Révision le 1er février.
+- Inflation France ${(ACTU.kpis||[]).map(k=>k.l+' '+k.v).join(', ')}.
+- PEA : après 5 ans, gains exonérés d'impôt sur le revenu, prélèvements sociaux 18,6 %. Plafond 150 000 € de versements. Un retrait avant 5 ans ferme le plan. Frais légaux max : 0,5 % par ordre en ligne.
+- Flat tax 31,4 % depuis 2026 ; assurance vie : prélèvements sociaux 17,2 %, abattement de 4 600 €/an sur les gains après 8 ans.
+- PER : déduction d'impôt, peu utile tant qu'il paie peu d'impôt (salaire d'apprenti exonéré jusqu'au SMIC).
+- Réforme des retraites de 2023 suspendue jusqu'au 1er janvier 2028 ; le COR prévoit un déficit plus important à long terme.
+- Courtiers PEA souvent cités (tarifs relevés le 6/11/2026) : Trade Republic (1 €/ordre, programmé gratuit), Bourse Direct (0,99 € jusqu'à 500 €, programmé gratuit sur une sélection d'ETF), Fortuneo (1er ordre du mois gratuit ≤ 500 €), BoursoBank (1,99 €), Saxo (0,08 % min 2 €). Assurances vie en ligne : Linxea Spirit 2, Meilleurtaux Essentiel Vie, Lucya CNP, Placement-direct Euro+. Toujours lui dire de vérifier la grille tarifaire.
+- ETF monde éligibles PEA : suivent le MSCI World ou MSCI ACWI, version capitalisante, TER < 0,45 %, réplication synthétique (swap) normale.
+- Actualité récente : ${(ACTU.news||[]).map(n=>n.l+' '+n.v+' : '+n.p).join(' | ')}
+
+SITUATION ACTUELLE DE HUGO (données de son appli, à jour) :
+${JSON.stringify(situation())}
+
+Réponds maintenant au fil de la conversation.`;
+}
+const TOOLS=[
+ {name:'simuler_epargne',description:"Simule une épargne mensuelle placée à un rendement moyen jusqu'à un âge donné. Renvoie le capital en euros de l'époque et en euros d'aujourd'hui, le total versé et le revenu mensuel possible (retrait de 4 %/an).",
+  inputSchema:{type:'object',properties:{versement_mensuel:{type:'number'},capital_depart:{type:'number'},age_debut:{type:'number'},age_fin:{type:'number'},rendement_annuel_pct:{type:'number'},frais_pct:{type:'number'},hausse_versement_pct:{type:'number'},inflation_pct:{type:'number'}},required:['versement_mensuel','age_fin','rendement_annuel_pct']},
+  execute(i){const p={age:+i.age_debut||(+$('age').value||20),ret:+i.age_fin,mens:Math.max(0,+i.versement_mensuel||0),init:Math.max(0,+i.capital_depart||0),rdt:+i.rendement_annuel_pct,frais:+(i.frais_pct??0.3),hausse:+(i.hausse_versement_pct??0),infl:+(i.inflation_pct??2),crash:false};
+   if(!(p.ret>p.age)) throw new Error('age_fin doit être supérieur à age_debut');
+   const pts=simulate(p),l=pts[pts.length-1],d=Math.pow(1+p.infl/100,l.y);return{annees:l.y,capital_euros_epoque:Math.round(l.cap),capital_euros_aujourdhui:Math.round(l.cap/d),total_verse:Math.round(l.verse),revenu_mensuel_retraite_euros_aujourdhui:Math.round(l.cap/d*0.04/12)};}},
+ {name:'calculer_projet',description:"Calcule combien mettre de côté chaque mois pour réunir un montant en un nombre de mois, avec ce qui est déjà épargné.",
+  inputSchema:{type:'object',properties:{montant:{type:'number'},mois:{type:'number'},deja_epargne:{type:'number'},rendement_annuel_pct:{type:'number'}},required:['montant','mois']},
+  execute(i){const n=Math.max(1,Math.round(+i.mois)),r=(+i.rendement_annuel_pct||0)/100/12,d=Math.max(0,+i.deja_epargne||0),fv=d*Math.pow(1+r,n),need=Math.max(0,+i.montant-fv);return{par_mois:Math.ceil(r?need*r/(Math.pow(1+r,n)-1):need/n),mois:n};}},
+ {name:'lire_situation',description:"Relit la situation à jour de Hugo dans l'appli (comptes, projets, profil, répartition).",inputSchema:{type:'object',properties:{}},execute(){return situation();}}
+];
+function bubble(role,html,cls=''){const d=document.createElement('div');d.className='msg '+(role==='user'?'u':'a')+(cls?' '+cls:'');if(role==='user')d.textContent=html;else d.innerHTML=html;$('chat').appendChild(d);return d;}
+function renderChat(){
+  $('chat').innerHTML='';
+  if(!CONV.length) bubble('assistant',md("Salut Hugo 👋 Je suis ton conseiller. Je vois ta situation dans l'appli : tes comptes, tes projets, ton profil.\n\nPose-moi n'importe quelle question, même basique. Je t'explique **quoi faire et comment**, étape par étape. Par quoi on commence ?"));
+  CONV.forEach(m=>bubble(m.role,m.role==='user'?m.content:md(m.content)));
+  $('sugg').innerHTML=SUGG.map(q=>`<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join('');
+  $('sugg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>sendChat(b.dataset.q)));
+  scrollChat();
+}
+function scrollChat(){requestAnimationFrame(()=>window.scrollTo(0,document.body.scrollHeight));}
+async function saveConv(){
+  CONV=CONV.slice(-40);
+  try{localStorage.setItem('prt-conv',JSON.stringify(CONV));}catch(e){}
+  if(CONVDOC){try{await CONVDOC.set({msgs:CONV,t:Date.now()});}catch(e){}}
+}
+async function sendChat(text){
+  text=(text||'').trim(); if(!text||chatBusy) return;
+  if(!SAMPLE){toast('Le conseiller n\'est pas disponible ici');return;}
+  chatBusy=true;$('chatSend').disabled=true;$('chatIn').value='';autoGrow();
+  CONV.push({role:'user',content:text});bubble('user',text);
+  const b=bubble('assistant','<span class="typing">Je réfléchis…</span>');scrollChat();
+  chatCtrl=new AbortController();
+  const msgs=[{role:'user',content:sysPrompt()},{role:'assistant',content:"Compris. Je suis le conseiller de Hugo et j'ai sa situation sous les yeux."},...CONV.slice(-20)];
+  try{
+    const r=await SAMPLE(msgs,{cache:false,signal:chatCtrl.signal,tools:TOOLS,onText:({text})=>{b.innerHTML=md(text)||'<span class="typing">Je réfléchis…</span>';}});
+    const out=(r&&r.text)||'';b.innerHTML=md(out);CONV.push({role:'assistant',content:out});await saveConv();
+  }catch(e){
+    b.classList.add('err');
+    const partial=e&&e.text;
+    b.innerHTML=e&&e.code==='rate_limited'?md("Beaucoup de questions d'un coup : attends une minute et renvoie ta question."):e&&e.code==='not_granted'?md("Le conseiller n'a pas l'autorisation de répondre ici. Recharge la page et accepte la demande d'accès."):md((partial?partial+'\n\n':'')+"Oups, la réponse a été interrompue. Renvoie ta question.");
+    if(e&&e.code==='not_granted'){SAMPLE=null;}
+    CONV.pop();
+  }
+  chatBusy=false;$('chatSend').disabled=false;scrollChat();
+}
+function autoGrow(){const t=$('chatIn');t.style.height='auto';t.style.height=Math.min(140,t.scrollHeight)+'px';}
+$('chatIn').addEventListener('input',autoGrow);
+$('chatIn').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!/iPhone|iPad|Android/.test(navigator.userAgent)){e.preventDefault();sendChat($('chatIn').value);}});
+$('chatForm').addEventListener('submit',e=>{e.preventDefault();sendChat($('chatIn').value);});
+$('chatNew').addEventListener('click',async()=>{if(chatBusy&&chatCtrl)chatCtrl.abort();CONV=[];await saveConv();renderChat();});
+$('chatSit').addEventListener('click',()=>{$('sitBox').hidden=false;$('sitTxt').focus();});
+$('sitCancel').addEventListener('click',()=>{$('sitBox').hidden=true;});
+$('sitGo').addEventListener('click',()=>{try{S=clean(JSON.parse($('sitTxt').value));persist();renderAll();$('sitBox').hidden=true;$('sitTxt').value='';toast('Situation mise à jour ✔');}catch(e){toast('Texte non reconnu : colle exactement les données copiées');}});
+function askAdvisor(q){
+  location.hash='conseiller';
+  if(SAMPLE){setTimeout(()=>{ if(/: $/.test(q)){$('chatIn').value=q;$('chatIn').focus();autoGrow();} else sendChat(q);},50);}
+  else pendingAsk=q;
+}
+function onChatView(){ if(SAMPLE&&!convLoaded) loadConv(); }
+async function loadConv(){
+  convLoaded=true;
+  try{const raw=localStorage.getItem('prt-conv');if(raw)CONV=JSON.parse(raw).filter(m=>m&&(m.role==='user'||m.role==='assistant')&&typeof m.content==='string');}catch(e){}
+  if(CONVDOC){try{const sn=await CONVDOC.get();if(sn.exists){const d=sn.data();if(Array.isArray(d.msgs))CONV=d.msgs.filter(m=>m&&(m.role==='user'||m.role==='assistant')&&typeof m.content==='string').slice(-40);}}catch(e){}}
+  renderChat();
+  if(pendingAsk){const q=pendingAsk;pendingAsk=null;askAdvisor(q);}
+}
+// Hors Claude (appli iPhone) : bouton qui copie les données et ouvre le conseiller
+$('openAdvisor').addEventListener('click',()=>{
+  const t=JSON.stringify(S);let ok=false;
+  try{navigator.clipboard.writeText(t).then(()=>{},()=>{});ok=true;}catch(e){}
+  window.open(ADVISOR_URL+'#conseiller','_blank');
+  $('openAdvisorNote').textContent=ok?'Tes données sont copiées. Dans le conseiller, touche « Mettre à jour ma situation » puis colle.':'Copie tes données depuis Mon argent → Suivi, puis colle-les dans le conseiller.';
+});
+$('openAdvisorNote').textContent=IN_CLAUDE?'':'Nécessite d\'être connecté à claude.ai dans Safari.';
+
+/* ================= SYNCHRO + CONSEILLER (version Claude uniquement) ================= */
+(async()=>{
+  if(!IN_CLAUDE) return;
+  try{$('install').hidden=true;}catch(e){}
+  // conseiller
+  try{const sm=await window.claude.use('sample'); if(sm){SAMPLE=sm;$('chatWrap').hidden=false;$('chatOff').hidden=true;if(location.hash==='#conseiller')loadConv();
+    try{const L=sm.limits?await sm.limits():null;if(L&&L.images)$('anaImgWrap').hidden=false;}catch(e){}}}catch(e){}
+  // base de données
+  let db=null; try{db=await window.claude.use('db');}catch(e){}
+  if(!db) return;
+  try{CONVDOC=db.doc('conseiller/conv');}catch(e){}
+  if(convLoaded&&CONVDOC){convLoaded=false;if(location.hash==='#conseiller')loadConv();}
+  setSync('load');
+  const timer=setTimeout(()=>{if(!DBDOC)setSync('err');},10000);
+  let doc; try{doc=db.doc('portfolio/state');}catch(e){clearTimeout(timer);setSync('local');return;}
+  let first=true;
+  doc.onSnapshot(snap=>{
+    if(snap.metadata&&snap.metadata.hasPendingWrites) return;
+    if(!snap.metadata||!snap.metadata.fromCache) clearTimeout(timer);
+    DBDOC=doc;
+    if(snap.exists){
+      const remote=JSON.stringify(clean(snap.data()));
+      if(remote!==JSON.stringify(S)){S=JSON.parse(remote);try{localStorage.setItem(LS,remote);}catch(e){} renderAll();}
+      lastSent=remote;
+    } else if(first){ flush(); }
+    first=false; setSync('ok');
+  },err=>{clearTimeout(timer);setSync(err&&err.code==='revoked'?'local':'err');});
+  try{db.doc('app/cours').onSnapshot(s=>{if(!s.exists)return;const C=s.data()||{};let ch=false;
+    S.positions.forEach(p=>{const c=p.isin&&C[p.isin];if(c&&isFinite(+c.cours)&&+c.cours>0){const t=Date.parse(c.date)||0;if(t>(p.coursDate||0)){p.cours=+c.cours;p.coursDate=t;p.coursAuto=true;ch=true;}}});
+    if(ch){persist();renderPositions();}},()=>{});}catch(e){}
+  try{db.doc('app/actu').onSnapshot(s=>{if(s.exists){const d=s.data();if(d&&d.asof&&Array.isArray(d.kpis)){ACTU=d;renderActu();renderCoach();}}},()=>{});}catch(e){}
+})();
+
+
+/* ================= PARCOURS « JE DÉBUTE » ================= */
+const RH_MAIL=`Bonjour,
+
+Je suis alternant(e) dans l'entreprise et je souhaiterais me renseigner sur l'épargne salariale :
+1. Existe-t-il un PEE et/ou un PERCOL, et les alternants y ont-ils accès ?
+2. Y a-t-il un abondement de l'entreprise ? Si oui, à quel taux et jusqu'à quel plafond ?
+3. Y a-t-il un accord d'intéressement ou de participation ?
+4. Quel est le gestionnaire et comment accéder à mon espace en ligne ?
+
+Merci beaucoup pour votre aide,
+Hugo`;
+const MISSIONS=[
+ {id:'m1',t:"Remplis ton budget",min:3,why:"Tout part de là : savoir ce qui rentre, ce qui sort, et ce que tu peux mettre de côté.",steps:["Va dans Mon argent → Budget & LEP.","Indique ton salaire net et tes dépenses fixes (loyer, transport, téléphone, abonnements, courses).","Regarde le montant « Épargne 20 % » : c'est ta cible de départ."],go:'argent:budget',gt:"Ouvrir mon budget",plan:'budget',auto:()=>S.profil.salaire>0&&S.profil.depenses>0&&S.profil.salaire!==1100},
+ {id:'m2',t:"Entre tes soldes",min:3,why:"Le coach et le conseiller s'adaptent à tes vrais chiffres.",steps:["Ouvre l'appli Société Générale et note le solde de chaque compte.","Dans Mon argent → Mes comptes, touche « Mettre à jour mes soldes ».","Ajoute les comptes qui manquent (Livret Jeune, LDDS…) avec « + Ajouter un compte »."],go:'argent:comptes',gt:"Mettre à jour mes soldes",plan:'comptes',auto:()=>S.accounts.some(a=>a.solde)},
+ {id:'m3',t:"Fais le test de profil",min:1,why:"Pour savoir comment répartir ton argent long terme sans paniquer en cas de krach.",steps:["7 questions, réponds honnêtement.","Note ton profil : il décide de la part en ETF, fonds euros et livrets."],go:'plus:conseil',gt:"Faire le test",plan:'profil',auto:()=>!!S.risk},
+ {id:'m4',t:"Envoie l'e-mail aux RH",min:2,why:"Si ton entreprise abonde ton épargne, c'est de l'argent offert : le meilleur placement possible.",steps:["Copie l'e-mail ci-dessous.","Envoie-le au service RH ou à ton tuteur.","Quand tu as la réponse, mets-la dans Mon argent → Budget & LEP → Mes réglages."],mail:true,plan:'rh',auto:()=>S.profil.pee!=='inconnu'},
+ {id:'m5',t:"Vérifie ton droit au LEP et ouvre-le",min:15,why:"Le LEP rapporte 2,5 % net, sans risque : la meilleure place pour ton matelas de sécurité.",steps:["Sur impots.gouv.fr → Documents, ouvre ton dernier avis d'impôt et note ton revenu fiscal de référence.","Teste-le dans Mon argent → Budget & LEP.","Si c'est bon : dans l'appli Société Générale ou en agence, demande l'ouverture d'un LEP (avis d'impôt + pièce d'identité, 30 € minimum).","Sinon : ouvre ou garde un Livret A."],go:'argent:budget',gt:"Tester mon droit au LEP",plan:'lep'},
+ {id:'m6',t:"Programme ton virement vers le livret",min:5,why:"Épargner automatiquement, le lendemain de la paie, avant de dépenser.",steps:["Appli Société Générale → Virements → Virement permanent.","Vers ton LEP (ou Livret A), le 29 de chaque mois.","Montant : celui de « Matelas de sécurité » dans « Ma répartition à chaque paie » sur l'accueil."],go:'plus:guides',guide:'g6',gt:"Voir le guide",plan:'vir1'},
+ {id:'m7',t:"Choisis ton courtier pour le PEA",min:10,why:"Des frais bas, c'est des milliers d'euros en plus à la retraite.",steps:["Ouvre Plus → Comparatif.","Choisis un courtier avec achats programmés gratuits ou presque et un ETF monde éligible PEA.","Regarde sa grille tarifaire officielle avant de valider ton choix."],go:'plus:compar',gt:"Voir le comparatif",plan:'courtier'},
+ {id:'m8',t:"Ouvre ton PEA et verse 10 €",min:20,why:"Le compteur fiscal des 5 ans démarre au premier versement : plus tôt c'est fait, mieux c'est.",steps:["Sur le site ou l'appli du courtier : « Ouvrir un PEA ».","Prépare pièce d'identité, justificatif de domicile de moins de 3 mois et RIB.","Réponds honnêtement au questionnaire.","Fais un premier virement, même de 10 €."],go:'plus:etapes',gt:"Voir le détail",plan:'pea'},
+ {id:'m9',t:"Choisis ton ETF monde",min:10,why:"Un seul ETF, bien choisi, que tu garderas des décennies.",steps:["Cherche « MSCI World » ou « All World » chez ton courtier.","Vérifie : éligible PEA, capitalisant (Acc), frais sous 0,45 %, gros encours.","Note son nom et son code ISIN."],go:'plus:guides',guide:'g1',gt:"Voir le guide ETF",plan:'etf'},
+ {id:'m10',t:"Programme ton achat mensuel",min:10,why:"Acheter chaque mois, automatiquement, sans te poser de question.",steps:["Programme un virement Société Générale → PEA le 29.","Chez le courtier : investissement programmé sur ton ETF, le 2 ou 3 du mois.","Montant : celui de « Retraite » dans ta répartition à chaque paie."],go:'plus:guides',guide:'g1',gt:"Voir le guide",plan:'auto'},
+ {id:'m11',t:"Ajoute ton ETF dans Mes placements",min:3,why:"Pour suivre tes parts, ton prix moyen et tes gains réels.",steps:["Mon argent → Placements → « + Ajouter un ETF ».","Après chaque achat, ajoute la date, le nombre de parts et le prix."],go:'argent:placements',gt:"Ouvrir Mes placements",plan:'ordre',auto:()=>S.positions.some(p=>p.achats.length)},
+ {id:'m12',t:"Ouvre ton assurance vie",min:15,why:"Pour lancer le compteur fiscal des 8 ans et avoir un fonds euros sans risque pour tes projets.",steps:["Choisis un contrat en ligne sans frais sur versement (Plus → Comparatif).","Gestion libre, remplis la clause bénéficiaire.","Verse le minimum demandé."],go:'plus:compar',gt:"Voir le comparatif",plan:'av'},
+ {id:'m13',t:"Ajoute le rappel de paie",min:1,why:"Un rappel la veille de ta paie pour répartir ton argent au bon moment.",steps:["Mon argent → Budget & LEP → Mes réglages.","Touche « Ajouter le rappel à mon calendrier », puis « Ajouter » sur l'iPhone."],go:'argent:budget',gt:"Ouvrir mes réglages"}
+];
+function missionDone(m){return !!S.done[m.id]||(m.auto&&m.auto());}
+function renderMission(){
+  const box=$('mission');
+  if(S.profil.debutant===false){box.hidden=true;return;}
+  const i=MISSIONS.findIndex(m=>!missionDone(m)&&!S.done[m.id+'_skip']);
+  const n=MISSIONS.filter(missionDone).length;
+  if(i<0){box.hidden=false;box.innerHTML=`<div class="eyebrow">Parcours « Je débute »</div><h3 style="margin:4px 0">Parcours terminé 🎉</h3><p class="small">Tu as fait les ${MISSIONS.length} étapes. Maintenant, laisse le temps travailler : un relevé par mois, un bilan par an.</p>`;return;}
+  const m=MISSIONS[i];box.hidden=false;
+  box.innerHTML=`<div class="mtop"><div class="eyebrow">Ta mission du moment · ${n+1}/${MISSIONS.length}</div><span class="mtime">≈ ${m.min} min</span></div>
+   <div class="progress"><i style="width:${n/MISSIONS.length*100}%"></i></div>
+   <h3 style="margin:8px 0 4px">${esc(m.t)}</h3><p class="small muted" style="margin:0 0 8px">${esc(m.why)}</p>
+   <ol class="steps">${m.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>
+   ${m.mail?`<textarea id="rhMail" readonly aria-label="E-mail à envoyer">${esc(RH_MAIL)}</textarea><button type="button" class="ghost" id="copyMail" style="margin:8px 0">Copier l'e-mail</button>`:''}
+   ${m.go?`<a class="go" href="#${m.go.split(':')[0]}" data-go="${m.go}"${m.guide?` data-guide="${m.guide}"`:''}>${esc(m.gt)} →</a>`:''}
+   <div class="btns" style="margin-top:12px"><button type="button" id="mDone">C'est fait ✓</button><button type="button" class="ghost" data-ask="Je suis bloqué sur l'étape « ${esc(m.t)} » de mon parcours. Aide-moi pas à pas.">Je bloque</button></div>
+   <button type="button" class="linkbtn" id="mSkip">Passer cette étape pour l'instant</button>`;
+  $('mDone').addEventListener('click',()=>{S.done[m.id]=true;if(m.plan)S.done[m.plan]=true;persist();renderMission();renderTasks();checkBadges();toast('Mission réussie ✔');});
+  $('mSkip').addEventListener('click',()=>{S.done[m.id+'_skip']=true;persist();renderMission();});
+  if(m.mail) $('copyMail').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(RH_MAIL);toast('E-mail copié');}catch(e){$('rhMail').select();toast('Sélectionne et copie le texte');}});
+}
+
+/* ================= BADGES ================= */
+const BADGES=[
+ {id:'start',n:'Premier pas',d:'Renseigner tes comptes',ok:()=>S.accounts.some(a=>a.solde)},
+ {id:'budget',n:'Budget en main',d:'Remplir salaire et dépenses',ok:()=>S.profil.salaire>0&&S.profil.depenses>0&&S.profil.salaire!==1100},
+ {id:'profil',n:'Je me connais',d:'Faire le test de profil',ok:()=>!!S.risk},
+ {id:'quiz',n:'Incollable',d:'8/10 au quiz',ok:()=>!!S.done.quiz},
+ {id:'rel1',n:'Premier relevé',d:'Enregistrer un relevé mensuel',ok:()=>S.historique.length>=1},
+ {id:'rel3',n:'Régulier',d:'3 relevés mensuels',ok:()=>S.historique.length>=3,p:()=>S.historique.length/3},
+ {id:'rel12',n:'Une année tenue',d:'12 relevés mensuels',ok:()=>S.historique.length>=12,p:()=>S.historique.length/12},
+ {id:'mat1',n:'Coussin',d:'1 mois de dépenses de côté',ok:()=>S.profil.depenses>0&&totals().secu>=S.profil.depenses,p:()=>S.profil.depenses?totals().secu/S.profil.depenses:0},
+ {id:'mat3',n:'Matelas complet',d:'3 mois de dépenses de côté',ok:()=>S.profil.depenses>0&&totals().secu>=S.profil.depenses*3,p:()=>S.profil.depenses?totals().secu/(S.profil.depenses*3):0},
+ {id:'etf',n:'Investisseur',d:'Premier ETF acheté',ok:()=>S.positions.some(p=>p.achats.length)},
+ {id:'k1',n:'1 000 € investis',d:'Long terme ≥ 1 000 €',ok:()=>totals().inv>=1000,p:()=>totals().inv/1000},
+ {id:'k5',n:'5 000 € investis',d:'Long terme ≥ 5 000 €',ok:()=>totals().inv>=5000,p:()=>totals().inv/5000},
+ {id:'k10',n:'10 000 € investis',d:'Long terme ≥ 10 000 €',ok:()=>totals().inv>=10000,p:()=>totals().inv/10000},
+ {id:'courant',n:'Rien ne dort',d:'Compte courant optimisé',ok:()=>{const T=totals(),d=S.profil.depenses;return d>0&&T.courant>=0&&T.courant<=Math.max(d,300)*1.5&&T.secu>0;}},
+ {id:'proj',n:'Projet bouclé',d:'Atteindre un objectif de projet',ok:()=>S.projets.some(p=>p.montant>0&&p.deja>=p.montant)},
+ {id:'detect',n:'Détective',d:'Analyser un relevé bancaire',ok:()=>!!S.analyse},
+ {id:'parcours',n:'Parcours terminé',d:'Les 13 missions « Je débute »',ok:()=>MISSIONS.every(missionDone),p:()=>MISSIONS.filter(missionDone).length/MISSIONS.length}
+];
+let badgeInit=false;
+function checkBadges(){
+  S.badges=S.badges||{};let neu=[];
+  BADGES.forEach(b=>{let ok=false;try{ok=b.ok();}catch(e){} if(ok&&!S.badges[b.id]){S.badges[b.id]=Date.now();neu.push(b);}});
+  if(neu.length){persist(); if(badgeInit) toast('🏅 Badge débloqué : '+neu[neu.length-1].n);}
+  badgeInit=true; renderBadges();
+}
+function renderBadges(){
+  const got=BADGES.filter(b=>S.badges&&S.badges[b.id]).length;
+  $('badgeStrip').innerHTML=`<div class="sect" style="margin-top:4px"><h3>Mes badges</h3><a class="go" href="#plus" data-go="plus:badges">${got}/${BADGES.length} →</a></div><div class="bstrip">`+BADGES.map(b=>`<span class="bdg${S.badges&&S.badges[b.id]?' on':''}" title="${esc(b.n)}">${badgeIcon(b.id)}</span>`).join('')+'</div>';
+  $('badgeGrid').innerHTML=BADGES.map(b=>{const on=S.badges&&S.badges[b.id];let pr=0;try{pr=b.p?Math.min(1,Math.max(0,b.p())):0;}catch(e){}
+    return `<div class="bcard${on?' on':''}"><span class="bdg${on?' on':''}">${badgeIcon(b.id)}</span><div><b>${esc(b.n)}</b><small>${esc(b.d)}</small>${on?`<small class="pos">Débloqué le ${new Date(on).toLocaleDateString('fr-FR')}</small>`:b.p?`<div class="progress" style="margin-top:6px"><i style="width:${pr*100}%"></i></div>`:''}</div></div>`;}).join('');
+}
+function badgeIcon(id){
+  const I={start:'M5 19l7-14 7 14M8 13h8',budget:'M4 7h16v10H4zM4 11h16',profil:'M12 8a3 3 0 1 0 0-.01M6 19c1-3 3-4.5 6-4.5s5 1.5 6 4.5',quiz:'M9 9a3 3 0 1 1 4 2.8c-.6.3-1 .8-1 1.5V14M12 17v.01',rel1:'M6 4h12v16H6zM9 9h6M9 13h6',rel3:'M5 18l4-5 3 3 6-8',rel12:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',mat1:'M12 3l8 4v5c0 5-4 8-8 9-4-1-8-4-8-9V7z',mat3:'M12 3l8 4v5c0 5-4 8-8 9-4-1-8-4-8-9V7zM9 12l2 2 4-4',etf:'M4 19V5M4 19h16M8 15l4-4 3 3 5-6',k1:'M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6',k5:'M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6',k10:'M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6',courant:'M3 12h4l3 8 4-16 3 8h4',proj:'M5 21V4h11l-2 4 2 4H5',detect:'M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12zM21 21l-6-6',parcours:'M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3'};
+  return `<svg viewBox="0 0 24 24"><path d="${I[id]||I.start}"/></svg>`;
+}
+
+/* ================= RAPPEL DE PAIE (calendrier) ================= */
+function icsText(){
+  const j=Math.min(28,Math.max(1,(S.profil.jour||28)-1)), now=new Date(), pad=n=>String(n).padStart(2,'0');
+  let y=now.getFullYear(),m=now.getMonth()+1; if(now.getDate()>j){m++;if(m>12){m=1;y++;}}
+  const dt=`${y}${pad(m)}${pad(j)}`, stamp=now.toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
+  const M=monthlyPlan(),desc=('Demain c\'est la paie ! Répartis ton épargne dès qu\'elle tombe :\\n'+M.out.map(o=>`- ${o.n} : ${Math.round(o.v)} € (${o.w})`).join('\\n')+'\\nOuvre Mon Plan Retraite pour le détail.').replace(/,/g,'\\,').replace(/;/g,'\;');
+  return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Mon Plan Retraite//FR','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:paie-${dt}@mon-plan-retraite`,`DTSTAMP:${stamp}`,`DTSTART;TZID=Europe/Paris:${dt}T193000`,`DTEND;TZID=Europe/Paris:${dt}T194500`,`RRULE:FREQ=MONTHLY;BYMONTHDAY=${j}`,'SUMMARY:💶 Paie demain : répartis ton épargne',`DESCRIPTION:${desc}`,'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:Paie demain : répartis ton épargne','TRIGGER:PT0M','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+}
+$('icsBtn').addEventListener('click',()=>{
+  if(IN_CLAUDE){toast('Fais-le depuis l\'appli installée sur ton iPhone');return;}
+  const blob=new Blob([icsText()],{type:'text/calendar'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='rappel-paie.ics';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+  S.done.m13=true;persist();renderMission();toast('Ouvre le fichier puis touche « Ajouter »');
+});
+$('jour').addEventListener('input',e=>{const v=Math.round(+e.target.value);if(v>=1&&v<=31){S.profil.jour=v;persist();renderCoach();}});
+$('debutant').addEventListener('change',e=>{S.profil.debutant=e.target.checked;persist();renderMission();});
+
+/* ================= MES PLACEMENTS (ETF) ================= */
+function posCalc(p){const parts=p.achats.reduce((x,a)=>x+a.parts,0),cost=p.achats.reduce((x,a)=>x+a.parts*a.prix,0),pru=parts?cost/parts:0,cours=p.cours||pru,val=parts*cours;return{parts,cost,pru,cours,val,pv:val-cost,pct:cost?(val-cost)/cost*100:0};}
+const fmtN=(n,d=2)=>(+n).toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d});
+function renderPositions(){
+  const openB=[...document.querySelectorAll('details.buys[open]')].map(d=>d.dataset.pid);
+  const tot=S.positions.reduce((x,p)=>{const c=posCalc(p);x.v+=c.val;x.c+=c.cost;return x;},{v:0,c:0});
+  $('posTot').innerHTML=S.positions.length?`<div class="eyebrow">Valeur de mes ETF</div><div class="bigv">${eur(tot.v)}</div><p class="small ${tot.v-tot.c>=0?'pos':'neg'}" style="font-weight:700;margin:2px 0 0">${tot.v-tot.c>=0?'+':''}${eur(tot.v-tot.c)} (${tot.c?fmtN((tot.v-tot.c)/tot.c*100,1):'0'} %) depuis tes achats</p><p class="small muted">Investi : ${eur(tot.c)}</p>`:`<div class="eyebrow">Mes placements</div><p class="small" style="margin:6px 0 0">Ajoute ton ETF pour suivre tes parts, ton prix moyen d'achat et tes gains réels.</p>`;
+  $('posList').innerHTML=S.positions.map(p=>{const c=posCalc(p),acc=S.accounts.find(a=>a.id===p.compte);
+    return `<div class="card pos-card"><div class="ph"><div><b>${esc(p.nom)}</b><small>${p.isin?esc(p.isin)+' · ':''}${acc?esc(acc.n):''}</small></div><button type="button" class="del" data-posdel="${esc(p.id)}" aria-label="Supprimer ${esc(p.nom)}">×</button></div>
+     <div class="pgrid"><div><small>Valeur</small><b>${eur(c.val)}</b></div><div><small>Gain</small><b class="${c.pv>=0?'pos':'neg'}">${c.pv>=0?'+':''}${eur(c.pv)}<br><span class="small">${c.pv>=0?'+':''}${fmtN(c.pct,1)} %</span></b></div><div><small>Parts</small><b>${fmtN(c.parts,c.parts%1?4:0)}</b></div><div><small>Prix moyen (PRU)</small><b>${fmtN(c.pru)} €</b></div></div>
+     <div class="row2" style="margin-top:10px"><div class="field" style="margin:0"><label for="cours-${esc(p.id)}">Cours actuel (€)</label><input type="number" inputmode="decimal" step="0.01" id="cours-${esc(p.id)}" data-cours="${esc(p.id)}" value="${p.cours||''}" placeholder="${fmtN(c.pru)}"></div><div style="display:flex;flex-direction:column;justify-content:flex-end"><a class="btn ghost" style="min-height:46px" href="https://www.google.com/search?q=${encodeURIComponent((p.isin||p.nom)+' cours')}" target="_blank" rel="noopener">Chercher le cours</a></div></div>
+     <p class="small muted" style="margin:4px 0 0">${p.coursDate?'Cours du '+new Date(p.coursDate).toLocaleDateString('fr-FR')+(p.coursAuto?' (mis à jour automatiquement)':''):'Recopie le cours affiché dans l\'appli de ton courtier.'}</p>
+     <details class="buys" data-pid="${esc(p.id)}"${openB.includes(p.id)?' open':''}><summary>Mes achats (${p.achats.length})</summary>
+      ${p.achats.slice().sort((a,b)=>b.d.localeCompare(a.d)).map(a=>`<div class="buy"><span>${new Date(a.d).toLocaleDateString('fr-FR')}</span><span>${fmtN(a.parts,a.parts%1?4:0)} × ${fmtN(a.prix)} €</span><b>${eur(a.parts*a.prix)}</b><button type="button" class="del sm" data-buydel="${esc(p.id)}|${esc(a.id)}" aria-label="Supprimer cet achat">×</button></div>`).join('')||'<p class="small muted">Aucun achat enregistré.</p>'}
+      <div class="three" style="margin-top:8px"><div><label for="bd-${esc(p.id)}">Date</label><input type="date" id="bd-${esc(p.id)}"></div><div><label for="bp-${esc(p.id)}">Parts</label><input type="number" inputmode="decimal" step="0.0001" min="0" id="bp-${esc(p.id)}"></div><div><label for="bx-${esc(p.id)}">Prix (€)</label><input type="number" inputmode="decimal" step="0.01" min="0" id="bx-${esc(p.id)}"></div></div>
+      <button type="button" class="ghost" data-buyadd="${esc(p.id)}" style="margin-top:8px">Ajouter cet achat</button>
+     </details>
+     ${acc?`<button type="button" class="linkbtn" data-sync="${esc(p.id)}">Reporter cette valeur dans le solde de « ${esc(acc.n)} »</button>`:''}
+    </div>`;}).join('');
+  const today=new Date().toISOString().slice(0,10);
+  S.positions.forEach(p=>{const el=$('bd-'+p.id);if(el)el.value=today;});
+  $('posList').querySelectorAll('[data-cours]').forEach(i=>i.addEventListener('change',e=>{const p=S.positions.find(x=>x.id===e.target.dataset.cours);if(!p)return;p.cours=num(e.target.value,0);p.coursDate=Date.now();p.coursAuto=false;persist();renderPositions();checkBadges();}));
+  $('posList').querySelectorAll('[data-buyadd]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.buyadd,p=S.positions.find(x=>x.id===id);if(!p)return;const d=$('bd-'+id).value,pa=num($('bp-'+id).value,0),px=num($('bx-'+id).value,0);
+    if(!d||!pa||!px){toast('Remplis la date, le nombre de parts et le prix');return;}
+    p.achats.push({id:'a'+Date.now().toString(36),d,parts:pa,prix:px});if(!p.cours){p.cours=px;p.coursDate=Date.now();}persist();renderPositions();checkBadges();renderMission();toast('Achat ajouté ✔');}));
+  $('posList').querySelectorAll('[data-buydel]').forEach(b=>b.addEventListener('click',()=>{const[pid,aid]=b.dataset.buydel.split('|'),p=S.positions.find(x=>x.id===pid);if(!p||!window.confirm('Supprimer cet achat ?'))return;p.achats=p.achats.filter(a=>a.id!==aid);persist();renderPositions();}));
+  $('posList').querySelectorAll('[data-posdel]').forEach(b=>b.addEventListener('click',()=>{const p=S.positions.find(x=>x.id===b.dataset.posdel);if(!p||!window.confirm(`Supprimer « ${p.nom} » et ses achats ?`))return;S.positions=S.positions.filter(x=>x!==p);persist();renderPositions();}));
+  $('posList').querySelectorAll('[data-sync]').forEach(b=>b.addEventListener('click',()=>{const p=S.positions.find(x=>x.id===b.dataset.sync);if(!p)return;const acc=S.accounts.find(a=>a.id===p.compte);if(!acc)return;
+    const v=S.positions.filter(x=>x.compte===acc.id).reduce((x,q)=>x+posCalc(q).val,0);acc.solde=Math.round(v*100)/100;acc.maj=Date.now();persist();renderAccounts();renderMoney();renderCoach();toast(`Solde de « ${acc.n} » mis à jour : ${eur(v)} (hors espèces)`);}));
+}
+$('posAdd').addEventListener('click',()=>{$('posForm').hidden=!$('posForm').hidden;$('posCompte').innerHTML=S.accounts.filter(a=>a.k==='inv').map(a=>`<option value="${esc(a.id)}">${esc(a.n)}</option>`).join('')||'<option value="">—</option>';});
+$('posGo').addEventListener('click',()=>{const n=$('posNom').value.trim();if(!n){toast('Donne le nom de ton ETF');return;}if(S.positions.length>=10)return;
+  S.positions.push({id:'e'+Date.now().toString(36),nom:n.slice(0,60),isin:$('posIsin').value.trim().toUpperCase().slice(0,12),compte:$('posCompte').value,achats:[],cours:0,coursDate:0});
+  persist();$('posForm').hidden=true;$('posNom').value='';$('posIsin').value='';renderPositions();toast('ETF ajouté : ajoute maintenant ton achat');});
+
+/* ================= ANALYSE DU RELEVÉ BANCAIRE ================= */
+const SPEND_CATS=[
+ ['Revenus',/salaire|paie|remuneration|caf |caf$|apl|prime|remboursement|virement recu|vir recu|vir inst recu|france travail|pole emploi/i,1],
+ ['Épargne et placements',/livret|lep|ldds|epargne|pea |pea$|bourse direct|trade republic|fortuneo|boursobank|saxo|linxea|assurance vie|placement/i],
+ ['Logement et énergie',/loyer|edf|engie|total ?energies|eau |veolia|suez|foncia|nexity|habitation|crous/i],
+ ['Courses',/carrefour|leclerc|auchan|lidl|aldi|intermarche|monoprix|franprix|casino|super u|hyper u|u express|picard|grand frais|netto|biocoop|naturalia|g20|spar/i],
+ ['Restos et livraison',/mcdo|mc donald|burger|kfc|uber ?eats|deliveroo|just ?eat|restaurant|resto|brasserie|pizza|sushi|starbucks|boulangerie|paul |o'tacos|subway|five guys|columbus/i],
+ ['Transport',/sncf|ratp|navigo|transilien|tcl|tisseo|keolis|uber(?! ?eats)|bolt|blablacar|essence|carburant|total |esso|bp |shell|avia|peage|vinci autoroute|sanef|parking|lime|tier/i],
+ ['Abonnements',/netflix|spotify|deezer|disney|canal|prime video|amazon prime|apple\.com|icloud|google ?(one|storage)|youtube|playstation|xbox|nintendo|basic ?fit|fitness|salle de sport|chatgpt|openai|free mobile|sfr|orange|bouygues|sosh|red by|b&you/i],
+ ['Shopping et loisirs',/amazon|zalando|fnac|darty|decathlon|h&m|zara|primark|shein|vinted|leboncoin|cdiscount|ikea|action |sephora|nocibe|cinema|ugc|pathe|steam|fnac/i],
+ ['Santé et assurances',/pharmacie|doctolib|medecin|dentiste|mutuelle|harmonie|mgen|alan |assurance|axa|maif|macif|matmut|allianz|groupama/i],
+ ['Frais bancaires',/frais|cotisation|commission|agios|interets debiteurs|tenue de compte|jazz|sobrio|carte bancaire/i],
+ ['Retraits d\'espèces',/retrait|dab |distributeur/i],
+ ['Virements et autres',/virement|vir |prlv|prelevement|lydia|paypal|sumeria|wero/i]
+];
+function parseAmt(v){if(v==null)return NaN;let s=String(v).replace(/\s|\u00a0|€|EUR/g,'').replace(/^\+/,'');if(!s)return NaN;if(/,\d{1,2}$/.test(s))s=s.replace(/\./g,'').replace(',','.');else s=s.replace(/,/g,'');return parseFloat(s);}
+function parseDate(v){const m=String(v||'').trim().match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})/);if(m){let y=+m[3];if(y<100)y+=2000;return new Date(y,+m[2]-1,+m[1]);}const m2=String(v||'').match(/^(\d{4})-(\d{2})-(\d{2})/);if(m2)return new Date(+m2[1],+m2[2]-1,+m2[3]);return null;}
+function splitCSV(line,sep){const out=[];let cur='',q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(q&&line[i+1]==='"'){cur+='"';i++;}else q=!q;}else if(ch===sep&&!q){out.push(cur);cur='';}else cur+=ch;}out.push(cur);return out.map(x=>x.trim());}
+function parseCSV(text){
+  const lines=text.split(/\r?\n/).filter(l=>l.trim());if(!lines.length)return[];
+  const sample=lines.slice(0,30).join('\n'),sep=[';','\t',','].sort((a,b)=>(sample.split(b).length)-(sample.split(a).length))[0];
+  const rows=lines.map(l=>splitCSV(l,sep));
+  const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  let hi=rows.findIndex(r=>{const j=norm(r.join(' '));return /date/.test(j)&&/(montant|debit|credit)/.test(j);});
+  const tx=[];
+  if(hi>=0){const H=rows[hi].map(norm),dI=H.findIndex(h=>/date/.test(h)),mI=H.findIndex(h=>/montant/.test(h)),deI=H.findIndex(h=>/debit/.test(h)),crI=H.findIndex(h=>/credit/.test(h));
+    const lI=H.map((h,i)=>/(libelle|detail|description|operation|nature)/.test(h)&&!/date|montant|devise/.test(h)?i:-1).filter(i=>i>=0);
+    for(const r of rows.slice(hi+1)){const d=parseDate(r[dI]);if(!d)continue;let a=mI>=0?parseAmt(r[mI]):NaN;
+      if(isNaN(a)){const de=parseAmt(r[deI]),cr=parseAmt(r[crI]);a=(isNaN(cr)?0:Math.abs(cr))-(isNaN(de)?0:Math.abs(de));if(!de&&!cr)continue;}
+      if(isNaN(a))continue;tx.push({d,l:lI.map(i=>r[i]||'').join(' ').replace(/\s+/g,' ').trim(),a});}
+  } else {
+    for(const r of rows){const di=r.findIndex(c=>parseDate(c));if(di<0)continue;let ai=-1;for(let i=r.length-1;i>=0;i--){if(i!==di&&/^[-+]?\s?[\d\s.]+,\d{2}$|^[-+]?\d+\.\d{2}$/.test(r[i].replace(/€|EUR/g,'').trim())){ai=i;break;}}
+      if(ai<0)continue;tx.push({d:parseDate(r[di]),l:r.filter((c,i)=>i!==di&&i!==ai&&!parseDate(c)).join(' ').replace(/\s+/g,' ').trim(),a:parseAmt(r[ai])});}
+  }
+  return tx.filter(t=>!isNaN(t.a)&&t.a!==0);
+}
+function catOf(t){const L=t.l.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');for(const[c,re,inc]of SPEND_CATS){if(re.test(L)){if(inc&&t.a<0)continue;if(!inc&&c!=='Épargne et placements'&&t.a>0&&c!=='Virements et autres')continue;return c;}}return t.a>0?'Revenus':'Autres dépenses';}
+function merchant(l){return l.replace(/\b(cb|carte|prlv|sepa|vir|virement|inst|prelevement|paiement|payments?|achat|retrait|dab|de|du|des|le|la|fact|facture|x\d+|\d{2}\/\d{2}(\/\d{2,4})?|\d{4,})\b/gi,' ').replace(/[^a-zA-ZÀ-ÿ&' ]/g,' ').replace(/\s+/g,' ').trim().split(' ').slice(0,3).join(' ').toUpperCase()||'?';}
+function analyse(tx){
+  if(!tx.length)return null;
+  tx.forEach(t=>t.c=catOf(t));
+  const ds=tx.map(t=>t.d.getTime()),from=new Date(Math.min(...ds)),to=new Date(Math.max(...ds));
+  const months=Math.max(1,Math.round((to-from)/(30.44*864e5)*10)/10);
+  const by={};tx.forEach(t=>{by[t.c]=(by[t.c]||0)+t.a;});
+  const rev=tx.filter(t=>t.c==='Revenus').reduce((x,t)=>x+t.a,0);
+  const ep=-(by['Épargne et placements']||0);
+  const dep=tx.filter(t=>t.a<0&&t.c!=='Épargne et placements').reduce((x,t)=>x-t.a,0);
+  const mer={};tx.filter(t=>t.a<0&&t.c!=='Épargne et placements').forEach(t=>{const k=merchant(t.l);mer[k]=mer[k]||{n:k,v:0,c:t.c,k:0,ms:new Set(),am:[]};mer[k].v-=t.a;mer[k].k++;mer[k].ms.add(t.d.getFullYear()+'-'+t.d.getMonth());mer[k].am.push(-t.a);});
+  const top=Object.values(mer).sort((a,b)=>b.v-a.v).slice(0,8).map(m=>({n:m.n,v:Math.round(m.v),c:m.c,k:m.k}));
+  const abos=Object.values(mer).filter(m=>m.c==='Abonnements'||(m.ms.size>=2&&m.k===m.ms.size&&Math.max(...m.am)-Math.min(...m.am)<=Math.max(2,0.1*Math.max(...m.am))&&!['Logement et énergie','Courses','Retraits d\'espèces','Restos et livraison','Shopping et loisirs'].includes(m.c))).map(m=>({n:m.n,v:Math.round(m.v/Math.max(1,m.ms.size)*100)/100})).sort((a,b)=>b.v-a.v).slice(0,10);
+  const cats=Object.entries(by).filter(([c,v])=>v<0&&c!=='Épargne et placements').map(([c,v])=>({c,v:Math.round(-v),m:Math.round(-v/months)})).sort((a,b)=>b.v-a.v);
+  return{date:Date.now(),from:from.toISOString().slice(0,10),to:to.toISOString().slice(0,10),months,n:tx.length,rev:Math.round(rev),dep:Math.round(dep),ep:Math.round(ep),cats,top,abos,frais:Math.round(-(by['Frais bancaires']||0))};
+}
+function renderAnalyse(){
+  const A=S.analyse,box=$('anaOut');if(!A){box.innerHTML='';return;}
+  const m=A.months,fx=['Logement et énergie','Transport','Abonnements','Santé et assurances','Frais bancaires'],fixe=A.cats.filter(c=>fx.includes(c.c)).reduce((x,c)=>x+c.m,0);
+  const resto=(A.cats.find(c=>c.c==='Restos et livraison')||{m:0}).m,shop=(A.cats.find(c=>c.c==='Shopping et loisirs')||{m:0}).m,aboM=A.abos.reduce((x,a)=>x+a.v,0);
+  const tips=[];
+  if(A.frais>0) tips.push(`<strong>${eur(A.frais/m)} de frais bancaires par mois.</strong> Demande à la Société Générale s'il existe une offre jeune moins chère, ou compare avec une banque en ligne gratuite.`);
+  if(aboM>20) tips.push(`<strong>${eur(aboM)} d'abonnements par mois.</strong> Passe la liste en revue : en supprimer un ou deux inutilisés, c'est vite ${eur(Math.min(aboM,30))} de plus par mois pour ton épargne.`);
+  if(resto>0&&A.rev>0&&resto/(A.rev/m)>0.1) tips.push(`<strong>Restos et livraison : ${eur(resto)} par mois</strong>, soit ${Math.round(resto/(A.rev/m)*100)} % de tes revenus. Réduire d'un tiers libérerait environ ${eur(resto/3)} par mois.`);
+  if(shop>150) tips.push(`<strong>Shopping et loisirs : ${eur(shop)} par mois.</strong> Fixe-toi une enveloppe « plaisir » mensuelle et garde le reste pour tes projets.`);
+  if(A.ep<=0) tips.push(`<strong>Aucun virement vers ton épargne repéré sur la période.</strong> Programme un virement permanent le lendemain de ta paie : c'est le geste qui change tout.`);
+  const pot=Math.round((Math.min(aboM,30)+(resto/(A.rev/m||1)>0.1?resto/3:0)+(A.frais/m))/5)*5;
+  const max=Math.max(...A.cats.map(c=>c.m),1);
+  box.innerHTML=`<div class="card"><div class="eyebrow">Du ${new Date(A.from).toLocaleDateString('fr-FR')} au ${new Date(A.to).toLocaleDateString('fr-FR')} · ${A.n} opérations</div>
+    <div class="pgrid" style="margin-top:8px"><div><small>Revenus / mois</small><b>${eur(A.rev/m)}</b></div><div><small>Dépenses / mois</small><b>${eur(A.dep/m)}</b></div><div><small>Épargné / mois</small><b class="${A.ep>0?'pos':''}">${eur(A.ep/m)}</b></div><div><small>Dépenses fixes / mois</small><b>${eur(fixe)}</b></div></div>
+    <button type="button" class="ghost" id="useFixe" style="margin-top:10px">Utiliser ${eur(fixe)} comme dépenses fixes</button></div>
+   ${pot>0?`<div class="card green"><div class="eyebrow" style="color:var(--good)">Potentiel repéré</div><div class="bigv">+${eur(pot)}<span class="small"> / mois</span></div><p class="small" style="margin:4px 0 0">Ce que tu pourrais épargner en plus, sans te priver de l'essentiel.</p></div>`:''}
+   ${tips.length?`<div class="card"><h3>Mes pistes</h3><ul class="small">${tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`:''}
+   <div class="card"><h3>Où va mon argent (par mois)</h3><div class="bars" style="margin-top:8px">${A.cats.map(c=>`<div class="b"><span>${esc(c.c)}</span><span class="track"><i style="width:${c.m/max*100}%;background:var(--accent)"></i></span><span class="amt">${eur(c.m)}</span></div>`).join('')}</div></div>
+   ${A.abos.length?`<div class="card"><h3>Abonnements et prélèvements récurrents</h3>${A.abos.map(a=>`<div class="buy"><span>${esc(a.n)}</span><b>${eur(a.v)}/mois</b></div>`).join('')}</div>`:''}
+   <div class="card"><h3>Là où je dépense le plus</h3>${A.top.map(t=>`<div class="buy"><span>${esc(t.n)}<small class="muted"> · ${esc(t.c)} · ${t.k}×</small></span><b>${eur(t.v)}</b></div>`).join('')}</div>
+   <button type="button" class="ghost" data-ask="Analyse mon relevé bancaire (résumé dans ma situation) et dis-moi concrètement comment épargner plus sans me priver.">En parler avec le conseiller</button>`;
+  $('useFixe').addEventListener('click',()=>{S.profil.depenses=Math.round(fixe/10)*10;persist();renderAll();toast('Dépenses fixes mises à jour');});
+}
+async function readFileText(f){const buf=await f.arrayBuffer();let t=new TextDecoder('utf-8').decode(buf);if(t.includes('\ufffd'))t=new TextDecoder('windows-1252').decode(buf);return t;}
+$('anaFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;
+  try{const tx=parseCSV(await readFileText(f));const A=analyse(tx);
+    if(!A){toast('Aucune opération reconnue dans ce fichier');$('anaMsg').textContent='Fichier non reconnu. Exporte au format CSV (ou Excel enregistré en CSV) depuis le site de ta banque.';return;}
+    S.analyse=A;persist();$('anaMsg').textContent='';renderAnalyse();checkBadges();toast(`${A.n} opérations analysées ✔`);}
+  catch(err){toast('Impossible de lire ce fichier');}
+  e.target.value='';});
+// Capture d'écran (version Claude, avec l'IA)
+async function analyseImage(f){
+  if(!SAMPLE){toast('Disponible dans la version Claude de l\'appli');return;}
+  $('anaMsg').textContent='Lecture de la capture par Claude…';
+  try{const r=await SAMPLE(`Voici une capture d'écran d'un relevé de compte bancaire français. Extrais TOUTES les opérations visibles. Réponds UNIQUEMENT avec un tableau JSON, sans texte autour, au format : [{"date":"JJ/MM/AAAA","libelle":"...","montant":-12.34}]. Montant négatif pour une dépense, positif pour un crédit. Si l'année n'est pas visible, utilise ${new Date().getFullYear()}.`,{images:[f],cache:false});
+    const m=(r.text||'').match(/\[[\s\S]*\]/);const arr=m?JSON.parse(m[0]):[];
+    const tx=arr.map(o=>({d:parseDate(o.date),l:String(o.libelle||''),a:+o.montant})).filter(t=>t.d&&!isNaN(t.a)&&t.a);
+    const A=analyse(tx);if(!A){$('anaMsg').textContent='Aucune opération lue sur cette capture.';return;}
+    S.analyse=A;persist();$('anaMsg').textContent='';renderAnalyse();checkBadges();toast(`${A.n} opérations analysées ✔`);}
+  catch(e){$('anaMsg').textContent=e&&e.code==='rate_limited'?'Trop de demandes : réessaie dans une minute.':'La capture n\'a pas pu être analysée. Essaie une image plus nette, ou le fichier CSV.';}
+}
+$('anaImg').addEventListener('change',e=>{const f=e.target.files[0];if(f)analyseImage(f);e.target.value='';});
+$('anaClear').addEventListener('click',()=>{S.analyse=null;persist();renderAnalyse();});
 
 /* ================= RENDU GLOBAL ================= */
 function fillInputs(){
-  $('capa').value=S.profil.capa??'';$('capa').placeholder=String(Math.round((S.profil.salaire||0)*0.2/10)*10);$('paie').value=S.profil.paie;$('peeSt').value=S.profil.pee;
+  $('capa').value=S.profil.capa??'';$('capa').placeholder=String(Math.round((S.profil.salaire||0)*0.2/10)*10);$('paie').value=S.profil.paie;$('jour').value=S.profil.jour;$('debutant').checked=S.profil.debutant!==false;$('peeSt').value=S.profil.pee;
   $('sal').value=S.profil.salaire;$('dep').value=S.profil.depenses;$('rfr').value=S.profil.rfr;$('parts').value=S.profil.parts;
   SIMK.forEach(k=>{if(S.sim[k]!==undefined&&$(k))$(k).value=S.sim[k];});
 }
-function renderAll(){fillInputs();renderAccounts();renderMoney();renderHist();budget();lep();renderTasks();update();drawHist();renderProjets();renderAdvisor();renderCoach();}
+function renderAll(){fillInputs();renderAccounts();renderMoney();renderHist();budget();lep();renderTasks();update();drawHist();renderProjets();renderAdvisor();renderPositions();renderAnalyse();renderCoach();}
 renderActu();renderAll();renderQuiz();gl();repart();immo();route();
 window.addEventListener('resize',refreshCanvases);
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',refreshCanvases);}catch(e){}
 new MutationObserver(refreshCanvases).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
+
 /* ================= APPLI INSTALLABLE ================= */
 const standalone=window.navigator.standalone===true||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);
-if(!standalone&&/iPhone|iPad|iPod/.test(navigator.userAgent)) $('install').hidden=false;
-if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
+if(!IN_CLAUDE&&!standalone&&/iPhone|iPad|iPod/.test(navigator.userAgent)) $('install').hidden=false;
+if(!IN_CLAUDE&&'serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
 function showBk(){try{const t=localStorage.getItem('prt-lastbk');$('lastBk').textContent=t?'Dernière copie : '+new Date(+t).toLocaleDateString('fr-FR'):'Aucune copie pour l\'instant.';}catch(e){}}
 $('exp').addEventListener('click',()=>{try{localStorage.setItem('prt-lastbk',Date.now());}catch(e){}showBk();});
