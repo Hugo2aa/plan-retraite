@@ -233,7 +233,7 @@ ol,ul{padding-left:18px;margin:4px 0} li{margin:4px 0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .card{border:0;box-shadow:var(--shadow);border-radius:18px}
 .card.tint,.card.amber,.card.red,.card.green{box-shadow:none}
-header.bar h1{display:flex;align-items:center;gap:8px;font-size:1.15rem}
+header.bar h1{display:flex;align-items:center;gap:8px;font-size:1.08rem;white-space:nowrap}
 .logo{width:30px;height:30px;border-radius:9px;background:var(--accent);display:grid;place-items:center}
 .logo svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .hero{display:block;background:linear-gradient(135deg,#0f6e6a 0%,#0b5551 60%,#0a4a47 100%);color:#fff;border-radius:22px;padding:18px 18px 16px;margin:4px 0 14px;box-shadow:0 10px 30px rgba(15,110,106,.25)}
@@ -340,13 +340,49 @@ details.buys summary{cursor:pointer;font-weight:700;color:var(--accent);font-siz
 .three label{font-size:.74rem;color:var(--muted);font-weight:700;display:block;margin-bottom:2px}
 .three input{min-height:42px;padding:8px}
 label.btn{cursor:pointer}
+.hdr-r{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.hdr-r .pill{font-size:.7rem;padding:3px 8px}
+.eye{width:36px;min-height:36px;height:36px;padding:0;border-radius:50%;background:var(--surface);box-shadow:var(--shadow)}
+.eye svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.eye[aria-pressed="true"]{background:var(--accent)}.eye[aria-pressed="true"] svg{stroke:#fff}
+body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.privacy [data-gsum],body.privacy .mp b,body.privacy .pgrid b,body.privacy .res .v,body.privacy .split .v,body.privacy .hist .h:not(.head) span:not(:first-child),body.privacy .buy b,body.privacy .plain strong,body.privacy .hs,body.privacy .yb,body.privacy .env .eb .small,body.privacy .env .eh span{filter:blur(7px);user-select:none}
+.goalc .progress{margin:6px 0 2px}
+.dchoice{background:var(--bg);color:var(--ink);border:1.5px solid var(--line);flex-direction:column;align-items:flex-start;text-align:left;margin-bottom:8px;min-height:auto;padding:10px 12px}
+.dchoice b{font-size:.95rem}.dchoice small{color:var(--muted);font-weight:600}
+.bilan-hero{background:linear-gradient(135deg,#c7801a,#a8641a);color:#fff;border-radius:20px;padding:18px;margin-bottom:12px}
+.bilan-hero .hv{font-family:var(--font-display);font-size:2.4rem;font-variant-numeric:tabular-nums}
+.yslide{color:#fff;border-radius:20px;padding:22px 18px;margin-bottom:10px;min-height:140px;display:flex;flex-direction:column;justify-content:center}
+.yslide .yb{font-family:var(--font-display);font-size:2.2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.yslide .yl{font-weight:700;font-size:1.05rem;margin-top:4px}.yslide .ys{opacity:.85;font-size:.9rem}
+.env{padding:10px 0;border-bottom:1px solid var(--line)}.env:last-of-type{border-bottom:0}
+.env .eh{display:flex;justify-content:space-between;font-size:.95rem}.env .eh span{font-weight:700;color:var(--good)}
+.env .eh span.warnc{color:var(--gain)}.env .eh span.neg{color:var(--warn)}
+.env .eb{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.qadd{display:flex;gap:4px}.qadd button{width:auto;min-height:32px;padding:4px 9px;font-size:.8rem;background:var(--accent-soft);color:var(--accent);border-radius:999px}
+.env input{min-height:40px}
+.etsi .eb{display:flex;justify-content:space-between;align-items:baseline;margin-top:4px}
+.cours .ch{background:none;color:var(--ink);display:flex;gap:12px;align-items:center;justify-content:flex-start;text-align:left;padding:0;min-height:44px;width:100%}
+.cours .ch b{display:block}.cours .ch small{display:block;color:var(--muted);font-weight:600;font-size:.8rem}
+.cours.done .gn{background:var(--good)}
+.cours .gb{padding:12px 0 0}
+.qa .opts button.right{border-color:var(--good);background:var(--good-soft)}.qa .opts button.wrong{border-color:var(--warn);background:var(--warn-soft)}
+.ovl{position:fixed;inset:0;z-index:50;background:rgba(10,30,30,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px;padding-bottom:max(16px,env(safe-area-inset-bottom))}
+.ovl[hidden]{display:none}
+.ovl.lock{background:var(--bg);align-items:center}
+.ovbox{background:var(--surface);border-radius:24px;padding:22px 20px;width:100%;max-width:520px;max-height:92vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.ovl.lock .ovbox{box-shadow:none;background:transparent;max-width:320px}
+.dots{display:flex;gap:6px;justify-content:center;margin-bottom:14px}.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--accent);width:22px;border-radius:99px}
+.onbic{font-size:2.6rem;text-align:center}
+.pindots{display:flex;gap:14px;justify-content:center;margin:18px 0 6px}.pindots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--accent)}.pindots i.on{background:var(--accent)}
+.keypad{display:grid;grid-template-columns:repeat(3,72px);gap:14px;justify-content:center;margin-top:8px}
+.keypad button{width:72px;height:72px;min-height:72px;border-radius:50%;background:var(--surface);color:var(--ink);font-size:1.6rem;font-weight:600;box-shadow:var(--shadow)}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="bar">
   <h1><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17l4-4 3 3 6-7"/><circle cx="18" cy="9" r="1.6"/></svg></span>Mon Plan Retraite</h1>
-  <span class="pill ok" id="sync">Sur ce téléphone</span>
+  <span class="hdr-r"><button type="button" class="eye" id="eyeBtn" aria-label="Masquer les montants" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button><span class="pill ok" id="sync">Sur ce téléphone</span></span>
 </header>
 <main>
 
@@ -362,6 +398,9 @@ label.btn{cursor:pointer}
     <div class="hb"><a href="#conseiller" class="hbtn">Parler à mon conseiller</a><a href="#argent" class="hbtn alt">Mes comptes</a></div>
   </div>
   <div class="card mission" id="mission" hidden></div>
+  <div class="card goalc" id="goalCard"></div>
+  <div class="card bilanc" id="bilanCard" hidden></div>
+  <div class="card defic" id="defiCard"></div>
   <div class="card nextc">
     <div class="ring" aria-hidden="true"><svg viewBox="0 0 88 88"><circle cx="44" cy="44" r="36" stroke="var(--line)" stroke-width="10" fill="none"/><circle id="ringArc" cx="44" cy="44" r="36" stroke="var(--accent)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="226.2" stroke-dashoffset="226.2"/></svg><div class="t" id="ringTxt">0 %</div></div>
     <div><div class="eyebrow">Prochaine étape</div><div id="nextT" style="font-weight:700;font-size:1.05rem"></div><div id="nextD" class="small muted"></div><a class="go" href="#plus" data-go="plus:etapes">Voir mon plan →</a></div>
@@ -456,10 +495,11 @@ label.btn{cursor:pointer}
   <div class="pane" data-pane="argent:placements">
     <div class="card" id="posTot"></div>
     <div id="posList"></div>
-    <button type="button" class="ghost" id="posAdd">+ Ajouter un ETF</button>
+    <button type="button" class="ghost" id="posAdd">+ Ajouter un placement</button>
     <div class="card" id="posForm" hidden style="margin-top:12px">
-      <h3>Nouvel ETF</h3>
-      <div class="field" style="margin-top:8px"><label for="posNom">Nom de l'ETF</label><input type="text" id="posNom" maxlength="60" placeholder="ex. ETF MSCI World PEA"></div>
+      <h3>Nouveau placement</h3>
+      <div class="chips" role="group" aria-label="Type de placement" id="posType" style="margin-top:8px"><button type="button" data-pt="etf" aria-pressed="true">ETF (parts)</button><button type="button" data-pt="fonds" aria-pressed="false">Fonds euros / assurance vie</button></div>
+      <div class="field"><label for="posNom">Nom du placement</label><input type="text" id="posNom" maxlength="60" placeholder="ex. ETF MSCI World PEA"></div>
       <div class="row2"><div class="field"><label for="posIsin">Code ISIN (facultatif)</label><input type="text" id="posIsin" maxlength="12" placeholder="12 caractères" autocapitalize="characters"></div><div class="field"><label for="posCompte">Sur quel compte</label><select id="posCompte"></select></div></div>
       <button type="button" id="posGo">Ajouter</button>
     </div>
@@ -481,6 +521,7 @@ label.btn{cursor:pointer}
   </div>
 
   <div class="pane" data-pane="argent:budget">
+    <div class="card" id="envBox"></div>
     <div class="card">
       <h3>Mon budget en 30 secondes</h3>
       <p class="small muted">Règle 50/30/20 : besoins, envies, épargne.</p>
@@ -496,15 +537,7 @@ label.btn{cursor:pointer}
       <p class="small" id="bMsg"></p>
       <p class="small" id="precMsg"></p>
     </div>
-    <div class="card">
-      <h3>Mes réglages</h3>
-      <div class="field" style="margin-top:8px"><label for="capa">Ce que je peux épargner chaque mois (€)</label><input type="number" id="capa" inputmode="numeric" min="0" step="10"><small>Utilisé pour te proposer la répartition de chaque paie.</small></div>
-      <div class="field"><label for="paie">Ma paie arrive</label><select id="paie"><option value="fin">En fin de mois (25 au 31)</option><option value="debut">En début de mois (1er au 5)</option><option value="milieu">En milieu de mois (10 au 15)</option></select></div>
-      <div class="field"><label for="jour">Jour de ma paie</label><input type="number" id="jour" inputmode="numeric" min="1" max="31" step="1"><small>Le rappel arrive la veille au soir.</small></div>
-      <button type="button" class="ghost" id="icsBtn" style="margin-bottom:12px">Ajouter le rappel à mon calendrier</button>
-      <label class="switch" for="debutant">Afficher le parcours « Je débute » <input type="checkbox" id="debutant"></label>
-      <div class="field"><label for="peeSt">Épargne salariale de mon entreprise</label><select id="peeSt"><option value="inconnu">Je ne sais pas encore</option><option value="abond">Oui, avec abondement</option><option value="sans">Oui, sans abondement</option><option value="non">Non</option></select></div>
-    </div>
+    <div class="card small tint">Tes réglages (capacité d'épargne, jour de paie, rappel calendrier…) sont dans <a href="#plus" data-go="plus:reglages">Plus → Réglages</a>.</div>
     <div class="card">
       <h3>Ai-je droit au LEP ?</h3>
       <p class="small muted">Ton revenu fiscal de référence est en 1re page de ton avis d'impôt.</p>
@@ -520,7 +553,8 @@ label.btn{cursor:pointer}
 <!-- ================= CONSEILLER ================= -->
 <section class="view" id="v-conseiller">
   <div id="chatWrap" hidden>
-    <div class="chathead"><div class="av" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg></div><div><b>Ton conseiller</b><small id="chatSit">Je connais ta situation dans l'appli</small></div><button type="button" class="sm ghost" id="chatNew">Nouvelle discussion</button></div>
+    <div class="chathead"><div class="av" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg></div><div><b>Ton conseiller</b><small id="chatSit">Je connais ta situation dans l'appli</small></div><button type="button" class="sm ghost" id="memoBtn">Mémoire</button><button type="button" class="sm ghost" id="chatNew">Nouveau</button></div>
+    <div class="card" id="memoBox" hidden><h3>Ce que ton conseiller retient</h3><p class="small muted">Il s'en sert dans toutes vos discussions. Touche × pour qu'il oublie.</p><div id="memoList"></div></div>
     <div id="chat" aria-live="polite"></div>
     <div class="sugg" id="sugg"></div>
     <form id="chatForm" class="chatform" autocomplete="off"><label for="chatIn" class="sr">Ta question</label><textarea id="chatIn" rows="1" placeholder="Pose ta question…" maxlength="1500"></textarea><button type="submit" id="chatSend" aria-label="Envoyer"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
@@ -556,6 +590,10 @@ label.btn{cursor:pointer}
     <button type="button" data-seg="simuler" data-p="repart" aria-pressed="false">Répartition</button>
     <button type="button" data-seg="simuler" data-p="retraite" aria-pressed="false">Retraite totale</button>
     <button type="button" data-seg="simuler" data-p="immo" aria-pressed="false">Immobilier</button>
+    <button type="button" data-seg="simuler" data-p="voiture" aria-pressed="false">Voiture</button>
+    <button type="button" data-seg="simuler" data-p="etsi" aria-pressed="false">Et si…</button>
+    <button type="button" data-seg="simuler" data-p="impots" aria-pressed="false">Impôts</button>
+
   </div>
 
   <!-- Épargne -->
@@ -642,6 +680,16 @@ label.btn{cursor:pointer}
       <div class="sm"><div class="l">Grâce à ton épargne</div><div class="v" id="rPriv">–</div></div>
     </div>
     <div class="card small" id="rMsg"></div>
+    <div class="card">
+      <h3>Ma carrière (relevé info-retraite)</h3>
+      <p class="small muted">Sur info-retraite.fr (connexion FranceConnect), ouvre « Mon relevé de carrière » et « Mon estimation ».</p>
+      <div class="row2">
+        <div class="field"><label for="rTrim">Trimestres déjà validés</label><input type="number" id="rTrim" inputmode="numeric" min="0" max="200" placeholder="ex. 4"></div>
+        <div class="field"><label for="rEstim">Estimation officielle (€/mois)</label><input type="number" id="rEstim" inputmode="numeric" min="0" placeholder="si tu l'as"></div>
+      </div>
+      <div class="progress"><i id="rTrimBar" style="width:0"></i></div>
+      <p class="small" id="rTrimTxt"></p>
+    </div>
     <div class="card tint small">Pour une estimation officielle de ta pension, utilise le simulateur M@rel sur info-retraite.fr, avec ta vraie carrière. L'épargne vient de l'onglet Épargne (même réglages).</div>
   </div>
 
@@ -674,11 +722,68 @@ label.btn{cursor:pointer}
     </div>
     <div class="card small" id="iMsg"></div>
   </div>
+  <!-- Voiture -->
+  <div class="pane" data-pane="simuler:voiture">
+    <p class="lead">Acheter une voiture : combien elle coûte vraiment chaque mois, crédit ou comptant, et l'effet sur tes autres objectifs.</p>
+    <div class="card">
+      <div class="row2">
+        <div class="field"><label for="vPrix">Prix de la voiture</label><input type="number" id="vPrix" inputmode="numeric" value="12000" step="500"></div>
+        <div class="field"><label for="vApport">Apport (déjà de côté)</label><input type="number" id="vApport" inputmode="numeric" value="2000" step="100"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="vDur">Durée du crédit <output id="vDurO"></output></label><input type="range" id="vDur" min="12" max="84" step="12" value="48"></div>
+        <div class="field"><label for="vTaux">TAEG <output id="vTauxO"></output></label><input type="range" id="vTaux" min="1" max="12" step="0.1" value="6.5"></div>
+      </div>
+      <small class="muted">TAEG courants en 2026 pour un crédit auto : souvent entre 4 et 7,5 % selon le montant, la durée et ton profil. Compare plusieurs offres.</small>
+      <h4 style="margin-top:14px">Les autres frais de la voiture</h4>
+      <div class="three">
+        <div><label for="vAssu">Assurance / an</label><input type="number" id="vAssu" inputmode="numeric" value="1200" step="50"></div>
+        <div><label for="vCarbu">Carburant / mois</label><input type="number" id="vCarbu" inputmode="numeric" value="80" step="10"></div>
+        <div><label for="vEntr">Entretien / an</label><input type="number" id="vEntr" inputmode="numeric" value="500" step="50"></div>
+      </div>
+      <small class="muted">Jeune conducteur : l'assurance coûte souvent plus de 1 000 € par an. Demande des devis avant d'acheter.</small>
+    </div>
+    <div class="res">
+      <div class="big"><div class="l">La voiture te coûte vraiment, par mois</div><div class="v" id="vTotal">–</div><div class="l" id="vTotalD"></div></div>
+      <div class="sm"><div class="l">Mensualité du crédit</div><div class="v" id="vMens">–</div></div>
+      <div class="sm"><div class="l">Coût du crédit (intérêts)</div><div class="v" id="vInt">–</div></div>
+    </div>
+    <div class="card" id="vVerdict"></div>
+    <div class="card" id="vCompare"></div>
+    <a class="go" href="#plus" data-go="plus:guides" data-guide="g7">Guide : comptant, crédit ou LOA ? →</a>
+    <button type="button" class="ghost" style="margin-top:10px" data-ask="Je veux acheter une voiture. Aide-moi à décider : comptant, crédit ou LOA, quel budget, et comment ne pas mettre en danger mon épargne et ma retraite.">En parler avec le conseiller</button>
+  </div>
+
+  <!-- Et si -->
+  <div class="pane" data-pane="simuler:etsi">
+    <p class="lead">Et si tu changeais une seule chose ? Comparaison avec ta simulation actuelle (onglet Épargne), en euros d'aujourd'hui.</p>
+    <div class="card tint small" id="etsiBase"></div>
+    <div id="etsiList"></div>
+    <p class="small muted">Chaque scénario change un seul réglage par rapport à ta simulation de l'onglet Épargne. Estimations, pas des promesses.</p>
+  </div>
+
+  <!-- Impôts -->
+  <div class="pane" data-pane="simuler:impots">
+    <p class="lead">Combien d'impôt sur le revenu tu paieras après ton alternance, et quand le PER devient intéressant.</p>
+    <div class="card">
+      <div class="field"><label for="iSal">Salaire net imposable par mois</label><input type="number" id="iSal" inputmode="numeric" value="1950" step="50"><small>Ligne « net imposable » de ta fiche de paie, un peu au-dessus du net versé.</small></div>
+      <div class="field"><label for="iMois">Nombre de mois payés dans l'année</label><input type="number" id="iMois" inputmode="numeric" value="12" min="1" max="14"></div>
+      <label class="switch" for="iApp">Je suis encore apprenti (exonération jusqu'au SMIC) <input type="checkbox" id="iApp"></label>
+    </div>
+    <div class="res">
+      <div class="big"><div class="l">Impôt sur le revenu estimé, par an</div><div class="v" id="iImpot">–</div><div class="l" id="iImpotD"></div></div>
+      <div class="sm"><div class="l">Tranche marginale (TMI)</div><div class="v" id="iTmi">–</div></div>
+      <div class="sm"><div class="l">Taux moyen</div><div class="v" id="iMoy">–</div></div>
+    </div>
+    <div class="card" id="iPer"></div>
+    <p class="small muted">Barème 2026 (revenus 2025) pour une personne seule : 0 % jusqu'à 11 600 €, 11 % jusqu'à 29 579 €, 30 % jusqu'à 84 577 €, puis 41 % et 45 %. Abattement de 10 % pour frais, décote pour les petits impôts, pas d'impôt sous 61 €. Exonération apprenti estimée à environ 21 600 € de salaire annuel. Estimation : ta situation réelle (autres revenus, parts, réductions) peut changer le résultat ; le simulateur officiel est sur impots.gouv.fr.</p>
+  </div>
+
 </section>
 
 <!-- ================= PLAN ================= -->
 <section class="view" id="v-plus">
-  <div id="plusHome"><h2>Plus</h2><p class="lead">Ton plan, tes guides et tout pour comprendre.</p><div class="tiles"><button type="button" class="tile" data-seg="plus" data-p="etapes"><span class="ti"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span><b>Mon plan</b><small>Ta checklist, étape par étape</small></span></button><button type="button" class="tile" data-seg="plus" data-p="conseil"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span><b>Mon profil investisseur</b><small>Le test en 7 questions</small></span></button><button type="button" class="tile" data-seg="plus" data-p="badges"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></span><span><b>Mes badges</b><small>Tes objectifs et récompenses</small></span></button><button type="button" class="tile" data-seg="plus" data-p="guides"><span class="ti"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5zM12 6v14"/></svg></span><span><b>Guides pas à pas</b><small>Acheter un ETF, krach, prime…</small></span></button><button type="button" class="tile" data-seg="plus" data-p="compar"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Comparatif</b><small>Courtiers et assurances vie</small></span></button><button type="button" class="tile" data-seg="plus" data-p="apres"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span><b>Après l'alternance</b><small>Fin d'alternance, 1er CDI</small></span></button><button type="button" class="tile" data-seg="plus" data-p="actu"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v13a1 1 0 0 0 2 0V8M5 4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14M8 8h6M8 12h6M8 16h4"/></svg></span><span><b>Actualité</b><small>Les marchés ce mois-ci</small></span></button><button type="button" class="tile" data-seg="plus" data-p="quiz"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17.5v.01"/></svg></span><span><b>Quiz</b><small>Teste tes bases</small></span></button><button type="button" class="tile" data-seg="plus" data-p="lexique"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M19 19v2H6"/></svg></span><span><b>Lexique</b><small>Tous les mots expliqués</small></span></button></div>
+  <div id="plusHome"><h2>Plus</h2><p class="lead">Ton plan, tes guides et tout pour comprendre.</p><div class="tiles"><button type="button" class="tile" data-seg="plus" data-p="bilan"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Mon bilan du mois</b><small>Ce que tu as accompli</small></span></button><button type="button" class="tile" data-seg="plus" data-p="annee"><span class="ti"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span><b>Mon année</b><small>Ton année en chiffres</small></span></button><button type="button" class="tile" data-seg="plus" data-p="defis"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></svg></span><span><b>Mes défis</b><small>Un défi par mois</small></span></button><button type="button" class="tile" data-seg="plus" data-p="cours"><span class="ti"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5"/></svg></span><span><b>Mini-cours</b><small>Comprendre l'investissement</small></span></button><button type="button" class="tile" data-seg="plus" data-p="reglages"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span><span><b>Réglages</b><small>Code, thème, sauvegardes</small></span></button><button type="button" class="tile" data-seg="plus" data-p="etapes"><span class="ti"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span><b>Mon plan</b><small>Ta checklist, étape par étape</small></span></button><button type="button" class="tile" data-seg="plus" data-p="conseil"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span><b>Mon profil investisseur</b><small>Le test en 7 questions</small></span></button><button type="button" class="tile" data-seg="plus" data-p="badges"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></span><span><b>Mes badges</b><small>Tes objectifs et récompenses</small></span></button><button type="button" class="tile" data-seg="plus" data-p="guides"><span class="ti"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5zM12 6v14"/></svg></span><span><b>Guides pas à pas</b><small>Acheter un ETF, krach, prime…</small></span></button><button type="button" class="tile" data-seg="plus" data-p="compar"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Comparatif</b><small>Courtiers et assurances vie</small></span></button><button type="button" class="tile" data-seg="plus" data-p="apres"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span><b>Après l'alternance</b><small>Fin d'alternance, 1er CDI</small></span></button><button type="button" class="tile" data-seg="plus" data-p="actu"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v13a1 1 0 0 0 2 0V8M5 4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14M8 8h6M8 12h6M8 16h4"/></svg></span><span><b>Actualité</b><small>Les marchés ce mois-ci</small></span></button><button type="button" class="tile" data-seg="plus" data-p="quiz"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17.5v.01"/></svg></span><span><b>Quiz</b><small>Teste tes bases</small></span></button><button type="button" class="tile" data-seg="plus" data-p="lexique"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M19 19v2H6"/></svg></span><span><b>Lexique</b><small>Tous les mots expliqués</small></span></button></div>
   <p class="foot">Sources : COR (rapport juin 2026), Insee (inflation oct. 2026), BCE (29 oct. 2026), LFSS 2026, service-public.fr, grilles tarifaires des courtiers (nov. 2026). Outil pédagogique, pas un conseil financier personnalisé.</p></div>
   <div class="pane" data-pane="plus:etapes">
     <button type="button" class="back" data-back>← Plus</button>
@@ -774,6 +879,39 @@ label.btn{cursor:pointer}
         <button type="button" class="ghost ask" data-ask="Aide-moi à programmer mes virements automatiques depuis la Société Générale vers mon livret et mon PEA, avec les montants adaptés à ma situation.">Le faire avec le conseiller</button>
       </div>
     </details>
+    <details class="card guide" id="g7">
+      <summary><span class="gn">7</span><span><b>Acheter une voiture : comptant, crédit ou LOA ?</b><small>Les 3 options, sans se faire avoir</small></span></summary>
+      <div class="gb">
+        <h4>Les 3 façons de payer</h4>
+        <ul><li><strong>Comptant</strong> : tu paies avec ton épargne de projet. Aucun intérêt, aucune dette. La meilleure option si tu as pu mettre de côté à temps.</li><li><strong>Crédit auto</strong> (affecté à la voiture) ou <strong>prêt personnel</strong> : la voiture est à toi tout de suite, mais tu paies des intérêts. Le crédit affecté a souvent un taux un peu plus bas, et il est annulé si la vente ne se fait pas.</li><li><strong>LOA / LLD</strong> (location) : un loyer chaque mois, souvent pour une voiture neuve. Tu n'es pas propriétaire (sauf option d'achat en LOA), avec des limites de kilomètres et des frais de remise en état. Pratique, mais souvent plus cher au total.</li></ul>
+        <h4>Les règles pour ne pas te mettre en difficulté</h4>
+        <ol class="steps"><li><b>Garde ton matelas de sécurité intact.</b> Ne vide pas ton livret de précaution pour l'apport.</li><li><b>Total voiture sous 15 % de ton salaire net</b> (crédit + assurance + carburant + entretien), et toutes tes mensualités de crédit sous 35 %.</li><li><b>Durée courte</b> : 36 à 48 mois. Plus c'est long, plus les intérêts coûtent cher.</li><li><b>Compare le TAEG</b> (le vrai coût, tout compris) entre ta banque, un courtier et l'offre du vendeur. Refuse les assurances optionnelles inutiles.</li><li><b>Demande des devis d'assurance avant d'acheter</b> : pour un jeune conducteur, elle peut coûter plus que le crédit.</li><li><b>Délai de rétractation</b> : tu as 14 jours après la signature d'un crédit à la consommation pour changer d'avis.</li></ol>
+        <p class="small muted">Simule ton projet dans Simuler → Voiture.</p>
+        <button type="button" class="ghost ask" data-ask="Je veux acheter une voiture. Quelle option (comptant, crédit, LOA) et quel budget sont raisonnables pour moi ?">En parler avec le conseiller</button>
+      </div>
+    </details>
+    <details class="card guide" id="g8">
+      <summary><span class="gn">8</span><span><b>Préparer un rendez-vous à la banque</b><small>Les bonnes questions, et comment dire non</small></span></summary>
+      <div class="gb">
+        <h4>Avant le rendez-vous</h4>
+        <ul><li>Note ce que tu veux : ouvrir un LEP, réduire tes frais, un crédit voiture…</li><li>Prends ton dernier avis d'impôt et tes 3 dernières fiches de paie.</li><li>Regarde dans l'appli combien tu paies de frais bancaires par an.</li></ul>
+        <h4>Les questions à poser</h4>
+        <ol class="steps"><li><b>« Quels sont tous les frais, en pourcentage par an ? »</b> Pour tout placement proposé : frais d'entrée, de gestion, de sortie.</li><li><b>« Existe-t-il une offre jeune ou alternant moins chère ? »</b> Pour ta carte et ta tenue de compte.</li><li><b>« Est-ce que je peux récupérer mon argent quand je veux ? »</b></li><li><b>« Quel est le TAEG, et l'assurance est-elle obligatoire ? »</b> Pour un crédit.</li><li><b>« Pouvez-vous me donner le document d'information pour que j'y réfléchisse ? »</b></li></ol>
+        <h4>Comment dire non poliment</h4>
+        <p>« Merci, je préfère y réfléchir et comparer. Je reviendrai vers vous. » Tu n'as jamais à signer un placement ou une assurance pendant le rendez-vous. Méfie-toi des fonds maison à plus de 1,5 % de frais par an et des assurances emprunteur ajoutées d'office.</p>
+        <button type="button" class="ghost ask" data-ask="J'ai bientôt un rendez-vous à la Société Générale. Aide-moi à le préparer selon ma situation : quoi demander et quoi refuser.">Préparer mon rendez-vous avec le conseiller</button>
+      </div>
+    </details>
+    <details class="card guide" id="g9">
+      <summary><span class="gn">9</span><span><b>On me propose un placement : arnaque ou pas ?</b><small>La checklist en 7 points</small></span></summary>
+      <div class="gb">
+        <p>Si tu coches <strong>un seul</strong> de ces points, n'envoie pas d'argent :</p>
+        <ol class="steps"><li><b>Rendement élevé « garanti » ou « sans risque ».</b> Ça n'existe pas.</li><li><b>On te presse :</b> « offre limitée », « il faut décider aujourd'hui ».</li><li><b>Contact non sollicité</b> : appel, message Instagram, WhatsApp, « ami d'ami ».</li><li><b>Paiement en crypto, par virement à l'étranger ou en cartes prépayées.</b></li><li><b>Impossible de retirer ton argent</b>, ou on te demande de payer des « frais » pour le récupérer.</li><li><b>L'intermédiaire n'est pas enregistré</b> : vérifie sur le registre ORIAS et la liste noire de l'AMF (amf-france.org).</li><li><b>Promesses de formation</b> « devenir riche avec le trading » vendues cher.</li></ol>
+        <p class="small">Tu as déjà payé ? Arrête tout versement, garde les preuves, appelle ta banque et signale sur le site de l'AMF ou au 01 53 45 62 00.</p>
+        <button type="button" class="ghost ask" data-ask="On m'a proposé un placement. Je te décris l'offre, dis-moi si ça ressemble à une arnaque : ">Faire vérifier par le conseiller</button>
+      </div>
+    </details>
+
 
   </div>
   <div class="pane" data-pane="plus:compar">
@@ -847,6 +985,70 @@ label.btn{cursor:pointer}
     <div class="card" id="quiz"></div>
   
   </div>
+  <div class="pane" data-pane="plus:bilan">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Mon bilan du mois</h2>
+    <div id="bilanFull"></div>
+  </div>
+  <div class="pane" data-pane="plus:annee">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Mon année</h2>
+    <div id="yearFull"></div>
+  </div>
+  <div class="pane" data-pane="plus:defis">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Mes défis</h2>
+    <p class="lead">Un défi par mois, choisi selon tes dépenses. Petits efforts, grands effets.</p>
+    <div id="defiFull"></div>
+  </div>
+  <div class="pane" data-pane="plus:cours">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Mini-cours</h2>
+    <p class="lead">8 cours de 5 minutes pour comprendre l'investissement. Chacun se termine par 2 questions : réponds juste pour le valider.</p>
+    <div class="card" style="padding:12px 14px"><div style="display:flex;justify-content:space-between;font-weight:700"><span>Progression</span><span id="coursTxt"></span></div><div class="progress"><i id="coursBar" style="width:0"></i></div></div>
+    <div id="coursList"></div>
+  </div>
+  <div class="pane" data-pane="plus:reglages">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Réglages</h2>
+    <div class="card">
+      <h3>Mes réglages</h3>
+      <div class="field" style="margin-top:8px"><label for="capa">Ce que je peux épargner chaque mois (€)</label><input type="number" id="capa" inputmode="numeric" min="0" step="10"><small>Utilisé pour te proposer la répartition de chaque paie.</small></div>
+      <div class="field"><label for="paie">Ma paie arrive</label><select id="paie"><option value="fin">En fin de mois (25 au 31)</option><option value="debut">En début de mois (1er au 5)</option><option value="milieu">En milieu de mois (10 au 15)</option></select></div>
+      <div class="field"><label for="jour">Jour de ma paie</label><input type="number" id="jour" inputmode="numeric" min="1" max="31" step="1"><small>Le rappel arrive la veille au soir.</small></div>
+      <button type="button" class="ghost" id="icsBtn" style="margin-bottom:12px">Ajouter le rappel à mon calendrier</button>
+      <label class="switch" for="debutant">Afficher le parcours « Je débute » <input type="checkbox" id="debutant"></label>
+      <div class="field"><label for="peeSt">Épargne salariale de mon entreprise</label><select id="peeSt"><option value="inconnu">Je ne sais pas encore</option><option value="abond">Oui, avec abondement</option><option value="sans">Oui, sans abondement</option><option value="non">Non</option></select></div>
+    </div>
+    <div class="card">
+      <h3>Mon grand objectif</h3>
+      <div class="row2" style="margin-top:8px">
+        <div class="field"><label for="gMont">Montant à atteindre (€)</label><input type="number" id="gMont" inputmode="numeric" min="0" step="500"></div>
+        <div class="field"><label for="gAge">À quel âge</label><input type="number" id="gAge" inputmode="numeric" min="18" max="70"></div>
+      </div>
+      <small class="muted">Compte toute ton épargne (hors compte courant).</small>
+    </div>
+    <div class="card">
+      <h3>Confidentialité</h3>
+      <label class="switch" for="hideAmt">Masquer les montants <input type="checkbox" id="hideAmt"></label>
+      <small class="muted">Aussi avec l'icône en forme d'œil en haut de l'écran.</small>
+      <div style="margin-top:12px"><b>Code à l'ouverture</b><p class="small muted" id="pinState" style="margin:2px 0 8px"></p>
+        <div class="btns"><button type="button" class="ghost" id="pinSet">Définir un code</button><button type="button" class="ghost" id="pinOff">Retirer le code</button></div></div>
+    </div>
+    <div class="card">
+      <h3>Apparence</h3>
+      <div class="chips" role="group" aria-label="Thème" id="themeChips"><button type="button" data-t="auto">Automatique</button><button type="button" data-t="light">Clair</button><button type="button" data-t="dark">Sombre</button></div>
+      <small class="muted" id="themeNote"></small>
+    </div>
+    <div class="card">
+      <h3>Sauvegardes automatiques</h3>
+      <p class="small muted">L'appli garde une copie de tes données par jour (les 7 derniers jours) sur ce téléphone. Tu peux revenir en arrière en cas d'erreur.</p>
+      <div id="snapList"></div>
+      <div class="btns" style="margin-top:8px"><button type="button" class="ghost" id="bkFile">Télécharger une sauvegarde</button><button type="button" class="ghost" id="bkCopy">Copier mes données</button></div>
+      <small class="muted">Range le fichier dans iCloud Drive : si tu changes de téléphone, tu le recolles dans Mon argent → Suivi → Coller des données.</small>
+    </div>
+    <button type="button" class="ghost" id="replayOnb">Revoir la présentation de l'appli</button>
+  </div>
   <div class="pane" data-pane="plus:badges">
     <button type="button" class="back" data-back>← Plus</button>
     <h2>Mes badges</h2>
@@ -867,6 +1069,23 @@ label.btn{cursor:pointer}
 </main>
 </div>
 
+<div class="ovl" id="onb" hidden role="dialog" aria-modal="true" aria-labelledby="onbT">
+  <div class="ovbox">
+    <div class="dots" id="onbDots"></div>
+    <div id="onbBody"></div>
+    <div class="btns" style="margin-top:16px"><button type="button" class="ghost" id="onbPrev">Retour</button><button type="button" id="onbNext">Suivant</button></div>
+  </div>
+</div>
+<div class="ovl lock" id="lock" hidden role="dialog" aria-modal="true" aria-label="Code d'accès">
+  <div class="ovbox" style="text-align:center">
+    <div class="logo" style="margin:0 auto 10px;width:52px;height:52px;border-radius:16px" aria-hidden="true"><svg viewBox="0 0 24 24" style="width:30px;height:30px"><path d="M5 17l4-4 3 3 6-7"/><circle cx="18" cy="9" r="1.6"/></svg></div>
+    <h2 id="lockT" style="font-size:1.2rem">Entre ton code</h2>
+    <div class="pindots" id="pinDots"><i></i><i></i><i></i><i></i></div>
+    <p class="small" id="lockMsg" style="min-height:1.4em;color:var(--warn)"></p>
+    <div class="keypad" id="keypad"></div>
+    <button type="button" class="linkbtn" id="pinForgot">Code oublié ?</button>
+  </div>
+</div>
 <nav class="tabs" aria-label="Navigation"><div class="in">
   <a href="#accueil" data-v="accueil"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Accueil</a>
   <a href="#argent" data-v="argent"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 15h2"/></svg>Mon argent</a>
@@ -889,7 +1108,7 @@ const KORDER=['courant','secu','inv','autre'];
 const DEF_ACC=[['courant','Compte courant','courant'],['lep','LEP','secu'],['livretA','Livret A / LDDS','secu'],['pea','PEA','inv'],['av','Assurance vie','inv'],['pee','Épargne salariale','inv']];
 const newAcc=(id,n,k)=>({id,n,k,solde:0,mensuel:0,maj:0});
 const DEF_PROJ=()=>[{id:'p1',n:'Permis + voiture',montant:6000,date:'2028-06',deja:0},{id:'p2',n:'Voyage / déménagement',montant:2000,date:'2027-09',deja:0},{id:'p3',n:'Apport logement',montant:25000,date:'2032-06',deja:0}];
-function defState(){return{v:3,profil:{salaire:1100,depenses:600,rfr:'',parts:'1',capa:null,paie:'fin',pee:'inconnu',jour:28,debutant:true},risk:null,projets:DEF_PROJ(),positions:[],analyse:null,badges:{},accounts:DEF_ACC.map(([id,n,k])=>newAcc(id,n,k)),historique:[],done:{},sim:{}};}
+function defState(){return{v:3,profil:{salaire:1100,depenses:600,rfr:'',parts:'1',capa:null,paie:'fin',pee:'inconnu',jour:28,debutant:true},risk:null,projets:DEF_PROJ(),positions:[],analyse:null,badges:{},objectif:{montant:10000,age:25},defis:{},env:null,cours:{},memo:[],carriere:{trim:0,estim:0},onboarded:false,accounts:DEF_ACC.map(([id,n,k])=>newAcc(id,n,k)),historique:[],done:{},sim:{}};}
 let S=defState();
 const num=(v,min)=>{const x=+v;return isFinite(x)?(min===undefined?x:Math.max(min,x)):0;};
 function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau format)
@@ -904,11 +1123,18 @@ function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau fo
   if(d.profil&&isFinite(+d.profil.jour)&&+d.profil.jour>=1&&+d.profil.jour<=31) s.profil.jour=Math.round(+d.profil.jour);
   if(d.profil&&typeof d.profil.debutant==='boolean') s.profil.debutant=d.profil.debutant;
   const str=(v,n)=>String(v==null?'':v).slice(0,n), isD=v=>/^\d{4}-\d{2}-\d{2}$/.test(v);
-  if(Array.isArray(d.positions)) s.positions=d.positions.filter(p=>p&&p.id).slice(0,10).map(p=>({id:str(p.id,40),nom:str(p.nom||'ETF',60),isin:str(p.isin,12).toUpperCase(),compte:str(p.compte,40),cours:num(p.cours,0),coursDate:num(p.coursDate,0),coursAuto:!!p.coursAuto,
+  if(Array.isArray(d.positions)) s.positions=d.positions.filter(p=>p&&p.id).slice(0,10).map(p=>({id:str(p.id,40),type:p.type==='fonds'?'fonds':'etf',valeur:num(p.valeur,0),nom:str(p.nom||'ETF',60),isin:str(p.isin,12).toUpperCase(),compte:str(p.compte,40),cours:num(p.cours,0),coursDate:num(p.coursDate,0),coursAuto:!!p.coursAuto,
     achats:Array.isArray(p.achats)?p.achats.filter(a=>a&&isD(a.d)).slice(0,600).map(a=>({id:str(a.id||Math.random().toString(36).slice(2),40),d:a.d,parts:num(a.parts,0),prix:num(a.prix,0)})).filter(a=>a.parts>0&&a.prix>0):[]}));
   if(d.analyse&&typeof d.analyse==='object'&&Array.isArray(d.analyse.cats)){const A=d.analyse;s.analyse={date:num(A.date,0),from:isD(A.from)?A.from:'',to:isD(A.to)?A.to:'',months:Math.max(1,num(A.months,1)),n:num(A.n,0),rev:num(A.rev),dep:num(A.dep),ep:num(A.ep),frais:num(A.frais,0),
     cats:A.cats.slice(0,20).map(c=>({c:str(c.c,40),v:num(c.v),m:num(c.m)})),top:(A.top||[]).slice(0,10).map(t=>({n:str(t.n,40),v:num(t.v),c:str(t.c,40),k:num(t.k,0)})),abos:(A.abos||[]).slice(0,12).map(a=>({n:str(a.n,40),v:num(a.v)}))};}
   if(d.badges&&typeof d.badges==='object') for(const k in d.badges) if(isFinite(+d.badges[k])) s.badges[str(k,20)]=+d.badges[k];
+  if(d.objectif&&typeof d.objectif==='object'){if(num(d.objectif.montant,0)>0)s.objectif.montant=num(d.objectif.montant,0);const a=Math.round(num(d.objectif.age,0));if(a>=18&&a<=70)s.objectif.age=a;}
+  if(d.defis&&typeof d.defis==='object')for(const k in d.defis){const v=d.defis[k];if(/^\d{4}-\d{2}$/.test(k)&&v&&typeof v.id==='string'){s.defis[k]={id:str(v.id,20)};if(typeof v.done==='boolean')s.defis[k].done=v.done;}}
+  if(d.env&&typeof d.env==='object'&&d.env.budgets){const b={},sp={};for(const k in d.env.budgets)b[str(k,40)]=num(d.env.budgets[k],0);for(const k in (d.env.spent||{}))sp[str(k,40)]=num(d.env.spent[k],0);s.env={budgets:b,spent:sp,mois:/^\d{4}-\d{2}$/.test(d.env.mois)?d.env.mois:''};}
+  if(d.cours&&typeof d.cours==='object')for(const k in d.cours)if(isFinite(+d.cours[k]))s.cours[str(k,10)]=+d.cours[k];
+  if(Array.isArray(d.memo))s.memo=d.memo.filter(m=>m&&m.t).slice(-30).map(m=>({t:str(m.t,200),d:num(m.d,0)}));
+  if(d.carriere&&typeof d.carriere==='object')s.carriere={trim:Math.max(0,Math.round(num(d.carriere.trim,0))),estim:num(d.carriere.estim,0)};
+  if(typeof d.onboarded==='boolean')s.onboarded=d.onboarded;
   if(Array.isArray(d.projets)) s.projets=d.projets.filter(p=>p&&p.id).slice(0,12).map(p=>({id:String(p.id).slice(0,40),n:String(p.n||'Projet').slice(0,40),montant:num(p.montant,0),date:/^\d{4}-\d{2}$/.test(p.date)?p.date:'2028-01',deja:num(p.deja,0)}));
   if(Array.isArray(d.accounts)){
     const seen=new Set();
@@ -925,7 +1151,9 @@ function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau fo
 const LS='prt-state-v2';
 try{const raw=localStorage.getItem(LS); if(raw) S=clean(JSON.parse(raw));}catch(e){}
 let DBDOC=null, saving=false, pending=false, saveT=null, lastSent='';
+let snapT=null;
 function persist(){
+  clearTimeout(snapT);snapT=setTimeout(snapshot,3000);
   try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}
   if(!DBDOC) return;
   clearTimeout(saveT); saveT=setTimeout(flush,700);
@@ -1132,7 +1360,7 @@ function update(){
   if(p.crash){const base=simulate({...p,crash:false}),idx=p.crashAge-p.age;let back=null;for(let i=idx;i<pts.length;i++){if(pts[i].cap>=base[idx].cap){back=i-idx;break;}}
     cm.hidden=false;cm.innerHTML=`<strong>Krach de −${p.crashPct} % à ${p.crashAge} ans.</strong> `+(back!==null?`En continuant tes versements, tu retrouves ton niveau en <strong>${back} an${back>1?'s':''}</strong>. `:`Pas le temps de récupérer avant ${p.ret} ans : on réduit le risque à l'approche de la retraite. `)+`Tout vendre pendant la panique aurait rendu la perte définitive.`;}
   else cm.hidden=true;
-  draw(pts,p,defl); retraite();
+  draw(pts,p,defl); retraite(); try{etsi();}catch(e){}
   const ns={};SIMK.forEach(k=>ns[k]=+$(k).value); if(JSON.stringify(ns)!==JSON.stringify(S.sim)){S.sim=ns;persist();}
 }
 function draw(pts,p,defl){
@@ -1176,7 +1404,7 @@ $('aApply').addEventListener('click',()=>{const r=repart();$('rdt').value=Math.r
 /* Retraite totale */
 function retraite(){
   const s=Math.max(0,+$('rSal').value||0),t=+$('rTaux').value; $('rTauxO').textContent=t+' %';
-  const pub=s*t/100,priv=lastCapR*0.04/12,tot=pub+priv;
+  const est=S.carriere&&S.carriere.estim>0?S.carriere.estim:0,pub=est||s*t/100,priv=lastCapR*0.04/12,tot=pub+priv;
   $('rPub').textContent=eur(pub);$('rPriv').textContent=eur(priv);$('rTot').textContent=eur(tot);
   $('rPct').textContent=s?`soit ${Math.round(tot/s*100)} % de ton dernier salaire`:'';
   $('rMsg').innerHTML=s?(tot/s>=0.75?`Avec ton épargne, tu gardes environ ${Math.round(tot/s*100)} % de ton niveau de vie. C'est un bon objectif.`:`Tu gardes environ ${Math.round(tot/s*100)} % de ton niveau de vie. Pour viser 75 %, il faudrait ${eur(Math.max(0,s*0.75-pub))} par mois grâce à ton épargne : utilise le mode « Combien verser ? ».`):'';
@@ -1438,10 +1666,10 @@ function monthlyPlan(){
 }
 function renderMonthPlan(){
   const M=monthlyPlan(),box=$('monthPlan'),paie={fin:'fin de mois',debut:'début de mois',milieu:'milieu de mois'}[S.profil.paie];
-  if(!M.C){box.innerHTML=`<h3>Ma répartition du mois</h3><p class="small muted">Indique ton salaire ou ta capacité d'épargne dans « Mon argent → Budget & LEP ».</p>`;return;}
+  if(!M.C){box.innerHTML=`<h3>Ma répartition du mois</h3><p class="small muted">Indique ton salaire dans Mon argent → Budget & LEP, ou ta capacité d'épargne dans Plus → Réglages.</p>`;return;}
   box.innerHTML=`<h3>Ma répartition à chaque paie</h3><p class="small muted">Ta paie de ${paie} : programme ces virements automatiques le lendemain.</p><div class="mp">`+
     M.out.map(o=>`<div class="row"><span>${esc(o.n)}<small>${esc(o.w)}</small></span><b>${eur(o.v)}</b></div>`).join('')+`</div>`+
-    `<p class="small muted" style="margin-top:8px">Total : ${eur(M.C)} par mois. ${M.short?'Tes projets ne sont pas entièrement couverts : voir l\'onglet Projets.':''} <a href="#argent" data-go="argent:budget">Modifier</a></p>`;
+    `<p class="small muted" style="margin-top:8px">Total : ${eur(M.C)} par mois. ${M.short?'Tes projets ne sont pas entièrement couverts : voir l\'onglet Projets.':''} <a href="#plus" data-go="plus:reglages">Modifier</a></p>`;
 }
 const LV={u:['Urgent','var(--warn)','⚠️'],a:['À faire','var(--accent)','✅'],c:['Conseil','var(--gain)','💡'],i:['Info','var(--muted)','ℹ️']};
 function coachTips(){
@@ -1484,14 +1712,19 @@ function coachTips(){
   if(mo===1) add('a','Nouvelle année : ton bilan annuel',`Augmente ton versement si ton salaire a monté, refais le test de profil si besoin, et vérifie tes projets.`,'plus:etapes','Voir mon plan');
   if(mo===1&&day<=31) add('i','Le 1er février, nouveau taux du Livret A et du LEP',`Il est calculé à partir de l'inflation. Rien à faire, c'est automatique.`);
   if(mo>=4&&mo<=6) add('a','Déclaration de revenus',`Si tu es encore rattaché à tes parents, faire ta propre déclaration peut te rendre éligible au LEP (2,5 % net). Ton salaire d'apprenti est exonéré jusqu'au niveau du SMIC.`,'argent:budget','Tester mon droit au LEP');
+  try{envInit();Object.entries(S.env.budgets).forEach(([c,b])=>{const sp=S.env.spent[c]||0;if(b&&sp>b)add('c',`Enveloppe « ${c} » dépassée`,`${eur(sp)} dépensés pour ${eur(b)} prévus. Ralentis jusqu'à la fin du mois, ou prends sur une autre enveloppe.`,'argent:budget','Voir mes enveloppes',1.6);else if(b&&sp>b*0.85)add('i',`Enveloppe « ${c} » presque vide`,`Il te reste ${eur(b-sp)} jusqu'à la fin du mois.`,'argent:budget','Voir mes enveloppes');});}catch(e){}
+  if(!(S.defis&&S.defis[ym])) add('a','Choisis ton défi du mois','Un petit défi pour épargner un peu plus ce mois-ci. Il est juste en dessous, sur l\'accueil.',null,null,2.2);
+  if(day<=10&&S.historique.length>=2) add('i','Ton bilan du mois est prêt','Regarde ce que tu as accompli le mois dernier.','plus:bilan','Voir mon bilan',2.4);
+  try{const gc=goalCalc();if(!gc.ok&&gc.late>12&&gc.mo)add('c','Ton objectif prend du retard',`À ton rythme, tu atteins ${eur(S.objectif.montant)} vers ${Math.floor(gc.ageAt)} ans au lieu de ${S.objectif.age}. Il faudrait environ ${eur(Math.ceil(gc.need/10)*10)}/mois.`,'plus:reglages','Ajuster mon objectif',2.6);}catch(e){}
+  if(Object.keys(S.cours||{}).length<COURS.length) add('i','5 minutes pour apprendre','Un mini-cours t\'attend : '+COURS.find(c=>!(S.cours||{})[c.id]).t+'.','plus:cours','Lire le cours',3.4);
   if(!S.done.quiz) add('i','Teste tes connaissances',`10 questions pour vérifier que tu maîtrises les bases avant d'investir plus.`,'plus:quiz','Faire le quiz',3.5);
   return tips.sort((a,b)=>a.pr-b.pr);
 }
 function renderCoach(){
   const tips=coachTips(),d=new Date();
   $('coachSub').textContent='Recalculés à chaque ouverture';
-  $('coach').innerHTML=tips.slice(0,6).map(t=>{const[l,c,ic]=LV[t.lv];return`<div class="tip" style="--c:${c}"><div class="ic" aria-hidden="true">${ic}</div><div><div class="lv">${l}</div><div class="tt">${esc(t.t)}</div><p>${esc(t.p)}</p>${t.go?`<a class="go" href="#${t.go.split(':')[0]}" data-go="${t.go}">${esc(t.gt)} →</a>`:''}</div></div>`;}).join('')||'<div class="card green small">Tout est en ordre ce mois-ci. Garde le cap 👍</div>';
-  if(tips.length>6) $('coach').innerHTML+=`<p class="small muted">+ ${tips.length-6} autre${tips.length-6>1?'s':''} conseil${tips.length-6>1?'s':''} une fois ceux-ci réglés.</p>`;
+  $('coach').innerHTML=tips.slice(0,4).map(t=>{const[l,c,ic]=LV[t.lv];return`<div class="tip" style="--c:${c}"><div class="ic" aria-hidden="true">${ic}</div><div><div class="lv">${l}</div><div class="tt">${esc(t.t)}</div><p>${esc(t.p)}</p>${t.go?`<a class="go" href="#${t.go.split(':')[0]}" data-go="${t.go}">${esc(t.gt)} →</a>`:''}</div></div>`;}).join('')||'<div class="card green small">Tout est en ordre ce mois-ci. Garde le cap 👍</div>';
+  if(tips.length>4) $('coach').innerHTML+=`<p class="small muted">+ ${tips.length-4} autre${tips.length-4>1?'s':''} conseil${tips.length-4>1?'s':''} une fois ceux-ci réglés.</p>`;
   renderMonthPlan();
   try{renderMission();checkBadges();}catch(e){}
 }
@@ -1502,7 +1735,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-ask]');if(
 const ADVISOR_URL='https://claude.ai/artifact/MBY25nRSgZGaV1FFYh8SHm';
 const IN_CLAUDE=!!(window.claude&&typeof window.claude.use==='function');
 let SAMPLE=null,CONV=[],chatBusy=false,chatCtrl=null,convLoaded=false,pendingAsk=null,CONVDOC=null;
-const SUGG=["Que dois-je faire ce mois-ci ?","Comment j'achète mon premier ETF ?","Un ETF, c'est vraiment une bonne idée pour moi ?","Explique-moi le simulateur simplement","J'ai reçu une prime, j'en fais quoi ?","Comment ouvrir un LEP à la Société Générale ?"];
+const SUGG=["Faire mon check-up du mois","Que dois-je faire ce mois-ci ?","Acheter une voiture : crédit ou comptant ?","Vérifier une proposition de placement","Préparer mon rendez-vous à la banque","Comment j'achète mon premier ETF ?","Un ETF, c'est vraiment une bonne idée pour moi ?","Explique-moi le simulateur simplement","J'ai reçu une prime, j'en fais quoi ?","Comment ouvrir un LEP à la Société Générale ?"];
 function md(t){
   const lines=esc(t).split(/\n/);let h='',list=null;
   const inline=x=>x.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*(?!\s)(.+?)\*(?!\*)/g,'$1<em>$2</em>').replace(/`([^`]+)`/g,'<code>$1</code>');
@@ -1533,8 +1766,15 @@ function situation(){
     analyse_releve_bancaire:S.analyse?{periode:S.analyse.from+' au '+S.analyse.to,revenus_par_mois:Math.round(S.analyse.rev/S.analyse.months),depenses_par_mois:Math.round(S.analyse.dep/S.analyse.months),epargne_par_mois:Math.round(S.analyse.ep/S.analyse.months),frais_bancaires_par_mois:Math.round(S.analyse.frais/S.analyse.months),categories_par_mois:S.analyse.cats.map(c=>c.c+' '+c.m+' €'),abonnements:S.analyse.abos.map(a=>a.n+' '+a.v+' €')}:'pas encore faite',
     jour_de_paie:S.profil.jour,
     parcours_debutant:{mission_actuelle:(MISSIONS.find(m=>!missionDone(m))||{t:'terminé'}).t,missions_faites:MISSIONS.filter(missionDone).length+'/'+MISSIONS.length},
-    badges:BADGES.filter(b=>S.badges&&S.badges[b.id]).map(b=>b.n)};
+    badges:BADGES.filter(b=>S.badges&&S.badges[b.id]).map(b=>b.n),
+    objectif:{montant:S.objectif.montant,age:S.objectif.age,atteint_vers:(()=>{const c=goalCalc();return c.ok?'atteint':c.n>=720?'inconnu':c.date.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});})()},
+    defi_du_mois:(()=>{const d=S.defis&&S.defis[curYM()];return d?((DEFIS.find(x=>x.id===d.id)||{}).t+' – '+(d.done===true?'réussi':d.done===false?'raté':'en cours')):'pas encore choisi';})(),
+    enveloppes_du_mois:S.env?Object.entries(S.env.budgets).map(([c,b])=>c+' : '+(S.env.spent[c]||0)+' / '+b+' €'):[],
+    mini_cours_valides:Object.keys(S.cours||{}).length+'/'+COURS.length,
+    trimestres_retraite_valides:S.carriere.trim||'inconnu',
+    projet_voiture_simule:VOIT||null};
 }
+const CHECKUP="Fais mon check-up du mois, comme un vrai conseiller : 1) regarde ma situation (comptes, matelas, projets, enveloppes, défi, objectif, relevés) ; 2) dis-moi en 3 points ce qui va bien et ce qui est à surveiller ; 3) donne-moi 3 actions précises pour ce mois avec les montants ; 4) pose-moi UNE question pour avancer. Note dans ta mémoire les décisions importantes.";
 function sysPrompt(){
   return `Tu es « Ton conseiller », le conseiller financier pédagogique intégré à l'appli « Mon Plan Retraite » de Hugo, 20 ans, alternant en France. Tu parles français, tu le tutoies, avec un ton chaleureux, simple et direct, comme un grand frère qui s'y connaît.
 
@@ -1563,6 +1803,9 @@ FAITS UTILES (novembre 2026, à vérifier si besoin) :
 - ETF monde éligibles PEA : suivent le MSCI World ou MSCI ACWI, version capitalisante, TER < 0,45 %, réplication synthétique (swap) normale.
 - Actualité récente : ${(ACTU.news||[]).map(n=>n.l+' '+n.v+' : '+n.p).join(' | ')}
 
+CE QUE TU AS RETENU DE VOS DISCUSSIONS (mémoire, utilise l'outil « retenir » pour noter une décision ou une info durable importante : courtier choisi, ETF, objectif, contrainte, projet ; pas les détails passagers) :
+${(S.memo||[]).map(m=>'- '+m.t).join('\n')||'(rien pour l\'instant)'}
+
 SITUATION ACTUELLE DE HUGO (données de son appli, à jour) :
 ${JSON.stringify(situation())}
 
@@ -1577,6 +1820,7 @@ const TOOLS=[
  {name:'calculer_projet',description:"Calcule combien mettre de côté chaque mois pour réunir un montant en un nombre de mois, avec ce qui est déjà épargné.",
   inputSchema:{type:'object',properties:{montant:{type:'number'},mois:{type:'number'},deja_epargne:{type:'number'},rendement_annuel_pct:{type:'number'}},required:['montant','mois']},
   execute(i){const n=Math.max(1,Math.round(+i.mois)),r=(+i.rendement_annuel_pct||0)/100/12,d=Math.max(0,+i.deja_epargne||0),fv=d*Math.pow(1+r,n),need=Math.max(0,+i.montant-fv);return{par_mois:Math.ceil(r?need*r/(Math.pow(1+r,n)-1):need/n),mois:n};}},
+ {name:'retenir',description:"Note dans la mémoire du conseiller une décision ou une information durable sur Hugo (ex. « A choisi Trade Republic pour son PEA », « Veut acheter une voiture d'occasion vers mi-2028 »). Une phrase courte.",inputSchema:{type:'object',properties:{note:{type:'string'}},required:['note']},execute(i){const t=String(i.note||'').trim().slice(0,200);if(!t)throw new Error('note vide');S.memo=S.memo||[];if(S.memo.some(m=>m.t===t))return{ok:true,deja:true};S.memo.push({t,d:Date.now()});S.memo=S.memo.slice(-30);persist();try{renderMemo();}catch(e){}return{ok:true};}},
  {name:'lire_situation',description:"Relit la situation à jour de Hugo dans l'appli (comptes, projets, profil, répartition).",inputSchema:{type:'object',properties:{}},execute(){return situation();}}
 ];
 function bubble(role,html,cls=''){const d=document.createElement('div');d.className='msg '+(role==='user'?'u':'a')+(cls?' '+cls:'');if(role==='user')d.textContent=html;else d.innerHTML=html;$('chat').appendChild(d);return d;}
@@ -1585,7 +1829,7 @@ function renderChat(){
   if(!CONV.length) bubble('assistant',md("Salut Hugo 👋 Je suis ton conseiller. Je vois ta situation dans l'appli : tes comptes, tes projets, ton profil.\n\nPose-moi n'importe quelle question, même basique. Je t'explique **quoi faire et comment**, étape par étape. Par quoi on commence ?"));
   CONV.forEach(m=>bubble(m.role,m.role==='user'?m.content:md(m.content)));
   $('sugg').innerHTML=SUGG.map(q=>`<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join('');
-  $('sugg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>sendChat(b.dataset.q)));
+  $('sugg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>sendChat(b.dataset.q==='Faire mon check-up du mois'?CHECKUP:b.dataset.q)));
   scrollChat();
 }
 function scrollChat(){requestAnimationFrame(()=>window.scrollTo(0,document.body.scrollHeight));}
@@ -1693,7 +1937,7 @@ const MISSIONS=[
  {id:'m1',t:"Remplis ton budget",min:3,why:"Tout part de là : savoir ce qui rentre, ce qui sort, et ce que tu peux mettre de côté.",steps:["Va dans Mon argent → Budget & LEP.","Indique ton salaire net et tes dépenses fixes (loyer, transport, téléphone, abonnements, courses).","Regarde le montant « Épargne 20 % » : c'est ta cible de départ."],go:'argent:budget',gt:"Ouvrir mon budget",plan:'budget',auto:()=>S.profil.salaire>0&&S.profil.depenses>0&&S.profil.salaire!==1100},
  {id:'m2',t:"Entre tes soldes",min:3,why:"Le coach et le conseiller s'adaptent à tes vrais chiffres.",steps:["Ouvre l'appli Société Générale et note le solde de chaque compte.","Dans Mon argent → Mes comptes, touche « Mettre à jour mes soldes ».","Ajoute les comptes qui manquent (Livret Jeune, LDDS…) avec « + Ajouter un compte »."],go:'argent:comptes',gt:"Mettre à jour mes soldes",plan:'comptes',auto:()=>S.accounts.some(a=>a.solde)},
  {id:'m3',t:"Fais le test de profil",min:1,why:"Pour savoir comment répartir ton argent long terme sans paniquer en cas de krach.",steps:["7 questions, réponds honnêtement.","Note ton profil : il décide de la part en ETF, fonds euros et livrets."],go:'plus:conseil',gt:"Faire le test",plan:'profil',auto:()=>!!S.risk},
- {id:'m4',t:"Envoie l'e-mail aux RH",min:2,why:"Si ton entreprise abonde ton épargne, c'est de l'argent offert : le meilleur placement possible.",steps:["Copie l'e-mail ci-dessous.","Envoie-le au service RH ou à ton tuteur.","Quand tu as la réponse, mets-la dans Mon argent → Budget & LEP → Mes réglages."],mail:true,plan:'rh',auto:()=>S.profil.pee!=='inconnu'},
+ {id:'m4',t:"Envoie l'e-mail aux RH",min:2,why:"Si ton entreprise abonde ton épargne, c'est de l'argent offert : le meilleur placement possible.",steps:["Copie l'e-mail ci-dessous.","Envoie-le au service RH ou à ton tuteur.","Quand tu as la réponse, mets-la dans Plus → Réglages."],mail:true,plan:'rh',auto:()=>S.profil.pee!=='inconnu'},
  {id:'m5',t:"Vérifie ton droit au LEP et ouvre-le",min:15,why:"Le LEP rapporte 2,5 % net, sans risque : la meilleure place pour ton matelas de sécurité.",steps:["Sur impots.gouv.fr → Documents, ouvre ton dernier avis d'impôt et note ton revenu fiscal de référence.","Teste-le dans Mon argent → Budget & LEP.","Si c'est bon : dans l'appli Société Générale ou en agence, demande l'ouverture d'un LEP (avis d'impôt + pièce d'identité, 30 € minimum).","Sinon : ouvre ou garde un Livret A."],go:'argent:budget',gt:"Tester mon droit au LEP",plan:'lep'},
  {id:'m6',t:"Programme ton virement vers le livret",min:5,why:"Épargner automatiquement, le lendemain de la paie, avant de dépenser.",steps:["Appli Société Générale → Virements → Virement permanent.","Vers ton LEP (ou Livret A), le 29 de chaque mois.","Montant : celui de « Matelas de sécurité » dans « Ma répartition à chaque paie » sur l'accueil."],go:'plus:guides',guide:'g6',gt:"Voir le guide",plan:'vir1'},
  {id:'m7',t:"Choisis ton courtier pour le PEA",min:10,why:"Des frais bas, c'est des milliers d'euros en plus à la retraite.",steps:["Ouvre Plus → Comparatif.","Choisis un courtier avec achats programmés gratuits ou presque et un ETF monde éligible PEA.","Regarde sa grille tarifaire officielle avant de valider ton choix."],go:'plus:compar',gt:"Voir le comparatif",plan:'courtier'},
@@ -1702,16 +1946,17 @@ const MISSIONS=[
  {id:'m10',t:"Programme ton achat mensuel",min:10,why:"Acheter chaque mois, automatiquement, sans te poser de question.",steps:["Programme un virement Société Générale → PEA le 29.","Chez le courtier : investissement programmé sur ton ETF, le 2 ou 3 du mois.","Montant : celui de « Retraite » dans ta répartition à chaque paie."],go:'plus:guides',guide:'g1',gt:"Voir le guide",plan:'auto'},
  {id:'m11',t:"Ajoute ton ETF dans Mes placements",min:3,why:"Pour suivre tes parts, ton prix moyen et tes gains réels.",steps:["Mon argent → Placements → « + Ajouter un ETF ».","Après chaque achat, ajoute la date, le nombre de parts et le prix."],go:'argent:placements',gt:"Ouvrir Mes placements",plan:'ordre',auto:()=>S.positions.some(p=>p.achats.length)},
  {id:'m12',t:"Ouvre ton assurance vie",min:15,why:"Pour lancer le compteur fiscal des 8 ans et avoir un fonds euros sans risque pour tes projets.",steps:["Choisis un contrat en ligne sans frais sur versement (Plus → Comparatif).","Gestion libre, remplis la clause bénéficiaire.","Verse le minimum demandé."],go:'plus:compar',gt:"Voir le comparatif",plan:'av'},
- {id:'m13',t:"Ajoute le rappel de paie",min:1,why:"Un rappel la veille de ta paie pour répartir ton argent au bon moment.",steps:["Mon argent → Budget & LEP → Mes réglages.","Touche « Ajouter le rappel à mon calendrier », puis « Ajouter » sur l'iPhone."],go:'argent:budget',gt:"Ouvrir mes réglages"}
+ {id:'m13',t:"Ajoute le rappel de paie",min:1,why:"Un rappel la veille de ta paie pour répartir ton argent au bon moment.",steps:["Plus → Réglages.","Touche « Ajouter le rappel à mon calendrier », puis « Ajouter » sur l'iPhone."],go:'plus:reglages',gt:"Ouvrir mes réglages"}
 ];
 function missionDone(m){return !!S.done[m.id]||(m.auto&&m.auto());}
 function renderMission(){
   const box=$('mission');
+  try{document.querySelector('.nextc').hidden=false;}catch(e){}
   if(S.profil.debutant===false){box.hidden=true;return;}
   const i=MISSIONS.findIndex(m=>!missionDone(m)&&!S.done[m.id+'_skip']);
   const n=MISSIONS.filter(missionDone).length;
   if(i<0){box.hidden=false;box.innerHTML=`<div class="eyebrow">Parcours « Je débute »</div><h3 style="margin:4px 0">Parcours terminé 🎉</h3><p class="small">Tu as fait les ${MISSIONS.length} étapes. Maintenant, laisse le temps travailler : un relevé par mois, un bilan par an.</p>`;return;}
-  const m=MISSIONS[i];box.hidden=false;
+  const m=MISSIONS[i];box.hidden=false;try{document.querySelector('.nextc').hidden=true;}catch(e){}
   box.innerHTML=`<div class="mtop"><div class="eyebrow">Ta mission du moment · ${n+1}/${MISSIONS.length}</div><span class="mtime">≈ ${m.min} min</span></div>
    <div class="progress"><i style="width:${n/MISSIONS.length*100}%"></i></div>
    <h3 style="margin:8px 0 4px">${esc(m.t)}</h3><p class="small muted" style="margin:0 0 8px">${esc(m.why)}</p>
@@ -1743,6 +1988,9 @@ const BADGES=[
  {id:'courant',n:'Rien ne dort',d:'Compte courant optimisé',ok:()=>{const T=totals(),d=S.profil.depenses;return d>0&&T.courant>=0&&T.courant<=Math.max(d,300)*1.5&&T.secu>0;}},
  {id:'proj',n:'Projet bouclé',d:'Atteindre un objectif de projet',ok:()=>S.projets.some(p=>p.montant>0&&p.deja>=p.montant)},
  {id:'detect',n:'Détective',d:'Analyser un relevé bancaire',ok:()=>!!S.analyse},
+ {id:'defi',n:'Défi relevé',d:'Réussir un défi du mois',ok:()=>Object.values(S.defis||{}).some(d=>d.done===true)},
+ {id:'cours',n:'Tête bien faite',d:'Valider les 8 mini-cours',ok:()=>Object.keys(S.cours||{}).length>=COURS.length,p:()=>Object.keys(S.cours||{}).length/COURS.length},
+ {id:'objectif',n:'Objectif atteint',d:'Atteindre ton grand objectif',ok:()=>totals().epargne>=S.objectif.montant,p:()=>S.objectif.montant?totals().epargne/S.objectif.montant:0},
  {id:'parcours',n:'Parcours terminé',d:'Les 13 missions « Je débute »',ok:()=>MISSIONS.every(missionDone),p:()=>MISSIONS.filter(missionDone).length/MISSIONS.length}
 ];
 let badgeInit=false;
@@ -1759,7 +2007,7 @@ function renderBadges(){
     return `<div class="bcard${on?' on':''}"><span class="bdg${on?' on':''}">${badgeIcon(b.id)}</span><div><b>${esc(b.n)}</b><small>${esc(b.d)}</small>${on?`<small class="pos">Débloqué le ${new Date(on).toLocaleDateString('fr-FR')}</small>`:b.p?`<div class="progress" style="margin-top:6px"><i style="width:${pr*100}%"></i></div>`:''}</div></div>`;}).join('');
 }
 function badgeIcon(id){
-  const I={start:'M5 19l7-14 7 14M8 13h8',budget:'M4 7h16v10H4zM4 11h16',profil:'M12 8a3 3 0 1 0 0-.01M6 19c1-3 3-4.5 6-4.5s5 1.5 6 4.5',quiz:'M9 9a3 3 0 1 1 4 2.8c-.6.3-1 .8-1 1.5V14M12 17v.01',rel1:'M6 4h12v16H6zM9 9h6M9 13h6',rel3:'M5 18l4-5 3 3 6-8',rel12:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',mat1:'M12 3l8 4v5c0 5-4 8-8 9-4-1-8-4-8-9V7z',mat3:'M12 3l8 4v5c0 5-4 8-8 9-4-1-8-4-8-9V7zM9 12l2 2 4-4',etf:'M4 19V5M4 19h16M8 15l4-4 3 3 5-6',k1:'M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6',k5:'M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6',k10:'M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6',courant:'M3 12h4l3 8 4-16 3 8h4',proj:'M5 21V4h11l-2 4 2 4H5',detect:'M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12zM21 21l-6-6',parcours:'M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3'};
+  const I={defi:'M5 21V4h11l-2 4 2 4H5',cours:'M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5',objectif:'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12zM12 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4z',start:'M5 19l7-14 7 14M8 13h8',budget:'M4 7h16v10H4zM4 11h16',profil:'M12 8a3 3 0 1 0 0-.01M6 19c1-3 3-4.5 6-4.5s5 1.5 6 4.5',quiz:'M9 9a3 3 0 1 1 4 2.8c-.6.3-1 .8-1 1.5V14M12 17v.01',rel1:'M6 4h12v16H6zM9 9h6M9 13h6',rel3:'M5 18l4-5 3 3 6-8',rel12:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',mat1:'M12 3l8 4v5c0 5-4 8-8 9-4-1-8-4-8-9V7z',mat3:'M12 3l8 4v5c0 5-4 8-8 9-4-1-8-4-8-9V7zM9 12l2 2 4-4',etf:'M4 19V5M4 19h16M8 15l4-4 3 3 5-6',k1:'M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6',k5:'M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6',k10:'M12 3v18M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6',courant:'M3 12h4l3 8 4-16 3 8h4',proj:'M5 21V4h11l-2 4 2 4H5',detect:'M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12zM21 21l-6-6',parcours:'M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3'};
   return `<svg viewBox="0 0 24 24"><path d="${I[id]||I.start}"/></svg>`;
 }
 
@@ -1781,20 +2029,20 @@ $('jour').addEventListener('input',e=>{const v=Math.round(+e.target.value);if(v>
 $('debutant').addEventListener('change',e=>{S.profil.debutant=e.target.checked;persist();renderMission();});
 
 /* ================= MES PLACEMENTS (ETF) ================= */
-function posCalc(p){const parts=p.achats.reduce((x,a)=>x+a.parts,0),cost=p.achats.reduce((x,a)=>x+a.parts*a.prix,0),pru=parts?cost/parts:0,cours=p.cours||pru,val=parts*cours;return{parts,cost,pru,cours,val,pv:val-cost,pct:cost?(val-cost)/cost*100:0};}
+function posCalc(p){if(p.type==='fonds'){const cost=p.achats.reduce((x,a)=>x+a.parts*a.prix,0),val=p.valeur||cost;return{parts:0,cost,pru:0,cours:0,val,pv:val-cost,pct:cost?(val-cost)/cost*100:0};}const parts=p.achats.reduce((x,a)=>x+a.parts,0),cost=p.achats.reduce((x,a)=>x+a.parts*a.prix,0),pru=parts?cost/parts:0,cours=p.cours||pru,val=parts*cours;return{parts,cost,pru,cours,val,pv:val-cost,pct:cost?(val-cost)/cost*100:0};}
 const fmtN=(n,d=2)=>(+n).toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d});
 function renderPositions(){
   const openB=[...document.querySelectorAll('details.buys[open]')].map(d=>d.dataset.pid);
   const tot=S.positions.reduce((x,p)=>{const c=posCalc(p);x.v+=c.val;x.c+=c.cost;return x;},{v:0,c:0});
-  $('posTot').innerHTML=S.positions.length?`<div class="eyebrow">Valeur de mes ETF</div><div class="bigv">${eur(tot.v)}</div><p class="small ${tot.v-tot.c>=0?'pos':'neg'}" style="font-weight:700;margin:2px 0 0">${tot.v-tot.c>=0?'+':''}${eur(tot.v-tot.c)} (${tot.c?fmtN((tot.v-tot.c)/tot.c*100,1):'0'} %) depuis tes achats</p><p class="small muted">Investi : ${eur(tot.c)}</p>`:`<div class="eyebrow">Mes placements</div><p class="small" style="margin:6px 0 0">Ajoute ton ETF pour suivre tes parts, ton prix moyen d'achat et tes gains réels.</p>`;
+  $('posTot').innerHTML=S.positions.length?`<div class="eyebrow">Valeur de mes placements</div><div class="bigv">${eur(tot.v)}</div><p class="small ${tot.v-tot.c>=0?'pos':'neg'}" style="font-weight:700;margin:2px 0 0">${tot.v-tot.c>=0?'+':''}${eur(tot.v-tot.c)} (${tot.c?fmtN((tot.v-tot.c)/tot.c*100,1):'0'} %) depuis tes achats</p><p class="small muted">Investi : ${eur(tot.c)}</p>`:`<div class="eyebrow">Mes placements</div><p class="small" style="margin:6px 0 0">Ajoute ton ETF (ou ton fonds euros d'assurance vie) pour suivre ce que tu as investi et tes gains réels.</p>`;
   $('posList').innerHTML=S.positions.map(p=>{const c=posCalc(p),acc=S.accounts.find(a=>a.id===p.compte);
     return `<div class="card pos-card"><div class="ph"><div><b>${esc(p.nom)}</b><small>${p.isin?esc(p.isin)+' · ':''}${acc?esc(acc.n):''}</small></div><button type="button" class="del" data-posdel="${esc(p.id)}" aria-label="Supprimer ${esc(p.nom)}">×</button></div>
-     <div class="pgrid"><div><small>Valeur</small><b>${eur(c.val)}</b></div><div><small>Gain</small><b class="${c.pv>=0?'pos':'neg'}">${c.pv>=0?'+':''}${eur(c.pv)}<br><span class="small">${c.pv>=0?'+':''}${fmtN(c.pct,1)} %</span></b></div><div><small>Parts</small><b>${fmtN(c.parts,c.parts%1?4:0)}</b></div><div><small>Prix moyen (PRU)</small><b>${fmtN(c.pru)} €</b></div></div>
-     <div class="row2" style="margin-top:10px"><div class="field" style="margin:0"><label for="cours-${esc(p.id)}">Cours actuel (€)</label><input type="number" inputmode="decimal" step="0.01" id="cours-${esc(p.id)}" data-cours="${esc(p.id)}" value="${p.cours||''}" placeholder="${fmtN(c.pru)}"></div><div style="display:flex;flex-direction:column;justify-content:flex-end"><a class="btn ghost" style="min-height:46px" href="https://www.google.com/search?q=${encodeURIComponent((p.isin||p.nom)+' cours')}" target="_blank" rel="noopener">Chercher le cours</a></div></div>
-     <p class="small muted" style="margin:4px 0 0">${p.coursDate?'Cours du '+new Date(p.coursDate).toLocaleDateString('fr-FR')+(p.coursAuto?' (mis à jour automatiquement)':''):'Recopie le cours affiché dans l\'appli de ton courtier.'}</p>
-     <details class="buys" data-pid="${esc(p.id)}"${openB.includes(p.id)?' open':''}><summary>Mes achats (${p.achats.length})</summary>
-      ${p.achats.slice().sort((a,b)=>b.d.localeCompare(a.d)).map(a=>`<div class="buy"><span>${new Date(a.d).toLocaleDateString('fr-FR')}</span><span>${fmtN(a.parts,a.parts%1?4:0)} × ${fmtN(a.prix)} €</span><b>${eur(a.parts*a.prix)}</b><button type="button" class="del sm" data-buydel="${esc(p.id)}|${esc(a.id)}" aria-label="Supprimer cet achat">×</button></div>`).join('')||'<p class="small muted">Aucun achat enregistré.</p>'}
-      <div class="three" style="margin-top:8px"><div><label for="bd-${esc(p.id)}">Date</label><input type="date" id="bd-${esc(p.id)}"></div><div><label for="bp-${esc(p.id)}">Parts</label><input type="number" inputmode="decimal" step="0.0001" min="0" id="bp-${esc(p.id)}"></div><div><label for="bx-${esc(p.id)}">Prix (€)</label><input type="number" inputmode="decimal" step="0.01" min="0" id="bx-${esc(p.id)}"></div></div>
+     <div class="pgrid"><div><small>Valeur</small><b>${eur(c.val)}</b></div><div><small>Gain</small><b class="${c.pv>=0?'pos':'neg'}">${c.pv>=0?'+':''}${eur(c.pv)}<br><span class="small">${c.pv>=0?'+':''}${fmtN(c.pct,1)} %</span></b></div>${p.type==='fonds'?`<div><small>Total versé</small><b>${eur(c.cost)}</b></div><div><small>Type</small><b style="font-size:.95rem">Fonds euros</b></div>`:`<div><small>Parts</small><b>${fmtN(c.parts,c.parts%1?4:0)}</b></div><div><small>Prix moyen (PRU)</small><b>${fmtN(c.pru)} €</b></div>`}</div>
+     ${p.type==='fonds'?`<div class="field" style="margin:10px 0 0"><label for="val-${esc(p.id)}">Valeur actuelle du fonds (€)</label><input type="number" inputmode="decimal" step="0.01" id="val-${esc(p.id)}" data-val="${esc(p.id)}" value="${p.valeur||''}" placeholder="${Math.round(c.cost)}"><small>Visible dans l'appli de ton assurance vie. Les intérêts sont ajoutés en début d'année.</small></div>`:`<div class="row2" style="margin-top:10px"><div class="field" style="margin:0"><label for="cours-${esc(p.id)}">Cours actuel (€)</label><input type="number" inputmode="decimal" step="0.01" id="cours-${esc(p.id)}" data-cours="${esc(p.id)}" value="${p.cours||''}" placeholder="${fmtN(c.pru)}"></div><div style="display:flex;flex-direction:column;justify-content:flex-end"><a class="btn ghost" style="min-height:46px" href="https://www.google.com/search?q=${encodeURIComponent((p.isin||p.nom)+' cours')}" target="_blank" rel="noopener">Chercher le cours</a></div></div>
+     <p class="small muted" style="margin:4px 0 0">${p.coursDate?'Cours du '+new Date(p.coursDate).toLocaleDateString('fr-FR')+(p.coursAuto?' (mis à jour automatiquement)':''):'Recopie le cours affiché dans l\'appli de ton courtier.'}</p>`}
+     <details class="buys" data-pid="${esc(p.id)}"${openB.includes(p.id)?' open':''}><summary>${p.type==='fonds'?'Mes versements':'Mes achats'} (${p.achats.length})</summary>
+      ${p.achats.slice().sort((a,b)=>b.d.localeCompare(a.d)).map(a=>`<div class="buy"><span>${new Date(a.d).toLocaleDateString('fr-FR')}</span><span>${p.type==='fonds'?'Versement':fmtN(a.parts,a.parts%1?4:0)+' × '+fmtN(a.prix)+' €'}</span><b>${eur(a.parts*a.prix)}</b><button type="button" class="del sm" data-buydel="${esc(p.id)}|${esc(a.id)}" aria-label="Supprimer cet achat">×</button></div>`).join('')||'<p class="small muted">Aucun achat enregistré.</p>'}
+      <div class="three" style="margin-top:8px"><div><label for="bd-${esc(p.id)}">Date</label><input type="date" id="bd-${esc(p.id)}"></div>${p.type==='fonds'?`<div style="grid-column:span 2"><label for="bp-${esc(p.id)}">Montant versé (€)</label><input type="number" inputmode="decimal" step="1" min="0" id="bp-${esc(p.id)}"><input type="hidden" id="bx-${esc(p.id)}" value="1"></div>`:`<div><label for="bp-${esc(p.id)}">Parts</label><input type="number" inputmode="decimal" step="0.0001" min="0" id="bp-${esc(p.id)}"></div><div><label for="bx-${esc(p.id)}">Prix (€)</label><input type="number" inputmode="decimal" step="0.01" min="0" id="bx-${esc(p.id)}"></div>`}</div>
       <button type="button" class="ghost" data-buyadd="${esc(p.id)}" style="margin-top:8px">Ajouter cet achat</button>
      </details>
      ${acc?`<button type="button" class="linkbtn" data-sync="${esc(p.id)}">Reporter cette valeur dans le solde de « ${esc(acc.n)} »</button>`:''}
@@ -1802,17 +2050,19 @@ function renderPositions(){
   const today=new Date().toISOString().slice(0,10);
   S.positions.forEach(p=>{const el=$('bd-'+p.id);if(el)el.value=today;});
   $('posList').querySelectorAll('[data-cours]').forEach(i=>i.addEventListener('change',e=>{const p=S.positions.find(x=>x.id===e.target.dataset.cours);if(!p)return;p.cours=num(e.target.value,0);p.coursDate=Date.now();p.coursAuto=false;persist();renderPositions();checkBadges();}));
+  $('posList').querySelectorAll('[data-val]').forEach(i=>i.addEventListener('change',e=>{const p=S.positions.find(x=>x.id===e.target.dataset.val);if(!p)return;p.valeur=num(e.target.value,0);persist();renderPositions();}));
   $('posList').querySelectorAll('[data-buyadd]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.buyadd,p=S.positions.find(x=>x.id===id);if(!p)return;const d=$('bd-'+id).value,pa=num($('bp-'+id).value,0),px=num($('bx-'+id).value,0);
-    if(!d||!pa||!px){toast('Remplis la date, le nombre de parts et le prix');return;}
-    p.achats.push({id:'a'+Date.now().toString(36),d,parts:pa,prix:px});if(!p.cours){p.cours=px;p.coursDate=Date.now();}persist();renderPositions();checkBadges();renderMission();toast('Achat ajouté ✔');}));
+    if(!d||!pa||!px){toast(p.type==='fonds'?'Remplis la date et le montant':'Remplis la date, le nombre de parts et le prix');return;}
+    p.achats.push({id:'a'+Date.now().toString(36),d,parts:pa,prix:px});if(p.type!=='fonds'&&!p.cours){p.cours=px;p.coursDate=Date.now();}persist();renderPositions();checkBadges();renderMission();toast('Achat ajouté ✔');}));
   $('posList').querySelectorAll('[data-buydel]').forEach(b=>b.addEventListener('click',()=>{const[pid,aid]=b.dataset.buydel.split('|'),p=S.positions.find(x=>x.id===pid);if(!p||!window.confirm('Supprimer cet achat ?'))return;p.achats=p.achats.filter(a=>a.id!==aid);persist();renderPositions();}));
   $('posList').querySelectorAll('[data-posdel]').forEach(b=>b.addEventListener('click',()=>{const p=S.positions.find(x=>x.id===b.dataset.posdel);if(!p||!window.confirm(`Supprimer « ${p.nom} » et ses achats ?`))return;S.positions=S.positions.filter(x=>x!==p);persist();renderPositions();}));
   $('posList').querySelectorAll('[data-sync]').forEach(b=>b.addEventListener('click',()=>{const p=S.positions.find(x=>x.id===b.dataset.sync);if(!p)return;const acc=S.accounts.find(a=>a.id===p.compte);if(!acc)return;
     const v=S.positions.filter(x=>x.compte===acc.id).reduce((x,q)=>x+posCalc(q).val,0);acc.solde=Math.round(v*100)/100;acc.maj=Date.now();persist();renderAccounts();renderMoney();renderCoach();toast(`Solde de « ${acc.n} » mis à jour : ${eur(v)} (hors espèces)`);}));
 }
+let posType='etf';document.querySelectorAll('#posType button').forEach(b=>b.addEventListener('click',()=>{posType=b.dataset.pt;document.querySelectorAll('#posType button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('posIsin').parentElement.hidden=posType==='fonds';}));
 $('posAdd').addEventListener('click',()=>{$('posForm').hidden=!$('posForm').hidden;$('posCompte').innerHTML=S.accounts.filter(a=>a.k==='inv').map(a=>`<option value="${esc(a.id)}">${esc(a.n)}</option>`).join('')||'<option value="">—</option>';});
-$('posGo').addEventListener('click',()=>{const n=$('posNom').value.trim();if(!n){toast('Donne le nom de ton ETF');return;}if(S.positions.length>=10)return;
-  S.positions.push({id:'e'+Date.now().toString(36),nom:n.slice(0,60),isin:$('posIsin').value.trim().toUpperCase().slice(0,12),compte:$('posCompte').value,achats:[],cours:0,coursDate:0});
+$('posGo').addEventListener('click',()=>{const n=$('posNom').value.trim();if(!n){toast('Donne le nom du placement');return;}if(S.positions.length>=10)return;
+  S.positions.push({id:'e'+Date.now().toString(36),type:posType,valeur:0,nom:n.slice(0,60),isin:$('posIsin').value.trim().toUpperCase().slice(0,12),compte:$('posCompte').value,achats:[],cours:0,coursDate:0});
   persist();$('posForm').hidden=true;$('posNom').value='';$('posIsin').value='';renderPositions();toast('ETF ajouté : ajoute maintenant ton achat');});
 
 /* ================= ANALYSE DU RELEVÉ BANCAIRE ================= */
@@ -1912,14 +2162,295 @@ async function analyseImage(f){
 $('anaImg').addEventListener('change',e=>{const f=e.target.files[0];if(f)analyseImage(f);e.target.value='';});
 $('anaClear').addEventListener('click',()=>{S.analyse=null;persist();renderAnalyse();});
 
+let VOIT=null;
+/* ================= OBJECTIF ================= */
+function profRate(){return S.risk?(()=>{const P=riskProfile(S.risk.score);return (P.a*7+P.f*2.5+P.l*2)/100;})():4;}
+function goalCalc(){
+  const G=S.objectif,T=totals(),start=T.epargne,mo=capa(),r=Math.pow(1+profRate()/100,1/12)-1,age=+$('age').value||20;
+  let v=start,n=0;while(v<G.montant&&n<720){v=v*(1+r)+mo;n++;}
+  const monthsLeft=Math.max(1,(G.age-age)*12),fvStart=start*Math.pow(1+r,monthsLeft);
+  const need=Math.max(0,r?(G.montant-fvStart)*r/(Math.pow(1+r,monthsLeft)-1):(G.montant-start)/monthsLeft);
+  const d=new Date();d.setMonth(d.getMonth()+n);
+  return{start,n,date:d,ageAt:age+n/12,need,ok:start>=G.montant,late:n-monthsLeft,pct:G.montant?Math.min(1,start/G.montant):0,mo};
+}
+function renderGoal(){
+  const G=S.objectif,c=goalCalc();
+  $('goalCard').innerHTML=`<div class="mtop"><div class="eyebrow">Mon grand objectif</div><a class="go" href="#plus" data-go="plus:reglages" style="margin:0">Modifier</a></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:4px"><b style="font-size:1.05rem">${eur(G.montant)} à ${G.age} ans</b><span class="small muted">${Math.round(c.pct*100)} %</span></div>
+   <div class="progress gain"><i style="width:${c.pct*100}%"></i></div>
+   <p class="small" style="margin:4px 0 0">${c.ok?'<strong class="pos">Objectif atteint 🎉</strong> Fixe-toi le suivant dans les réglages.':c.n>=720||!c.mo?'Indique ta capacité d\'épargne dans Plus → Réglages pour voir quand tu l\'atteindras.':`À ton rythme (${eur(c.mo)}/mois), tu l'atteins vers <strong>${c.date.toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</strong> (${Math.floor(c.ageAt)} ans). `+(c.late<=0?`<span class="pos">En avance de ${Math.abs(c.late)} mois 👍</span>`:`Pour l'atteindre à ${G.age} ans, il faudrait <strong>${eur(Math.ceil(c.need/10)*10)}/mois</strong>.`)}</p>`;
+}
+['gMont','gAge'].forEach(id=>$(id).addEventListener('input',()=>{const m=num($('gMont').value,0),a=Math.round(num($('gAge').value,0));if(m>0)S.objectif.montant=m;if(a>=18&&a<=70)S.objectif.age=a;persist();renderGoal();checkBadges();}));
+
+/* ================= BILAN DU MOIS / ANNÉE ================= */
+const MOIS_L=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+function monthName(m){const[y,mm]=m.split('-');return MOIS_L[+mm-1]+' '+y;}
+function bilanData(){
+  const H=S.historique;if(H.length<2)return null;const a=H[H.length-2],b=H[H.length-1];
+  const dTot=b.total-a.total,dVer=b.verse-a.verse,g=dTot-dVer;
+  const ym=b.m,badges=BADGES.filter(x=>S.badges&&S.badges[x.id]&&new Date(S.badges[x.id]).toISOString().slice(0,7)===ym);
+  const prev=H.length>=3?H[H.length-2].total-H[H.length-3].total:null;
+  const df=S.defis&&S.defis[ym];
+  return{a,b,dTot,dVer,g,badges,prev,df};
+}
+function renderBilan(){
+  const B=bilanData(),card=$('bilanCard'),full=$('bilanFull'),day=new Date().getDate();
+  if(!B){full.innerHTML=`<div class="card"><p class="small" style="margin:0">Ton bilan apparaît dès que tu as enregistré <strong>deux relevés mensuels</strong> (Mon argent → Mes comptes → « Enregistrer le relevé de ce mois »). Reviens le mois prochain !</p></div>`;card.hidden=true;return;}
+  const up=B.dTot>=0,cmp=B.prev===null?'':B.dTot>=B.prev?`<span class="pos">Mieux que le mois d'avant (${B.prev>=0?'+':''}${eur(B.prev)})</span>`:`Un peu moins que le mois d'avant (${B.prev>=0?'+':''}${eur(B.prev)}), ça arrive.`;
+  const html=`<div class="bilan-hero"><div class="eyebrow" style="color:#fff;opacity:.85">Bilan de ${monthName(B.b.m)}</div><div class="hv">${up?'+':''}${eur(B.dTot)}</div><div class="hs">d'épargne en plus ce mois-ci</div></div>
+   <div class="pgrid card"><div><small>Argent versé</small><b>${eur(B.dVer)}</b></div><div><small>Gains des placements</small><b class="${B.g>=0?'pos':'neg'}">${B.g>=0?'+':''}${eur(B.g)}</b></div><div><small>Épargne totale</small><b>${eur(B.b.total)}</b></div><div><small>Badges gagnés</small><b>${B.badges.length}</b></div></div>
+   <div class="card small">${cmp?`<p style="margin:0 0 6px">${cmp}</p>`:''}${B.badges.length?`<p style="margin:0 0 6px">🏅 ${B.badges.map(x=>esc(x.n)).join(', ')}</p>`:''}${B.df?`<p style="margin:0 0 6px">Défi du mois : <strong>${esc((DEFIS.find(d=>d.id===B.df.id)||{t:''}).t)}</strong> ${B.df.done===true?'<span class="pos">réussi ✓</span>':B.df.done===false?'(pas cette fois)':'(en cours)'}</p>`:''}<p style="margin:0">${B.g<0?'Tes placements ont baissé ce mois-ci : c\'est normal et temporaire. Tu as continué à épargner, c\'est ça qui compte.':'Continue comme ça : la régularité fait tout.'}</p></div>`;
+  full.innerHTML=html+`<button type="button" class="ghost" data-ask="Fais-moi le bilan de mon mois et dis-moi quoi améliorer le mois prochain.">Commenter mon mois avec le conseiller</button>`;
+  card.hidden=!(day<=10);
+  card.innerHTML=`<div class="mtop"><div class="eyebrow">Ton bilan de ${monthName(B.b.m)}</div></div><div class="bigv ${up?'pos':''}">${up?'+':''}${eur(B.dTot)}</div><p class="small muted" style="margin:0">d'épargne en plus · ${B.badges.length} badge${B.badges.length>1?'s':''}</p><a class="go" href="#plus" data-go="plus:bilan">Voir mon bilan →</a>`;
+}
+function renderYear(){
+  const y=String(new Date().getFullYear()),H=S.historique.filter(h=>h.m.startsWith(y)),all=S.historique;
+  const idx=all.findIndex(h=>h.m.startsWith(y)),before=idx>0?all[idx-1]:null;
+  if(!H.length){$('yearFull').innerHTML=`<div class="card small">Ton année en chiffres se remplit avec tes relevés mensuels. Enregistre ton premier relevé dans Mon argent.</div>`;return;}
+  const first=before||H[0],last=H[H.length-1],added=last.total-first.total,ver=last.verse-first.verse,gain=added-ver;
+  let best=null;for(let i=1;i<all.length;i++){if(!all[i].m.startsWith(y))continue;const d=all[i].total-all[i-1].total;if(!best||d>best.d)best={m:all[i].m,d};}
+  const badges=BADGES.filter(b=>S.badges&&S.badges[b.id]&&new Date(S.badges[b.id]).getFullYear()==y);
+  const defis=Object.entries(S.defis||{}).filter(([m,d])=>m.startsWith(y)&&d.done===true).length;
+  const cours=Object.keys(S.cours||{}).length;
+  const slides=[
+   ['var(--accent)',`Ton année ${y}`,`${H.length} relevé${H.length>1?'s':''}`,'mois suivis avec régularité'],
+   ['#0b5551',`${added>=0?'+':''}${eur(added)}`,'d\'épargne en plus','depuis '+(before?'fin '+monthName(before.m):'ton premier relevé')],
+   ['#c7801a',`${gain>=0?'+':''}${eur(gain)}`,'gagnés par tes placements','en plus de tes '+eur(ver)+' versés'],
+   ...(best?[['#2f7d3a',(m=>m[0].toUpperCase()+m.slice(1))(monthName(best.m)),'ton meilleur mois',`${best.d>=0?'+':''}${eur(best.d)} d'épargne`]]:[]),
+   ['#16232a',`${badges.length} badge${badges.length>1?'s':''}`,'débloqués cette année',`${defis} défi${defis>1?'s':''} réussi${defis>1?'s':''} · ${cours} cours validé${cours>1?'s':''}`]
+  ];
+  $('yearFull').innerHTML=slides.map(([c,big,l,s])=>`<div class="yslide" style="background:${c}"><div class="yb">${big}</div><div class="yl">${l}</div><div class="ys">${s}</div></div>`).join('')+(S.analyse?`<div class="card small">D'après ton dernier relevé bancaire analysé : ${eur(S.analyse.dep/S.analyse.months)} de dépenses par mois, dont ${eur(((S.analyse.cats.find(c=>c.c==='Restos et livraison')||{m:0}).m))} en restos et livraison.</div>`:'')+`<button type="button" class="ghost" data-ask="Fais-moi le bilan de mon année et fixe-moi 3 objectifs pour l'an prochain.">Mon bilan de l'année avec le conseiller</button>`;
+}
+
+/* ================= DÉFIS ================= */
+const DEFIS=[
+ {id:'livraison',t:'Une semaine sans livraison ni fast-food',d:'Cuisine ou emporte ton repas. Mets l\'argent économisé sur ton livret.',w:()=>S.analyse?(S.analyse.cats.find(c=>c.c==='Restos et livraison')||{m:0}).m:20},
+ {id:'abo',t:'Résilier un abonnement inutile',d:'Passe en revue tes abonnements : garde ceux que tu utilises vraiment.',w:()=>S.analyse?S.analyse.abos.reduce((x,a)=>x+a.v,0):15},
+ {id:'plus30',t:'30 € de plus sur ton livret ce mois-ci',d:'Un petit virement en plus, juste après ta paie.',w:()=>12},
+ {id:'weekend',t:'Un week-end sans aucune dépense',d:'Balade, sport, soirée jeux chez toi : zéro euro dépensé.',w:()=>10},
+ {id:'lunch',t:'Préparer tes déjeuners 3 jours par semaine',d:'Économie typique : 5 à 8 € par repas.',w:()=>S.analyse?(S.analyse.cats.find(c=>c.c==='Restos et livraison')||{m:0}).m/2:8},
+ {id:'frais',t:'Faire baisser tes frais bancaires',d:'Demande à ta banque une offre jeune, ou compare avec une banque en ligne.',w:()=>S.analyse&&S.analyse.frais?40:0},
+ {id:'cours',t:'Terminer un mini-cours',d:'5 minutes pour mieux comprendre ton argent.',w:()=>Object.keys(S.cours||{}).length<COURS.length?9:0},
+ {id:'shop',t:'La règle des 48 heures',d:'Pour tout achat plaisir de plus de 30 €, attends 48 h avant d\'acheter.',w:()=>S.analyse?(S.analyse.cats.find(c=>c.c==='Shopping et loisirs')||{m:0}).m/3:9}
+];
+function curYM(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
+function defiChoices(){const ym=curYM(),seed=+ym.replace('-','');return DEFIS.map((d,i)=>({d,w:d.w()+((seed*7+i*13)%10)})).filter(x=>x.w>0).sort((a,b)=>b.w-a.w).slice(0,3).map(x=>x.d);}
+function renderDefi(){
+  S.defis=S.defis||{};const ym=curYM(),cur=S.defis[ym];
+  const box=$('defiCard');
+  if(!cur){const ch=defiChoices();box.innerHTML=`<div class="eyebrow">Défi du mois</div><p class="small" style="margin:4px 0 8px">Choisis ton défi de ${MOIS_L[new Date().getMonth()]} :</p>`+ch.map(d=>`<button type="button" class="dchoice" data-defi="${d.id}"><b>${esc(d.t)}</b><small>${esc(d.d)}</small></button>`).join('');}
+  else{const d=DEFIS.find(x=>x.id===cur.id)||{t:'Défi',d:''};box.innerHTML=`<div class="mtop"><div class="eyebrow">Défi de ${MOIS_L[new Date().getMonth()]}</div>${cur.done===true?'<span class="pos small" style="font-weight:700">Réussi ✓</span>':cur.done===false?'<span class="small muted">Pas cette fois</span>':''}</div><h3 style="margin:4px 0">${esc(d.t)}</h3><p class="small muted" style="margin:0 0 8px">${esc(d.d)}</p>`+(cur.done===undefined?`<div class="btns"><button type="button" id="defiOk">Défi réussi ✓</button><button type="button" class="ghost" id="defiKo">Pas cette fois</button></div>`:`<a class="go" href="#plus" data-go="plus:defis">Mes défis →</a>`);
+    if($('defiOk'))$('defiOk').addEventListener('click',()=>{cur.done=true;persist();renderDefi();checkBadges();toast('Bravo, défi relevé ! 💪');});
+    if($('defiKo'))$('defiKo').addEventListener('click',()=>{cur.done=false;persist();renderDefi();toast('Pas grave, nouveau défi le mois prochain');});}
+  box.querySelectorAll('[data-defi]').forEach(b=>b.addEventListener('click',()=>{S.defis[ym]={id:b.dataset.defi};persist();renderDefi();toast('Défi accepté !');}));
+  const hist=Object.entries(S.defis).sort((a,b)=>b[0].localeCompare(a[0]));
+  $('defiFull').innerHTML=`<div class="card">${box.innerHTML.replace(/id="defi(Ok|Ko)"/g,'')}</div>`+(hist.length?`<div class="card"><h3>Historique</h3>${hist.map(([m,v])=>`<div class="buy"><span>${monthName(m)}<small class="muted"> · ${esc((DEFIS.find(d=>d.id===v.id)||{t:''}).t)}</small></span><b class="${v.done===true?'pos':''}">${v.done===true?'Réussi':v.done===false?'Raté':'En cours'}</b></div>`).join('')}</div>`:'');
+  $('defiFull').querySelectorAll('[data-defi]').forEach(b=>b.addEventListener('click',()=>{S.defis[ym]={id:b.dataset.defi};persist();renderDefi();}));
+}
+
+/* ================= ENVELOPPES ================= */
+const ENV_CATS=['Courses','Restos et livraison','Shopping et loisirs','Transport','Sorties','Autres dépenses'];
+function envInit(){
+  S.env=S.env||{budgets:{},mois:'',spent:{}};
+  if(!Object.keys(S.env.budgets).length){const A=S.analyse;ENV_CATS.forEach(c=>{const m=A?(A.cats.find(x=>x.c===c)||{m:0}).m:0;S.env.budgets[c]=m?Math.round(m/10)*10:({'Courses':180,'Restos et livraison':60,'Shopping et loisirs':80,'Transport':60,'Sorties':60,'Autres dépenses':50})[c];});}
+  if(S.env.mois!==curYM()){S.env.mois=curYM();S.env.spent={};}
+}
+let envEdit=false;
+function renderEnv(){
+  envInit();const E=S.env,box=$('envBox'),day=new Date().getDate(),dim=new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate();
+  const tb=Object.values(E.budgets).reduce((x,v)=>x+v,0),ts=Object.values(E.spent).reduce((x,v)=>x+v,0);
+  box.innerHTML=`<div class="mtop"><h3>Mes enveloppes de ${MOIS_L[new Date().getMonth()]}</h3><button type="button" class="linkbtn" id="envEditBtn" style="margin:0">${envEdit?'Terminé':'Modifier'}</button></div>
+   <p class="small muted" style="margin:2px 0 10px">Il te reste <strong>${eur(tb-ts)}</strong> sur ${eur(tb)} pour tes dépenses variables, ${dim-day} jours avant la fin du mois. Note tes dépenses au fil de l'eau avec les boutons.</p>`+
+   Object.entries(E.budgets).map(([c,b])=>{const s=E.spent[c]||0,r=b?s/b:0,cls=r>1?'neg':r>0.85?'warnc':'';
+    return `<div class="env"><div class="eh"><b>${esc(c)}</b><span class="${cls}">${envEdit?'':`reste ${eur(b-s)}`}</span></div>
+     ${envEdit?`<div class="row2"><div><label class="small muted" for="eb-${ENV_CATS.indexOf(c)}">Budget du mois</label><input type="number" inputmode="numeric" min="0" step="10" data-envb="${esc(c)}" id="eb-${ENV_CATS.indexOf(c)}" value="${b}"></div><div><label class="small muted" for="es-${ENV_CATS.indexOf(c)}">Déjà dépensé</label><input type="number" inputmode="decimal" min="0" step="1" data-envs="${esc(c)}" id="es-${ENV_CATS.indexOf(c)}" value="${s||''}"></div></div>`:
+     `<div class="progress ${r>0.85?'gain':''}" style="${r>1?'--x:1':''}"><i style="width:${Math.min(100,r*100)}%;${r>1?'background:var(--warn)':''}"></i></div><div class="eb"><span class="small muted">${eur(s)} / ${eur(b)}</span><span class="qadd">${[5,10,20].map(v=>`<button type="button" data-envadd="${esc(c)}" data-v="${v}">+${v}</button>`).join('')}<button type="button" data-envadd="${esc(c)}" data-v="?">+…</button></span></div>`}</div>`;}).join('')+
+   (envEdit?'':`<button type="button" class="linkbtn" id="envReset">Remettre à zéro ce mois</button>`)+
+   (S.analyse?'':`<p class="small muted" style="margin:8px 0 0">Astuce : analyse ton relevé (onglet Dépenses) pour régler les budgets sur tes vraies habitudes.</p>`);
+  $('envEditBtn').addEventListener('click',()=>{envEdit=!envEdit;renderEnv();});
+  box.querySelectorAll('[data-envadd]').forEach(b=>b.addEventListener('click',()=>{const c=b.dataset.envadd;let v=b.dataset.v;if(v==='?'){v=window.prompt('Montant dépensé (€) en '+c+' ?','');if(v===null)return;v=num(String(v).replace(',','.'),0);}else v=+v;if(!v)return;
+    E.spent[c]=Math.round(((E.spent[c]||0)+v)*100)/100;persist();renderEnv();const bu=E.budgets[c];if(bu&&E.spent[c]>bu)toast(`Enveloppe « ${c} » dépassée`);else toast(`+${eur(v)} en ${c}`);}));
+  box.querySelectorAll('[data-envb]').forEach(i=>i.addEventListener('input',e=>{E.budgets[e.target.dataset.envb]=num(e.target.value,0);persist();}));
+  box.querySelectorAll('[data-envs]').forEach(i=>i.addEventListener('input',e=>{E.spent[e.target.dataset.envs]=num(e.target.value,0);persist();}));
+  if($('envReset'))$('envReset').addEventListener('click',()=>{if(window.confirm('Remettre toutes les dépenses du mois à zéro ?')){E.spent={};persist();renderEnv();}});
+}
+
+/* ================= CARRIÈRE (retraite publique) ================= */
+const TRIM_REQ=172;
+function renderCarriere(){
+  const t=S.carriere.trim||0,r=Math.min(1,t/TRIM_REQ),age=+$('age').value||20,yrs=Math.ceil((TRIM_REQ-t)/4);
+  $('rTrimBar').style.width=(r*100)+'%';
+  $('rTrimTxt').innerHTML=t?`<strong>${t} / ${TRIM_REQ} trimestres</strong>. Au rythme d'une année complète validée par an (4 trimestres), tu aurais tous tes trimestres vers <strong>${age+yrs} ans</strong>. Le nombre exigé pour ta génération sera fixé par les futures réformes : environ 172 avec les règles actuelles.`:'Indique tes trimestres validés pour suivre ta progression vers le taux plein (environ 172 trimestres avec les règles actuelles).';
+}
+$('rTrim').addEventListener('input',e=>{S.carriere.trim=Math.max(0,Math.round(num(e.target.value,0)));persist();renderCarriere();});
+$('rEstim').addEventListener('input',e=>{S.carriere.estim=num(e.target.value,0);persist();retraite();});
+
+/* ================= IMPÔTS ================= */
+const IR_TR=[[11600,0],[29579,.11],[84577,.30],[181917,.41],[Infinity,.45]];
+function irCalc(netImpAnnuel){
+  const R=Math.max(0,netImpAnnuel-Math.min(14426,netImpAnnuel*0.10));
+  let brut=0,prev=0,tmi=0;for(const[lim,t]of IR_TR){if(R>prev){brut+=(Math.min(R,lim)-prev)*t;if(t>0)tmi=t;}prev=lim;}
+  let dec=brut<1982?Math.max(0,897-0.4525*brut):0;let net=Math.max(0,brut-dec);if(net<61)net=0;
+  return{R,brut,net,tmi:R>11600?tmi:0};
+}
+function impots(){
+  const m=num($('iSal').value,0),n=Math.max(1,Math.min(14,Math.round(num($('iMois').value,12)))),app=$('iApp').checked;
+  const annual=m*n,imp=app?Math.max(0,annual-21600):annual,C=irCalc(imp);
+  $('iImpot').textContent=eur(C.net);$('iImpotD').textContent=C.net?`soit environ ${eur(C.net/12)} prélevés chaque mois`:'tu ne serais pas imposable';
+  $('iTmi').textContent=Math.round(C.tmi*100)+' %';$('iMoy').textContent=annual?pct(Math.round(C.net/annual*1000)/10):'0 %';
+  $('iPer').innerHTML=C.tmi>=0.30?`<h3>Le PER devient intéressant</h3><p class="small" style="margin:4px 0 0">Avec une tranche à ${Math.round(C.tmi*100)} %, chaque <strong>100 €</strong> versés sur un PER réduisent ton impôt d'environ <strong>${Math.round(C.tmi*100)} €</strong>. L'argent est bloqué jusqu'à la retraite (sauf achat de ta résidence principale).</p>`:
+   `<h3>Le PER n'est pas encore intéressant</h3><p class="small" style="margin:4px 0 0">${C.tmi?'Avec une tranche à 11 %, 100 € versés ne te font économiser qu\'environ 11 € d\'impôt, contre un blocage jusqu\'à la retraite.':'Tu ne paierais pas d\'impôt : la déduction du PER ne te rapporterait rien.'} Continue avec ton PEA et ton assurance vie. Le PER deviendra intéressant à partir d'un revenu net imposable d'environ ${eur(29579/0.9/12)} par mois (tranche à 30 %).</p>`;
+}
+['iSal','iMois','iApp'].forEach(id=>$(id).addEventListener('input',impots));
+
+/* ================= VOITURE ================= */
+function voiture(){
+  const prix=num($('vPrix').value,0),ap=Math.min(prix,num($('vApport').value,0)),N=+$('vDur').value,t=+$('vTaux').value,assu=num($('vAssu').value,0),carb=num($('vCarbu').value,0),ent=num($('vEntr').value,0);
+  $('vDurO').textContent=N+' mois';$('vTauxO').textContent=pct(t);
+  const L=prix-ap,i=t/100/12,mens=L?(i?L*i/(1-Math.pow(1+i,-N)):L/N):0,inter=mens*N-L,frais=assu/12+carb+ent/12,tot=mens+frais,sal=S.profil.salaire||0;
+  $('vMens').textContent=eur(mens);$('vInt').textContent=eur(inter);$('vTotal').textContent=eur(tot);
+  $('vTotalD').textContent=`dont ${eur(frais)} d'assurance, carburant et entretien`+(sal?` · ${Math.round(tot/sal*100)} % de ton salaire`:'');
+  const endet=sal?mens/sal:0,ratio=sal?tot/sal:0;
+  const lvl=!sal?'':ratio<=0.15&&endet<=0.35?'ok':ratio<=0.25&&endet<=0.35?'mid':'ko';
+  $('vVerdict').className='card '+(lvl==='ok'?'green':lvl==='mid'?'amber':lvl==='ko'?'red':'');
+  $('vVerdict').innerHTML=!sal?'<p class="small" style="margin:0">Indique ton salaire dans Mon argent → Budget & LEP pour savoir si c\'est raisonnable.</p>':
+   lvl==='ok'?`<h3>Budget raisonnable</h3><p class="small" style="margin:4px 0 0">La voiture prend ${Math.round(ratio*100)} % de ton salaire (repère : moins de 15 %). Garde quand même ton matelas de sécurité intact.</p>`:
+   lvl==='mid'?`<h3>Budget serré</h3><p class="small" style="margin:4px 0 0">${Math.round(ratio*100)} % de ton salaire passe dans la voiture (repère : moins de 15 %). Pense à une voiture moins chère, un apport plus grand ou une assurance moins coûteuse.</p>`:
+   `<h3>Trop lourd pour ton budget</h3><p class="small" style="margin:4px 0 0">${Math.round(ratio*100)} % de ton salaire pour la voiture${endet>0.35?`, et la mensualité dépasse 35 % de tes revenus : la banque refuserait probablement`:''}. Revois le prix ou épargne plus longtemps avant d'acheter.</p>`;
+  // comparer : épargner la mensualité avant d'acheter comptant
+  let months=0,v=0;const r=0.02/12;if(L>0&&mens>0){while(v<L&&months<240){v=v*(1+r)+mens;months++;}}
+  const pIdx=S.projets.findIndex(p=>/voiture|permis|auto/i.test(p.n)),pr=pIdx>=0?S.projets[pIdx]:null;
+  $('vCompare').innerHTML=`<h3>Crédit maintenant ou comptant plus tard ?</h3>`+(L>0?`<p class="small" style="margin:4px 0 0">En mettant <strong>${eur(mens)}</strong> par mois sur ton livret au lieu de rembourser, tu aurais les ${eur(L)} manquants en <strong>${months} mois</strong> et tu économiserais <strong>${eur(inter)}</strong> d'intérêts. Le crédit a du sens si la voiture est indispensable tout de suite (travail, trajets).</p>`:'<p class="small" style="margin:4px 0 0">Tu paies comptant : aucun intérêt. 👍</p>')+
+   (pr?`<p class="small" style="margin:8px 0 0">Ton projet « ${esc(pr.n)} » : ${eur(pr.deja)} de côté sur ${eur(pr.montant)}.</p><button type="button" class="ghost" id="vToProj" style="margin-top:6px">Mettre à jour ce projet avec ${eur(prix)}</button>`:`<button type="button" class="ghost" id="vNewProj" style="margin-top:8px">Créer un projet « Voiture » de ${eur(prix)}</button>`)+
+   `<p class="small muted" style="margin:8px 0 0">Effet d'un crédit sur ta retraite : voir Simuler → Et si…</p>`;
+  if($('vToProj'))$('vToProj').addEventListener('click',()=>{pr.montant=prix;persist();renderProjets();renderCoach();toast('Projet mis à jour');});
+  if($('vNewProj'))$('vNewProj').addEventListener('click',()=>{const d=new Date();S.projets.push({id:'p'+Date.now().toString(36),n:'Voiture',montant:prix,date:(d.getFullYear()+2)+'-'+String(d.getMonth()+1).padStart(2,'0'),deja:ap});persist();renderProjets();renderCoach();voiture();toast('Projet « Voiture » créé');});
+  S.voiture={mens:Math.round(mens),N,prix,ap,t};
+}
+['vPrix','vApport','vDur','vTaux','vAssu','vCarbu','vEntr'].forEach(id=>$(id).addEventListener('input',voiture));
+
+/* ================= ET SI… ================= */
+function simulateEx(p){ // comme simulate, avec pause des versements
+  const years=Math.max(0,p.ret-p.age),rm=Math.pow(1+(p.rdt-p.frais)/100,1/12)-1;let cap=p.init,verse=p.init,m=p.mens;
+  for(let y=1;y<=years;y++){const age=p.age+y-1,pause=p.pauseFrom!=null&&age>=p.pauseFrom&&age<p.pauseTo;for(let k=0;k<12;k++){if(!pause){cap+=m;verse+=m;}cap*=1+rm;}if(p.crash&&p.age+y===p.crashAge)cap*=1-p.crashPct/100;m*=1+p.hausse/100;}
+  return{cap,verse,years};
+}
+function etsi(){
+  const p={...read(),crash:false},defl=y=>Math.pow(1+p.infl/100,y);
+  const base=simulateEx(p),baseR=base.cap/defl(base.years);
+  $('etsiBase').innerHTML=`Ta simulation : <strong>${eur(p.mens)}/mois</strong> de ${p.age} à ${p.ret} ans à ${pct(p.rdt)} → <strong>${eur(baseR)}</strong>, soit ${eur(baseR*0.04/12)}/mois à la retraite.`;
+  const V=S.voiture||{mens:250,N:48};
+  const sc=[
+   ['Mettre 50 € de plus chaque mois',{mens:p.mens+50}],
+   ['Augmenter tes versements de 4 %/an au lieu de '+pct(p.hausse),{hausse:4}],
+   ['Commencer 5 ans plus tard',{age:p.age+5}],
+   [`Arrêter d'épargner ${Math.round(V.N/12)} ans pour payer une voiture à crédit`,{pauseFrom:p.age,pauseTo:p.age+Math.round(V.N/12)}],
+   ['Tout laisser sur un livret (2 %)',{rdt:2}],
+   ['Payer 2 % de frais par an (fonds de banque)',{frais:2}],
+   ['Un krach de −40 % à 60 ans',{crash:true,crashAge:60,crashPct:40}],
+   ['Continuer jusqu\'à 67 ans',{ret:Math.max(p.ret,67)}]
+  ];
+  $('etsiList').innerHTML=sc.map(([t,ch])=>{const q={...p,...ch};if(q.ret<=q.age)return'';const s=simulateEx(q),r=s.cap/defl(Math.max(0,q.ret-p.age)),d=r-baseR;
+    return `<div class="card etsi"><b>${esc(t)}</b><div class="eb"><span class="bigv" style="font-size:1.3rem">${eur(r)}</span><span class="${d>=0?'pos':'neg'}" style="font-weight:700">${d>=0?'+':''}${eur(d)}</span></div><small class="muted">${d>=0?'+':''}${eur(d*0.04/12)}/mois à la retraite</small></div>`;}).join('');
+}
+
+/* ================= ASSURANCE VIE / FONDS ================= */
+// (géré dans posCalc / renderPositions via p.type==='fonds')
+
+/* ================= MINI-COURS ================= */
+const COURS=[
+ {id:'c1',n:'Débutant',t:'Les intérêts composés',c:`<p>Quand ton argent rapporte, <strong>les gains rapportent à leur tour</strong>. 1 000 € placés à 7 % deviennent 1 070 € après un an, puis 1 145 € (7 % de 1 070), et environ <strong>15 000 € après 40 ans</strong>, sans rien ajouter.</p><p>C'est pour ça que <strong>le temps compte plus que le montant</strong> : commencer à 20 ans avec 100 € par mois donne souvent plus que commencer à 35 ans avec 200 €.</p><p>La règle de 72 : divise 72 par le rendement pour savoir en combien d'années ton argent double. À 7 % : environ 10 ans. À 2 % (livret) : 36 ans.</p>`,q:[["À 7 % par an, ton argent double en environ :",["3 ans","10 ans","25 ans"],1],["Le plus important pour profiter des intérêts composés :",["Le temps","Choisir la bonne action","Regarder la bourse chaque jour"],0]]},
+ {id:'c2',n:'Débutant',t:'Risque et rendement',c:`<p>Règle d'or : <strong>plus un placement peut rapporter, plus il peut baisser</strong>. Un livret est garanti mais rapporte peu ; les actions rapportent plus sur le long terme mais peuvent perdre 30 à 50 % pendant un krach.</p><p>Le risque baisse avec le temps : sur 1 an, les actions peuvent faire −40 % ; sur 20 ans, elles ont presque toujours fini en hausse dans le passé (sans garantie pour l'avenir).</p><p>Donc : <strong>argent utile bientôt = sans risque ; argent pour dans 10 ans ou plus = peut aller en bourse</strong>.</p>`,q:[["Pour ton permis dans 1 an, tu places l'argent :",["En actions","Sur un livret","En crypto"],1],["« 10 % par mois garanti sans risque », c'est :",["Une bonne affaire","Une arnaque","Un livret réglementé"],1]]},
+ {id:'c3',n:'Débutant',t:'Actions, obligations, ETF',c:`<p><strong>Action</strong> : un petit morceau d'entreprise. <strong>Obligation</strong> : un prêt à un État ou une entreprise, qui te verse des intérêts.</p><p><strong>Indice</strong> : un panier d'entreprises (CAC 40, MSCI World…). <strong>ETF</strong> : un fonds qui copie un indice. Avec un ETF MSCI World, tu possèdes un bout de ~1 300 entreprises d'un coup, pour 0,2 à 0,4 % de frais par an.</p><p>C'est l'outil le plus simple pour investir sans choisir d'actions toi-même.</p>`,q:[["Un ETF MSCI World, c'est :",["Une seule entreprise américaine","Un fonds qui copie un indice de ~1 300 entreprises","Un livret bancaire"],1],["Une obligation, c'est :",["Un prêt qui verse des intérêts","Une part d'entreprise","Une assurance"],0]]},
+ {id:'c4',n:'Intermédiaire',t:'Diversifier',c:`<p>Ne pas mettre tous ses œufs dans le même panier. Si tu achètes une seule action et que l'entreprise fait faillite, tu perds tout. Avec 1 300 entreprises, une faillite ne se voit presque pas.</p><p>Diversifier aussi <strong>dans le temps</strong> (acheter chaque mois) et <strong>entre placements</strong> (livret pour la sécurité, fonds euros, ETF pour le long terme).</p><p>Attention : le MSCI World, c'est environ 70 % d'entreprises américaines. Un ETF « All World » ajoute les pays émergents.</p>`,q:[["La meilleure façon de diversifier simplement :",["Un ETF monde","Acheter l'action à la mode","Tout mettre en crypto"],0],["Diversifier dans le temps, c'est :",["Vendre souvent","Investir un peu chaque mois","Attendre le krach"],1]]},
+ {id:'c5',n:'Intermédiaire',t:'Les frais, l\'ennemi silencieux',c:`<p>1 à 2 % de frais par an, ça paraît peu. Mais sur 40 ans, <strong>2 % de frais au lieu de 0,3 % peuvent te coûter un tiers de ton capital final</strong>.</p><p>Les frais à surveiller : frais d'entrée (sur chaque versement), frais de gestion annuels, frais de courtage (par ordre), droits de garde.</p><p>Repères : ETF 0,2–0,4 %/an ; assurance vie en ligne 0,5–0,6 %/an ; 0 % sur versement. Fuis les fonds maison à 2 % et plus.</p>`,q:[["Sur 40 ans, 2 % de frais au lieu de 0,3 % :",["Ne changent presque rien","Peuvent coûter environ un tiers du capital","Augmentent le rendement"],1],["Pour une assurance vie, les frais sur versement devraient être :",["0 %","3 %","5 %"],0]]},
+ {id:'c6',n:'Intermédiaire',t:'Les enveloppes : PEA, assurance vie, PER',c:`<p>L'enveloppe, c'est le « contenant » qui décide des impôts. Le contenu (un ETF) peut être le même.</p><ul><li><strong>PEA</strong> : actions européennes et ETF éligibles. Après 5 ans, plus d'impôt sur le revenu sur les gains.</li><li><strong>Assurance vie</strong> : fonds euros + ETF. Souple, avantage fiscal après 8 ans.</li><li><strong>PER</strong> : bloqué jusqu'à la retraite, déduction d'impôt utile quand tu paies beaucoup d'impôt.</li></ul>`,q:[["Après combien de temps le PEA devient avantageux fiscalement ?",["2 ans","5 ans","8 ans"],1],["Le PER est surtout intéressant si :",["Tu ne paies pas d'impôt","Ta tranche d'impôt est à 30 % ou plus","Tu as besoin de l'argent dans 2 ans"],1]]},
+ {id:'c7',n:'Intermédiaire',t:'Investir chaque mois (DCA)',c:`<p>Personne ne sait prédire les hauts et les bas de la bourse. La solution : <strong>investir la même somme chaque mois</strong>, automatiquement. C'est le DCA (« Dollar Cost Averaging »).</p><p>Quand ça baisse, tu achètes plus de parts pour le même prix. Quand ça monte, tes parts prennent de la valeur. Tu lisses ton prix d'achat et tu évites de tout investir au pire moment.</p><p>Bonus : ça se programme une fois, et tu n'as plus à y penser.</p>`,q:[["Quand la bourse baisse et que tu investis chaque mois :",["Tu achètes plus de parts pour le même montant","Tu perds forcément","Il faut arrêter"],0],["Le DCA permet surtout de :",["Deviner le bon moment","Ne pas avoir à deviner le bon moment","Éviter tous les risques"],1]]},
+ {id:'c8',n:'Avancé',t:'Le crédit : ami ou ennemi ?',c:`<p>Un crédit, c'est payer plus cher pour avoir quelque chose plus tôt. Le <strong>TAEG</strong> donne le vrai coût, tout compris.</p><p><strong>Bon crédit</strong> : pour un bien utile et durable (logement, voiture indispensable au travail), avec une mensualité supportable (toutes mensualités < 35 % des revenus).</p><p><strong>Mauvais crédit</strong> : pour des envies (vacances, téléphone), crédit renouvelable (jusqu'à plus de 20 %), découvert permanent. Règle : <strong>ne jamais emprunter pour investir en bourse</strong>.</p>`,q:[["Le chiffre à comparer entre deux crédits :",["La mensualité seule","Le TAEG","La couleur du contrat"],1],["Toutes tes mensualités de crédit devraient rester sous :",["35 % de tes revenus","60 % de tes revenus","90 % de tes revenus"],0]]}
+];
+let coursOpen=null,coursAns={};
+function renderCours(){
+  S.cours=S.cours||{};const n=COURS.filter(c=>S.cours[c.id]).length;
+  $('coursTxt').textContent=n+'/'+COURS.length;$('coursBar').style.width=(n/COURS.length*100)+'%';
+  $('coursList').innerHTML=COURS.map((c,i)=>{const done=S.cours[c.id],open=coursOpen===c.id;
+    return `<div class="card cours${done?' done':''}"><button type="button" class="ch" data-copen="${c.id}" aria-expanded="${open}"><span class="gn">${done?'✓':i+1}</span><span><b>${esc(c.t)}</b><small>${c.n} · 5 min</small></span></button>
+     ${open?`<div class="gb">${c.c}<h4>Vérifie que tu as compris</h4>${c.q.map(([q,o,a],qi)=>`<div class="qa"><div class="qq">${q}</div><div class="opts">${o.map((t,j)=>{const k=c.id+'_'+qi,sel=coursAns[k]===j;return `<button type="button" data-cq="${k}" data-j="${j}" aria-pressed="${sel}" class="${sel?(j===a?'right':'wrong'):''}">${t}</button>`;}).join('')}</div></div>`).join('')}
+     <button type="button" class="ghost" data-ask="J'ai une question sur le cours « ${esc(c.t)} » : ">Une question ? Demande au conseiller</button></div>`:''}</div>`;}).join('');
+  $('coursList').querySelectorAll('[data-copen]').forEach(b=>b.addEventListener('click',()=>{coursOpen=coursOpen===b.dataset.copen?null:b.dataset.copen;renderCours();}));
+  $('coursList').querySelectorAll('[data-cq]').forEach(b=>b.addEventListener('click',()=>{coursAns[b.dataset.cq]=+b.dataset.j;const cid=b.dataset.cq.split('_')[0],c=COURS.find(x=>x.id===cid);
+    if(c.q.every(([q,o,a],qi)=>coursAns[cid+'_'+qi]===a)&&!S.cours[cid]){S.cours[cid]=Date.now();persist();toast('Cours validé ✓');checkBadges();if(S.defis&&S.defis[curYM()]&&S.defis[curYM()].id==='cours'&&S.defis[curYM()].done===undefined){S.defis[curYM()].done=true;persist();renderDefi();}}
+    renderCours();}));
+}
+
+/* ================= CONFIDENTIALITÉ, CODE, THÈME, SAUVEGARDES ================= */
+const LSG=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:v;}catch(e){return d;}},LSS=(k,v)=>{try{if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(e){}};
+function setHide(on){document.body.classList.toggle('privacy',on);LSS('prt-hide',on?'1':null);$('hideAmt').checked=on;$('eyeBtn').setAttribute('aria-pressed',on);}
+$('eyeBtn').addEventListener('click',()=>setHide(!document.body.classList.contains('privacy')));
+$('hideAmt').addEventListener('change',e=>setHide(e.target.checked));
+async function sha(t){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('prt:'+t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}catch(e){let h=0;for(const ch of 'prt:'+t)h=(h*31+ch.charCodeAt(0))|0;return 'x'+h;}}
+let pinBuf='',pinMode='unlock',pinFirst='';
+function pinUI(){$('pinDots').querySelectorAll('i').forEach((d,i)=>d.classList.toggle('on',i<pinBuf.length));}
+function openLock(mode){pinMode=mode;pinBuf='';pinFirst='';$('lockMsg').textContent='';$('lockT').textContent=mode==='unlock'?'Entre ton code':'Choisis un code à 4 chiffres';$('pinForgot').hidden=mode!=='unlock';$('lock').hidden=false;pinUI();}
+$('keypad').innerHTML=[1,2,3,4,5,6,7,8,9,'',0,'⌫'].map(k=>k===''?'<span></span>':`<button type="button" data-k="${k}" aria-label="${k==='⌫'?'Effacer':k}">${k}</button>`).join('');
+$('keypad').addEventListener('click',async e=>{const b=e.target.closest('[data-k]');if(!b)return;const k=b.dataset.k;
+  if(k==='⌫'){pinBuf=pinBuf.slice(0,-1);pinUI();return;}if(pinBuf.length>=4)return;pinBuf+=k;pinUI();if(pinBuf.length<4)return;
+  if(pinMode==='unlock'){const ok=(await sha(pinBuf))===LSG('prt-pin','');if(ok){$('lock').hidden=true;try{sessionStorage.setItem('prt-unlocked','1');}catch(e){}}else{$('lockMsg').textContent='Code incorrect';setTimeout(()=>{pinBuf='';pinUI();},300);}}
+  else if(!pinFirst){pinFirst=pinBuf;pinBuf='';pinUI();$('lockT').textContent='Confirme ton code';}
+  else if(pinFirst===pinBuf){LSS('prt-pin',await sha(pinBuf));try{sessionStorage.setItem('prt-unlocked','1');}catch(e){}$('lock').hidden=true;renderPinState();toast('Code activé 🔒');}
+  else{$('lockMsg').textContent='Les deux codes sont différents, recommence';pinFirst='';setTimeout(()=>{pinBuf='';pinUI();$('lockT').textContent='Choisis un code à 4 chiffres';},400);}
+});
+$('pinForgot').addEventListener('click',()=>{if(window.confirm('Sans le code, la seule solution est d\'effacer toutes les données de l\'appli sur ce téléphone (tu pourras les recoller depuis une sauvegarde). Effacer ?')){try{localStorage.clear();sessionStorage.clear();}catch(e){}location.reload();}});
+function renderPinState(){const on=!!LSG('prt-pin','');$('pinState').textContent=on?'Activé : l\'appli demande ton code à chaque ouverture.':'Désactivé.';$('pinOff').hidden=!on;$('pinSet').textContent=on?'Changer le code':'Définir un code';}
+$('pinSet').addEventListener('click',()=>openLock('set'));
+$('pinOff').addEventListener('click',()=>{if(window.confirm('Retirer le code à l\'ouverture ?')){LSS('prt-pin',null);renderPinState();toast('Code retiré');}});
+function applyTheme(t){if(IN_CLAUDE){$('themeNote').textContent='Dans la version Claude, le thème suit celui de Claude.';return;}
+  if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',t);
+  LSS('prt-theme',t==='auto'?null:t);document.querySelectorAll('#themeChips button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===t));
+  const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=t==='dark'?'#0c1416':'#0f6e6a';refreshCanvases();}
+document.querySelectorAll('#themeChips button').forEach(b=>b.addEventListener('click',()=>applyTheme(b.dataset.t)));
+function snapshot(){try{const today=new Date().toISOString().slice(0,10);let L=JSON.parse(LSG('prt-snaps','[]'));L=L.filter(x=>x.d!==today);L.push({d:today,s:JSON.stringify(S)});L=L.slice(-7);LSS('prt-snaps',JSON.stringify(L));}catch(e){}}
+function renderSnaps(){let L=[];try{L=JSON.parse(LSG('prt-snaps','[]'));}catch(e){}
+  $('snapList').innerHTML=L.length?L.slice().reverse().map(x=>`<div class="buy"><span>${new Date(x.d).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}</span><button type="button" class="ghost sm" data-snap="${x.d}">Restaurer</button></div>`).join(''):'<p class="small muted">Aucune sauvegarde pour l\'instant.</p>';
+  $('snapList').querySelectorAll('[data-snap]').forEach(b=>b.addEventListener('click',()=>{const x=L.find(y=>y.d===b.dataset.snap);if(!x||!window.confirm('Revenir à tes données du '+new Date(x.d).toLocaleDateString('fr-FR')+' ? Les changements faits depuis seront perdus.'))return;S=clean(JSON.parse(x.s));persist();renderAll();toast('Données restaurées ✔');}));}
+$('bkFile').addEventListener('click',()=>{if(IN_CLAUDE){toast('Utilise « Copier mes données » ici');return;}const b=new Blob([JSON.stringify(S,null,1)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='plan-retraite-sauvegarde-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);try{localStorage.setItem('prt-lastbk',Date.now());}catch(e){}});
+$('bkCopy').addEventListener('click',()=>$('exp').click());
+$('replayOnb').addEventListener('click',()=>openOnb());
+
+/* ================= PRÉSENTATION (premier lancement) ================= */
+let onbStep=0;
+const ONB=[
+ ()=>`<div class="onbic" aria-hidden="true">👋</div><h2 id="onbT">Bienvenue dans ton plan</h2><p>Cette appli t'aide à <strong>épargner régulièrement</strong>, à <strong>bien investir pour ta retraite</strong> et à <strong>financer tes projets</strong> (voiture, logement…), étape par étape.</p><p class="small muted">Tes données restent sur ton téléphone.</p>`,
+ ()=>`<h2 id="onbT">Ton budget</h2><p class="small muted">Pour te proposer la bonne répartition à chaque paie.</p><div class="field"><label for="oSal">Salaire net par mois (€)</label><input type="number" id="oSal" inputmode="numeric" value="${S.profil.salaire||''}"></div><div class="field"><label for="oDep">Dépenses fixes par mois (€)</label><input type="number" id="oDep" inputmode="numeric" value="${S.profil.depenses||''}"><small>Loyer, transport, téléphone, abonnements, courses.</small></div><div class="field"><label for="oJour">Jour de ta paie</label><input type="number" id="oJour" inputmode="numeric" min="1" max="31" value="${S.profil.jour||28}"></div>`,
+ ()=>`<h2 id="onbT">Ton grand objectif</h2><p class="small muted">Un cap motivant. Tu pourras le changer quand tu veux.</p><div class="field"><label for="oMont">Je veux avoir (€)</label><input type="number" id="oMont" inputmode="numeric" step="500" value="${S.objectif.montant}"></div><div class="field"><label for="oAge">à l'âge de</label><input type="number" id="oAge" inputmode="numeric" min="18" max="70" value="${S.objectif.age}"></div>`,
+ ()=>`<h2 id="onbT">Comment ça marche</h2><ol class="steps"><li><b>L'accueil</b> te donne ta mission du moment et tes conseils, selon la date et tes comptes.</li><li><b>Mon argent</b> : mets tes soldes à jour une fois par mois et enregistre ton relevé.</li><li><b>Le conseiller</b> (bouton du milieu) répond à toutes tes questions.</li><li><b>Plus</b> : guides, cours, défis, badges et réglages.</li></ol>`
+];
+function openOnb(){onbStep=0;$('onb').hidden=false;renderOnb();}
+function saveOnbStep(){if(onbStep===1){const sa=num($('oSal').value,0),de=num($('oDep').value,0),j=Math.round(num($('oJour').value,28));if(sa)S.profil.salaire=sa;if(de)S.profil.depenses=de;if(j>=1&&j<=31)S.profil.jour=j;}
+  if(onbStep===2){const m=num($('oMont').value,0),a=Math.round(num($('oAge').value,0));if(m)S.objectif.montant=m;if(a>=18&&a<=70)S.objectif.age=a;}}
+function renderOnb(){$('onbBody').innerHTML=ONB[onbStep]();$('onbDots').innerHTML=ONB.map((_,i)=>`<i class="${i===onbStep?'on':''}"></i>`).join('');$('onbPrev').style.visibility=onbStep?'visible':'hidden';$('onbNext').textContent=onbStep===ONB.length-1?'C\'est parti !':'Suivant';}
+$('onbNext').addEventListener('click',()=>{saveOnbStep();if(onbStep<ONB.length-1){onbStep++;renderOnb();}else{S.onboarded=true;persist();$('onb').hidden=true;renderAll();toast('Bienvenue ! Ta première mission t\'attend.');}});
+$('onbPrev').addEventListener('click',()=>{saveOnbStep();if(onbStep>0){onbStep--;renderOnb();}});
+
+/* ================= MÉMOIRE DU CONSEILLER ================= */
+function renderMemo(){
+  S.memo=S.memo||[];$('memoList').innerHTML=S.memo.length?S.memo.map((m,i)=>`<div class="buy"><span>${esc(m.t)}<small class="muted"> · ${new Date(m.d).toLocaleDateString('fr-FR')}</small></span><button type="button" class="del sm" data-memo="${i}" aria-label="Oublier">×</button></div>`).join(''):'<p class="small muted">Rien pour l\'instant. Le conseiller notera ici tes décisions importantes (courtier choisi, objectifs…).</p>';
+  $('memoList').querySelectorAll('[data-memo]').forEach(b=>b.addEventListener('click',()=>{S.memo.splice(+b.dataset.memo,1);persist();renderMemo();}));
+}
+$('memoBtn').addEventListener('click',()=>{$('memoBox').hidden=!$('memoBox').hidden;renderMemo();});
+
 /* ================= RENDU GLOBAL ================= */
 function fillInputs(){
   $('capa').value=S.profil.capa??'';$('capa').placeholder=String(Math.round((S.profil.salaire||0)*0.2/10)*10);$('paie').value=S.profil.paie;$('jour').value=S.profil.jour;$('debutant').checked=S.profil.debutant!==false;$('peeSt').value=S.profil.pee;
   $('sal').value=S.profil.salaire;$('dep').value=S.profil.depenses;$('rfr').value=S.profil.rfr;$('parts').value=S.profil.parts;
   SIMK.forEach(k=>{if(S.sim[k]!==undefined&&$(k))$(k).value=S.sim[k];});
 }
-function renderAll(){fillInputs();renderAccounts();renderMoney();renderHist();budget();lep();renderTasks();update();drawHist();renderProjets();renderAdvisor();renderPositions();renderAnalyse();renderCoach();}
+function renderAll(){fillInputs();renderAccounts();renderMoney();renderHist();budget();lep();renderTasks();update();drawHist();renderProjets();renderAdvisor();renderPositions();renderAnalyse();renderEnv();renderCarriere();$('rTrim').value=S.carriere.trim||'';$('rEstim').value=S.carriere.estim||'';$('gMont').value=S.objectif.montant;$('gAge').value=S.objectif.age;retraite();impots();voiture();etsi();renderCours();renderDefi();renderMemo();renderCoach();renderGoal();renderBilan();renderYear();renderPinState();renderSnaps();}
 renderActu();renderAll();renderQuiz();gl();repart();immo();route();
+try{applyTheme(LSG('prt-theme','auto'));}catch(e){}
+if(LSG('prt-hide',''))setHide(true);
+(()=>{let un=false;try{un=sessionStorage.getItem('prt-unlocked')==='1';}catch(e){}if(LSG('prt-pin','')&&!un)openLock('unlock');})();
+setTimeout(()=>{if(S.onboarded)return;if(!S.accounts.some(a=>a.solde))openOnb();else{S.onboarded=true;persist();}},IN_CLAUDE?4000:300);
 window.addEventListener('resize',refreshCanvases);
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',refreshCanvases);}catch(e){}
 new MutationObserver(refreshCanvases).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
