@@ -376,6 +376,15 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
 .pindots{display:flex;gap:14px;justify-content:center;margin:18px 0 6px}.pindots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--accent)}.pindots i.on{background:var(--accent)}
 .keypad{display:grid;grid-template-columns:repeat(3,72px);gap:14px;justify-content:center;margin-top:8px}
 .keypad button{width:72px;height:72px;min-height:72px;border-radius:50%;background:var(--surface);color:var(--ink);font-size:1.6rem;font-weight:600;box-shadow:var(--shadow)}
+.tl{display:inline;background:none;color:inherit;font:inherit;font-weight:inherit;padding:0;margin:0;min-height:0;width:auto;border-radius:0;border-bottom:2px dotted var(--accent);cursor:help;line-height:inherit;text-align:inherit}
+.tl:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.msg.u .tl,.hero .tl{border-color:currentColor}
+.pod .ptags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag.muted2{background:var(--line);color:var(--muted)}
+.btn.sm2{min-height:40px;font-size:.9rem}
+.ori{padding:10px 0;border-bottom:1px solid var(--line)}.ori:last-child{border-bottom:0}
+.ori .ph b{font-size:.97rem}
+.pod[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -783,7 +792,7 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
 
 <!-- ================= PLAN ================= -->
 <section class="view" id="v-plus">
-  <div id="plusHome"><h2>Plus</h2><p class="lead">Ton plan, tes guides et tout pour comprendre.</p><div class="tiles"><button type="button" class="tile" data-seg="plus" data-p="bilan"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Mon bilan du mois</b><small>Ce que tu as accompli</small></span></button><button type="button" class="tile" data-seg="plus" data-p="annee"><span class="ti"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span><b>Mon année</b><small>Ton année en chiffres</small></span></button><button type="button" class="tile" data-seg="plus" data-p="defis"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></svg></span><span><b>Mes défis</b><small>Un défi par mois</small></span></button><button type="button" class="tile" data-seg="plus" data-p="cours"><span class="ti"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5"/></svg></span><span><b>Mini-cours</b><small>Comprendre l'investissement</small></span></button><button type="button" class="tile" data-seg="plus" data-p="reglages"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span><span><b>Réglages</b><small>Code, thème, sauvegardes</small></span></button><button type="button" class="tile" data-seg="plus" data-p="etapes"><span class="ti"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span><b>Mon plan</b><small>Ta checklist, étape par étape</small></span></button><button type="button" class="tile" data-seg="plus" data-p="conseil"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span><b>Mon profil investisseur</b><small>Le test en 7 questions</small></span></button><button type="button" class="tile" data-seg="plus" data-p="badges"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></span><span><b>Mes badges</b><small>Tes objectifs et récompenses</small></span></button><button type="button" class="tile" data-seg="plus" data-p="guides"><span class="ti"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5zM12 6v14"/></svg></span><span><b>Guides pas à pas</b><small>Acheter un ETF, krach, prime…</small></span></button><button type="button" class="tile" data-seg="plus" data-p="compar"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Comparatif</b><small>Courtiers et assurances vie</small></span></button><button type="button" class="tile" data-seg="plus" data-p="apres"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span><b>Après l'alternance</b><small>Fin d'alternance, 1er CDI</small></span></button><button type="button" class="tile" data-seg="plus" data-p="actu"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v13a1 1 0 0 0 2 0V8M5 4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14M8 8h6M8 12h6M8 16h4"/></svg></span><span><b>Actualité</b><small>Les marchés ce mois-ci</small></span></button><button type="button" class="tile" data-seg="plus" data-p="quiz"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17.5v.01"/></svg></span><span><b>Quiz</b><small>Teste tes bases</small></span></button><button type="button" class="tile" data-seg="plus" data-p="lexique"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M19 19v2H6"/></svg></span><span><b>Lexique</b><small>Tous les mots expliqués</small></span></button></div>
+  <div id="plusHome"><h2>Plus</h2><p class="lead">Ton plan, tes guides et tout pour comprendre.</p><div class="tiles"><button type="button" class="tile" data-seg="plus" data-p="podcasts"><span class="ti"><svg viewBox="0 0 24 24"><path d="M3 14v-2a9 9 0 0 1 18 0v2M3 14a2 2 0 0 1 2-2h1v7H5a2 2 0 0 1-2-2zM21 14a2 2 0 0 0-2-2h-1v7h1a2 2 0 0 0 2-2z"/></svg></span><span><b>Podcasts &amp; vidéos</b><small>Apprendre en écoutant</small></span></button><button type="button" class="tile" data-seg="plus" data-p="orienter"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span><span><b>Vers qui m'orienter</b><small>Organismes gratuits, pros</small></span></button><button type="button" class="tile" data-seg="plus" data-p="bilan"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Mon bilan du mois</b><small>Ce que tu as accompli</small></span></button><button type="button" class="tile" data-seg="plus" data-p="annee"><span class="ti"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span><b>Mon année</b><small>Ton année en chiffres</small></span></button><button type="button" class="tile" data-seg="plus" data-p="defis"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></svg></span><span><b>Mes défis</b><small>Un défi par mois</small></span></button><button type="button" class="tile" data-seg="plus" data-p="cours"><span class="ti"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5"/></svg></span><span><b>Mini-cours</b><small>Comprendre l'investissement</small></span></button><button type="button" class="tile" data-seg="plus" data-p="reglages"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span><span><b>Réglages</b><small>Code, thème, sauvegardes</small></span></button><button type="button" class="tile" data-seg="plus" data-p="etapes"><span class="ti"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span><b>Mon plan</b><small>Ta checklist, étape par étape</small></span></button><button type="button" class="tile" data-seg="plus" data-p="conseil"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span><b>Mon profil investisseur</b><small>Le test en 7 questions</small></span></button><button type="button" class="tile" data-seg="plus" data-p="badges"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></span><span><b>Mes badges</b><small>Tes objectifs et récompenses</small></span></button><button type="button" class="tile" data-seg="plus" data-p="guides"><span class="ti"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5zM12 6v14"/></svg></span><span><b>Guides pas à pas</b><small>Acheter un ETF, krach, prime…</small></span></button><button type="button" class="tile" data-seg="plus" data-p="compar"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Comparatif</b><small>Courtiers et assurances vie</small></span></button><button type="button" class="tile" data-seg="plus" data-p="apres"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span><b>Après l'alternance</b><small>Fin d'alternance, 1er CDI</small></span></button><button type="button" class="tile" data-seg="plus" data-p="actu"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v13a1 1 0 0 0 2 0V8M5 4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14M8 8h6M8 12h6M8 16h4"/></svg></span><span><b>Actualité</b><small>Les marchés ce mois-ci</small></span></button><button type="button" class="tile" data-seg="plus" data-p="quiz"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17.5v.01"/></svg></span><span><b>Quiz</b><small>Teste tes bases</small></span></button><button type="button" class="tile" data-seg="plus" data-p="lexique"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M19 19v2H6"/></svg></span><span><b>Lexique</b><small>Tous les mots expliqués</small></span></button></div>
   <p class="foot">Sources : COR (rapport juin 2026), Insee (inflation oct. 2026), BCE (29 oct. 2026), LFSS 2026, service-public.fr, grilles tarifaires des courtiers (nov. 2026). Outil pédagogique, pas un conseil financier personnalisé.</p></div>
   <div class="pane" data-pane="plus:etapes">
     <button type="button" class="back" data-back>← Plus</button>
@@ -1049,6 +1058,138 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
     </div>
     <button type="button" class="ghost" id="replayOnb">Revoir la présentation de l'appli</button>
   </div>
+  <div class="pane" data-pane="plus:podcasts">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Podcasts &amp; vidéos</h2>
+    <p class="lead">Une sélection de podcasts et de chaînes en français, triée par niveau. Sélection relevée en novembre 2026, à partir de classements récents.</p>
+    <div class="card tint small"><strong>Ton plan d'écoute pour commencer (1 épisode par semaine)</strong><ol style="margin:6px 0 0"><li>Semaine 1 : <em>Allo La Martingale</em>, un épisode dont la question ressemble à la tienne.</li><li>Semaine 2 : <em>S'investir</em> sur YouTube, une vidéo sur les ETF ou le PEA.</li><li>Semaine 3 : <em>Le Grand Bain</em> ou <em>Finary Talk</em>, un épisode « Back to basics ».</li><li>Semaine 4 : <em>Jugeote</em>, l'épisode sur le PER.</li></ol></div>
+    <div class="chips" role="group" aria-label="Niveau" id="podLvl"><button type="button" data-l="all" aria-pressed="true">Tout</button><button type="button" data-l="debut" aria-pressed="false">Débutant</button><button type="button" data-l="inter" aria-pressed="false">Intermédiaire</button><button type="button" data-l="avance" aria-pressed="false">Avancé</button><button type="button" data-l="new" aria-pressed="false">Nouveaux 2026</button></div>
+    <h3 style="margin:14px 0 8px">Podcasts</h3>
+    <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>Allo La Martingale</b><small>Amaury de Tonquédec · Orso Media · 30-45 min, chaque semaine</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
+      <div class="ptags"><span class="tag">Questions d'auditeurs</span></div>
+      <p class="small" style="margin:6px 0 8px">Des auditeurs posent leurs vraies questions d'argent et un expert répond. Idéal pour démarrer : on y parle souvent de situations comme la tienne.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Allo%20La%20Martingale" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Allo%20La%20Martingale" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>Le Grand Bain</b><small>Charles-Elias Farah · 8-60 min, deux fois par mois</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
+      <div class="ptags"><span class="tag">Pédagogie</span></div>
+      <p class="small" style="margin:6px 0 8px">Ton bienveillant, sans jargon : épargne, budget, premiers investissements. Parfait pour se jeter à l'eau.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Le%20Grand%20Bain%20Charles-Elias%20Farah" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Le%20Grand%20Bain%20Charles-Elias%20Farah" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>Finary Talk</b><small>Mounir Laggoune · Finary · 20-60 min</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
+      <div class="ptags"><span class="tag">Série « Back to basics »</span><span class="tag muted2">Contenu de marque</span></div>
+      <p class="small" style="margin:6px 0 8px">Entretiens avec des experts et une série « Back to basics » pour les débutants. Finary est une entreprise qui vend une appli de suivi de patrimoine.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Finary%20Talk" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Finary%20Talk" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>C'est mon budget</b><small>France Info · quelques minutes</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
+      <div class="ptags"><span class="tag">Très court</span></div>
+      <p class="small" style="margin:6px 0 8px">Des épisodes courts et concrets sur le budget du quotidien. À écouter dans les transports.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/C%27est%20mon%20budget%20franceinfo" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=C%27est%20mon%20budget%20franceinfo" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>Le Podcast de la Bourse</b><small>Tino_Bourse</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
+      <div class="ptags"><span class="tag">Bourse et ETF</span></div>
+      <p class="small" style="margin:6px 0 8px">Les bases de la bourse et des ETF expliquées simplement, pour poser les fondations.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Le%20Podcast%20de%20la%20Bourse%20Tino" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Le%20Podcast%20de%20la%20Bourse%20Tino" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="inter" data-new="0"><div class="ph"><div><b>La Martingale</b><small>Matthieu Stefani · Orso Media · 45 min-1 h, chaque semaine</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--gain);color:var(--gain)">Intermédiaire</span></div>
+      <div class="ptags"><span class="tag">La référence</span></div>
+      <p class="small" style="margin:6px 0 8px">Le podcast de finance personnelle le plus connu en France : un expert par épisode (bourse, immobilier, fiscalité, retraite…). Choisis les épisodes dont le thème te parle.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/La%20Martingale%20podcast" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=La%20Martingale%20podcast" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="inter" data-new="0"><div class="ph"><div><b>Jugeote</b><small>Chaque mardi · épisodes longs</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--gain);color:var(--gain)">Intermédiaire</span></div>
+      <div class="ptags"><span class="tag">Bon sens</span></div>
+      <p class="small" style="margin:6px 0 8px">Apprendre à investir avec bon sens. Épisodes récents utiles pour toi : « Le PER : dans quelle situation en ouvrir un ? » et « Votre conseiller financier travaille-t-il vraiment pour vous ? ».</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Jugeote%20podcast" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Jugeote%20podcast" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="inter" data-new="0"><div class="ph"><div><b>Combien Ça Gagne</b><small>Clémence Lepic · Orso Media · 30-45 min</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--gain);color:var(--gain)">Intermédiaire</span></div>
+      <div class="ptags"><span class="tag">Métiers et revenus</span></div>
+      <p class="small" style="margin:6px 0 8px">Des gens ouvrent leurs comptes : combien gagne tel métier, comment ils gèrent. Instructif pour penser à ta carrière (ton meilleur investissement).</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Combien%20%C3%87a%20Gagne%20Cl%C3%A9mence%20Lepic" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Combien%20%C3%87a%20Gagne%20Cl%C3%A9mence%20Lepic" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="inter" data-new="0"><div class="ph"><div><b>Rends l'argent</b><small>Argent et couple</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--gain);color:var(--gain)">Intermédiaire</span></div>
+      <div class="ptags"><span class="tag">À deux</span></div>
+      <p class="small" style="margin:6px 0 8px">L'argent dans le couple, sans tabou : compte commun ou pas, qui paie quoi… Pour plus tard, avec ta future copine.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Rends%20l%27argent%20podcast" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Rends%20l%27argent%20podcast" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="inter" data-new="1"><div class="ph"><div><b>Cash Story</b><small>Bourse Direct · lancé en juin 2026</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--gain);color:var(--gain)">Intermédiaire</span></div>
+      <div class="ptags"><span class="tag amber">Nouveau 2026</span><span class="tag">Nouveau 2026</span><span class="tag muted2">Contenu de marque</span></div>
+      <p class="small" style="margin:6px 0 8px">Nouveau podcast d'éducation financière animé par une experte de la salle des marchés de Bourse Direct. Contenu de marque : un courtier qui parle d'investissement.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Cash%20Story%20Bourse%20Direct" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Cash%20Story%20Bourse%20Direct" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="inter" data-new="1"><div class="ph"><div><b>Cash Confidences</b><small>BoursoBank · lancé en mars 2026</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--gain);color:var(--gain)">Intermédiaire</span></div>
+      <div class="ptags"><span class="tag amber">Nouveau 2026</span><span class="tag">Nouveau 2026</span><span class="tag muted2">Contenu de marque</span></div>
+      <p class="small" style="margin:6px 0 8px">Des trajectoires de vie où l'argent et les sentiments se mêlent. Contenu de marque d'une banque.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Cash%20Confidences%20BoursoBank" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Cash%20Confidences%20BoursoBank" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="avance" data-new="1"><div class="ph"><div><b>Vraiment Riches</b><small>Anthony Bourbon, Samuel Guez, Roméo Bach · lancé en juin 2026</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--warn);color:var(--warn)">Avancé</span></div>
+      <div class="ptags"><span class="tag amber">Nouveau 2026</span><span class="tag">Nouveau 2026</span></div>
+      <p class="small" style="margin:6px 0 8px">On y parle d'argent sans détour, toutes les deux semaines. Encore récent et les avis sont partagés : à écouter avec du recul, c'est plutôt l'univers des entrepreneurs.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/Vraiment%20Riches%20podcast" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Vraiment%20Riches%20podcast" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="avance" data-new="0"><div class="ph"><div><b>L'Art d'investir en bourse</b><small>Xavier Delmas · Zonebourse · 6-12 min</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--warn);color:var(--warn)">Avancé</span></div>
+      <div class="ptags"><span class="tag">Marchés</span></div>
+      <p class="small" style="margin:6px 0 8px">Analyses de marché courtes, plus techniques. Pour quand tu maîtriseras les bases.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/L%27Art%20d%27investir%20en%20bourse%20Xavier%20Delmas" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=L%27Art%20d%27investir%20en%20bourse%20Xavier%20Delmas" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="avance" data-new="0"><div class="ph"><div><b>C'est votre argent</b><small>Marc Fiorentino · BFM Business · le week-end</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--warn);color:var(--warn)">Avancé</span></div>
+      <div class="ptags"><span class="tag">Actu patrimoine</span></div>
+      <p class="small" style="margin:6px 0 8px">Épargne, placements, fiscalité et conjoncture. Attention : on y parle souvent de « bons moments » pour acheter ou vendre, ce qui n'est pas ta stratégie.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/C%27est%20votre%20argent%20BFM%20Fiorentino" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=C%27est%20votre%20argent%20BFM%20Fiorentino" target="_blank" rel="noopener">YouTube</a></div></div>
+    <div class="card pod" data-l="avance" data-new="0"><div class="ph"><div><b>Ça fait un bail</b><small>Jérémy Nabais · chaque semaine</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--warn);color:var(--warn)">Avancé</span></div>
+      <div class="ptags"><span class="tag">Immobilier</span></div>
+      <p class="small" style="margin:6px 0 8px">L'investissement immobilier expliqué avec des cas concrets. Utile quand tu prépareras ton apport logement.</p>
+      <div class="btns"><a class="btn ghost sm2" href="https://open.spotify.com/search/%C3%87a%20fait%20un%20bail%20podcast" target="_blank" rel="noopener">Spotify</a><a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=%C3%87a%20fait%20un%20bail%20podcast" target="_blank" rel="noopener">YouTube</a></div></div>
+    <h3 style="margin:18px 0 8px">Chaînes YouTube</h3>
+    <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>S'investir</b><small>Matthieu Louvet</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
+      <p class="small" style="margin:6px 0 8px">ETF, PEA, comparatifs de courtiers, investissement passif sur le long terme, avec les risques bien expliqués. Très proche de ta stratégie.</p>
+      <a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=S%27investir%20Matthieu%20Louvet" target="_blank" rel="noopener">Voir sur YouTube</a></div>
+    <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>Heu?reka</b><small>Économie et bourse vulgarisées</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
+      <p class="small" style="margin:6px 0 8px">Comprendre comment marchent l'économie, les crises, la bourse, avec des vidéos très pédagogiques.</p>
+      <a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Heu%3Freka%20%C3%A9conomie" target="_blank" rel="noopener">Voir sur YouTube</a></div>
+    <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>Finary</b><small>Chaîne YouTube de Finary</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
+      <p class="small" style="margin:6px 0 8px">Vidéos pédagogiques sur l'épargne et l'investissement. Contenu de marque.</p>
+      <a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Finary%20YouTube" target="_blank" rel="noopener">Voir sur YouTube</a></div>
+    <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>Julien EK</b><small>Budget et économies</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
+      <p class="small" style="margin:6px 0 8px">Astuces pour économiser et mieux gérer ton argent au quotidien.</p>
+      <a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Julien%20EK%20argent" target="_blank" rel="noopener">Voir sur YouTube</a></div>
+    <div class="card pod" data-l="inter" data-new="0"><div class="ph"><div><b>Corrige ton impôt</b><small>Thibault Diringer</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--gain);color:var(--gain)">Intermédiaire</span></div>
+      <p class="small" style="margin:6px 0 8px">Fiscalité et déclaration de revenus expliquées. Utile quand tu deviendras imposable.</p>
+      <a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Corrige%20ton%20imp%C3%B4t%20Thibault%20Diringer" target="_blank" rel="noopener">Voir sur YouTube</a></div>
+    <div class="card pod" data-l="avance" data-new="0"><div class="ph"><div><b>Zonebourse</b><small>Xavier Delmas et l'équipe</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--warn);color:var(--warn)">Avancé</span></div>
+      <p class="small" style="margin:6px 0 8px">Décryptages de marchés, finance comportementale, histoire de la bourse.</p>
+      <a class="btn ghost sm2" href="https://www.youtube.com/results?search_query=Zonebourse%20Xavier%20Delmas" target="_blank" rel="noopener">Voir sur YouTube</a></div>
+    <div class="card amber small"><strong>Écouter sans se faire influencer :</strong> un podcast ou un youtubeur peut être payé par un courtier, une banque ou vendre des formations. Méfie-toi de quiconque promet des gains rapides, pousse à « acheter maintenant » ou vend une méthode miracle. Garde ta stratégie : matelas, projets sur livret, ETF monde chaque mois.</div>
+    <button type="button" class="ghost" data-ask="Quel podcast ou quelle vidéo me conseilles-tu d'écouter en premier vu mon niveau et ce que je veux apprendre ?">Que m'écouter en premier ? Demande au conseiller</button>
+  </div>
+  <div class="pane" data-pane="plus:orienter">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Vers qui m'orienter</h2>
+    <p class="lead">Selon ta situation, vers qui te tourner. <strong>Commence toujours par le gratuit et le neutre.</strong> Les conseillers payants, c'est pour plus tard.</p>
+    <div class="card red small"><strong>Urgence :</strong> fraude sur ta carte ou ton compte → fais opposition immédiatement depuis l'appli de ta banque ou en appelant son numéro d'opposition, puis porte plainte. Arnaque au placement → Info Escroqueries 0 805 805 817 et AMF.</div>
+    <details class="card guide"><summary><span class="gn" aria-hidden="true">→</span><span><b>Une question sur un placement, ou peur d'une arnaque</b><small>2 contacts</small></span></summary><div class="gb">
+      <div class="ori"><div class="ph"><b>AMF Épargne Info Service</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Le gendarme de la bourse répond à tes questions sur un placement, un intermédiaire ou une offre suspecte. Consulte aussi sa liste noire.</p><p class="small muted" style="margin:0">amf-france.org · 01 53 45 62 00</p></div>
+      <div class="ori"><div class="ph"><b>Info Escroqueries</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Si tu penses être victime d'une arnaque (faux placement, faux conseiller).</p><p class="small muted" style="margin:0">0 805 805 817</p></div>
+    </div></details>
+    <details class="card guide"><summary><span class="gn" aria-hidden="true">→</span><span><b>Je n'arrive pas à boucler mon budget</b><small>3 contacts</small></span></summary><div class="gb">
+      <div class="ori"><div class="ph"><b>Point conseil budget</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Service labellisé par l'État (environ 400 en France) : un professionnel fait le point avec toi, confidentiellement, pour éviter les difficultés.</p><p class="small muted" style="margin:0">Trouve le plus proche sur mesquestionsdargent.fr</p></div>
+      <div class="ori"><div class="ph"><b>Mes questions d'argent</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Le site de la Banque de France pour tout comprendre : budget, banque, crédit, épargne. Des outils et des fiches simples.</p><p class="small muted" style="margin:0">mesquestionsdargent.fr</p></div>
+      <div class="ori"><div class="ph"><b>Banque de France</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">En cas de surendettement ou si une banque te refuse un compte (droit au compte).</p><p class="small muted" style="margin:0">banque-france.fr · 34 14</p></div>
+    </div></details>
+    <details class="card guide"><summary><span class="gn" aria-hidden="true">→</span><span><b>Un problème avec ma banque</b><small>3 contacts</small></span></summary><div class="gb">
+      <div class="ori"><div class="ph"><b>Ton conseiller puis le service réclamations</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">D'abord par écrit à ton agence, puis au service réclamations de la Société Générale.</p><p class="small muted" style="margin:0">Dans ton appli ou ta convention de compte</p></div>
+      <div class="ori"><div class="ph"><b>Le médiateur de la banque</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Si la réclamation n'aboutit pas après 2 mois, le médiateur tranche gratuitement.</p><p class="small muted" style="margin:0">Coordonnées dans ta convention de compte</p></div>
+      <div class="ori"><div class="ph"><b>Associations de consommateurs</b><span class="tag " style="background:var(--line);color:var(--ink)">Adhésion</span></div><p class="small" style="margin:4px 0">UFC-Que Choisir, CLCV… pour t'aider dans un litige.</p><p class="small muted" style="margin:0">Sites des associations</p></div>
+    </div></details>
+    <details class="card guide"><summary><span class="gn" aria-hidden="true">→</span><span><b>Le permis et la voiture</b><small>3 contacts</small></span></summary><div class="gb">
+      <div class="ori"><div class="ph"><b>Important : l'aide de 500 € pour les apprentis est supprimée</b><span class="tag amber" style="">Info</span></div><p class="small" style="margin:4px 0">La loi de finances 2026 a supprimé cette aide au permis pour les apprentis. Le CPF ne finance plus le permis pour les salariés seuls (réservé aux demandeurs d'emploi, sauf cofinancement).</p><p class="small muted" style="margin:0">À savoir avant de budgéter</p></div>
+      <div class="ori"><div class="ph"><b>Permis à 1 € par jour</b><span class="tag " style="">Prêt à 0 %</span></div><p class="small" style="margin:4px 0">Prêt sans intérêt de 600 à 1 200 € pour les 15-25 ans, via une auto-école partenaire.</p><p class="small muted" style="margin:0">Demande à ton auto-école</p></div>
+      <div class="ori"><div class="ph"><b>Mission locale, région, mairie, branche professionnelle</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Certaines régions, communes ou branches (par exemple le BTP) ont encore des aides au permis. La mission locale (16-25 ans) t'oriente.</p><p class="small muted" style="margin:0">Mission locale la plus proche</p></div>
+    </div></details>
+    <details class="card guide"><summary><span class="gn" aria-hidden="true">→</span><span><b>Me loger, et plus tard acheter</b><small>3 contacts</small></span></summary><div class="gb">
+      <div class="ori"><div class="ph"><b>Action Logement</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Aides pour les jeunes salariés et alternants : garantie Visale (caution gratuite), aides au loyer selon conditions.</p><p class="small muted" style="margin:0">actionlogement.fr</p></div>
+      <div class="ori"><div class="ph"><b>ADIL</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Conseil juridique, financier et fiscal neutre sur le logement : location, achat, prêt immobilier.</p><p class="small muted" style="margin:0">anil.org (ADIL de ton département)</p></div>
+      <div class="ori"><div class="ph"><b>Courtier en crédit immobilier</b><span class="tag " style="background:var(--line);color:var(--ink)">Payant au succès</span></div><p class="small" style="margin:4px 0">Négocie ton prêt auprès des banques. Vérifie son inscription à l'ORIAS (IOBSP).</p><p class="small muted" style="margin:0">Au moment d'acheter</p></div>
+    </div></details>
+    <details class="card guide"><summary><span class="gn" aria-hidden="true">→</span><span><b>Mes impôts</b><small>2 contacts</small></span></summary><div class="gb">
+      <div class="ori"><div class="ph"><b>impots.gouv.fr</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Simulateur officiel, messagerie sécurisée de ton espace particulier pour poser tes questions.</p><p class="small muted" style="margin:0">impots.gouv.fr</p></div>
+      <div class="ori"><div class="ph"><b>France services</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Des agents t'aident en personne pour tes démarches (impôts, CAF, retraite…).</p><p class="small muted" style="margin:0">france-services.gouv.fr</p></div>
+    </div></details>
+    <details class="card guide"><summary><span class="gn" aria-hidden="true">→</span><span><b>Ma retraite</b><small>1 contact</small></span></summary><div class="gb">
+      <div class="ori"><div class="ph"><b>info-retraite.fr</b><span class="tag " style="">Gratuit</span></div><p class="small" style="margin:4px 0">Ton relevé de carrière, tes trimestres, le simulateur M@rel. Vérifie que tes années d'alternance sont bien comptées.</p><p class="small muted" style="margin:0">info-retraite.fr (FranceConnect)</p></div>
+    </div></details>
+    <details class="card guide"><summary><span class="gn" aria-hidden="true">→</span><span><b>Un vrai conseiller, plus tard</b><small>3 contacts</small></span></summary><div class="gb">
+      <div class="ori"><div class="ph"><b>Conseiller en gestion de patrimoine indépendant</b><span class="tag " style="background:var(--line);color:var(--ink)">Payant (honoraires)</span></div><p class="small" style="margin:4px 0">Utile quand ta situation se complique (gros patrimoine, achat immobilier, héritage, entreprise). Choisis-le rémunéré en honoraires, statut CIF, inscrit à l'ORIAS.</p><p class="small muted" style="margin:0">Vérifie sur orias.fr</p></div>
+      <div class="ori"><div class="ph"><b>Conseiller bancaire</b><span class="tag " style="">Gratuit mais commercial</span></div><p class="small" style="margin:4px 0">Pour les opérations courantes. Il vend les produits de sa banque : compare toujours les frais.</p><p class="small muted" style="margin:0">Ton agence</p></div>
+      <div class="ori"><div class="ph"><b>Notaire, expert-comptable</b><span class="tag " style="background:var(--line);color:var(--ink)">Payant</span></div><p class="small" style="margin:4px 0">Notaire pour un achat immobilier ou une succession ; expert-comptable si tu deviens indépendant.</p><p class="small muted" style="margin:0">Le moment venu</p></div>
+    </div></details>
+    <button type="button" class="ghost" data-ask="J'ai un problème d'argent ou une question précise : aide-moi à savoir vers qui me tourner. Voici ma situation : ">Pas sûr ? Le conseiller t'oriente</button>
+  </div>
   <div class="pane" data-pane="plus:badges">
     <button type="button" class="back" data-back>← Plus</button>
     <h2>Mes badges</h2>
@@ -1084,6 +1225,14 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
     <p class="small" id="lockMsg" style="min-height:1.4em;color:var(--warn)"></p>
     <div class="keypad" id="keypad"></div>
     <button type="button" class="linkbtn" id="pinForgot">Code oublié ?</button>
+  </div>
+</div>
+<div class="ovl" id="def" hidden role="dialog" aria-modal="true" aria-labelledby="defT">
+  <div class="ovbox">
+    <div class="mtop"><span class="tag" id="defC"></span><button type="button" class="linkbtn" id="defClose" style="margin:0">Fermer</button></div>
+    <h2 id="defT" style="margin:10px 0 6px;font-size:1.25rem"></h2>
+    <p id="defD" style="font-size:1.02rem;line-height:1.55"></p>
+    <div class="btns" style="margin-top:12px"><button type="button" id="defAsk" data-ask="">Un exemple pour moi</button><button type="button" class="ghost" id="defLex">Voir le lexique</button></div>
   </div>
 </div>
 <nav class="tabs" aria-label="Navigation"><div class="in">
@@ -1717,6 +1866,7 @@ function coachTips(){
   if(day<=10&&S.historique.length>=2) add('i','Ton bilan du mois est prêt','Regarde ce que tu as accompli le mois dernier.','plus:bilan','Voir mon bilan',2.4);
   try{const gc=goalCalc();if(!gc.ok&&gc.late>12&&gc.mo)add('c','Ton objectif prend du retard',`À ton rythme, tu atteins ${eur(S.objectif.montant)} vers ${Math.floor(gc.ageAt)} ans au lieu de ${S.objectif.age}. Il faudrait environ ${eur(Math.ceil(gc.need/10)*10)}/mois.`,'plus:reglages','Ajuster mon objectif',2.6);}catch(e){}
   if(Object.keys(S.cours||{}).length<COURS.length) add('i','5 minutes pour apprendre','Un mini-cours t\'attend : '+COURS.find(c=>!(S.cours||{})[c.id]).t+'.','plus:cours','Lire le cours',3.4);
+  {const pw=podOfWeek();add('i','À écouter cette semaine : '+pw[0],pw[1],'plus:podcasts','Voir les podcasts',3.6);}
   if(!S.done.quiz) add('i','Teste tes connaissances',`10 questions pour vérifier que tu maîtrises les bases avant d'investir plus.`,'plus:quiz','Faire le quiz',3.5);
   return tips.sort((a,b)=>a.pr-b.pr);
 }
@@ -1735,7 +1885,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-ask]');if(
 const ADVISOR_URL='https://claude.ai/artifact/MBY25nRSgZGaV1FFYh8SHm';
 const IN_CLAUDE=!!(window.claude&&typeof window.claude.use==='function');
 let SAMPLE=null,CONV=[],chatBusy=false,chatCtrl=null,convLoaded=false,pendingAsk=null,CONVDOC=null;
-const SUGG=["Faire mon check-up du mois","Que dois-je faire ce mois-ci ?","Acheter une voiture : crédit ou comptant ?","Vérifier une proposition de placement","Préparer mon rendez-vous à la banque","Comment j'achète mon premier ETF ?","Un ETF, c'est vraiment une bonne idée pour moi ?","Explique-moi le simulateur simplement","J'ai reçu une prime, j'en fais quoi ?","Comment ouvrir un LEP à la Société Générale ?"];
+const SUGG=["Faire mon check-up du mois","Vers qui m'orienter pour mon problème ?","Quel podcast écouter pour débuter ?","Que dois-je faire ce mois-ci ?","Acheter une voiture : crédit ou comptant ?","Vérifier une proposition de placement","Préparer mon rendez-vous à la banque","Comment j'achète mon premier ETF ?","Un ETF, c'est vraiment une bonne idée pour moi ?","Explique-moi le simulateur simplement","J'ai reçu une prime, j'en fais quoi ?","Comment ouvrir un LEP à la Société Générale ?"];
 function md(t){
   const lines=esc(t).split(/\n/);let h='',list=null;
   const inline=x=>x.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*(?!\s)(.+?)\*(?!\*)/g,'$1<em>$2</em>').replace(/`([^`]+)`/g,'<code>$1</code>');
@@ -1805,6 +1955,10 @@ FAITS UTILES (novembre 2026, à vérifier si besoin) :
 
 CE QUE TU AS RETENU DE VOS DISCUSSIONS (mémoire, utilise l'outil « retenir » pour noter une décision ou une info durable importante : courtier choisi, ETF, objectif, contrainte, projet ; pas les détails passagers) :
 ${(S.memo||[]).map(m=>'- '+m.t).join('\n')||'(rien pour l\'instant)'}
+
+ORIENTATION (à proposer quand c'est utile, le gratuit et neutre d'abord) : AMF Épargne Info Service (01 53 45 62 00) pour un placement ou une arnaque ; Info Escroqueries 0 805 805 817 ; Points conseil budget (gratuits, trouvables sur mesquestionsdargent.fr) et le site mesquestionsdargent.fr de la Banque de France ; Banque de France (34 14) pour surendettement ou droit au compte ; médiateur bancaire après réclamation écrite sans réponse sous 2 mois ; ADIL et Action Logement (Visale) pour le logement ; impots.gouv.fr et France services ; info-retraite.fr ; mission locale et « permis à 1 € par jour » (l'aide de 500 € au permis des apprentis a été supprimée par la loi de finances 2026, et le CPF permis est désormais réservé aux demandeurs d'emploi sauf cofinancement) ; plus tard un CGP indépendant payé en honoraires (statut CIF, inscrit ORIAS). L'appli a un écran Plus → Vers qui m'orienter.
+PODCASTS ET VIDÉOS (écran Plus → Podcasts & vidéos) : débutant : Allo La Martingale, Le Grand Bain, Finary Talk (contenu de marque), C'est mon budget, Le Podcast de la Bourse, S'investir (YouTube, Matthieu Louvet), Heu?reka ; intermédiaire : La Martingale, Jugeote, Combien Ça Gagne, Rends l'argent (argent en couple) ; nouveaux 2026 : Cash Story (Bourse Direct, juin 2026), Cash Confidences (BoursoBank, mars 2026), Vraiment Riches (juin 2026, avis partagés) ; avancé : L'Art d'investir en bourse, C'est votre argent, Ça fait un bail (immobilier). Rappelle qu'un contenu peut être sponsorisé.
+EXPLICATIONS : explique toujours les mots techniques la première fois, avec un exemple chiffré à son échelle (100 €, 1 000 €). Dans l'appli, les mots soulignés en pointillés s'ouvrent en définition d'un tap.
 
 SITUATION ACTUELLE DE HUGO (données de son appli, à jour) :
 ${JSON.stringify(situation())}
@@ -2439,6 +2593,69 @@ function renderMemo(){
 }
 $('memoBtn').addEventListener('click',()=>{$('memoBox').hidden=!$('memoBox').hidden;renderMemo();});
 
+/* ================= EXPLICATIONS EN UN TAP ================= */
+const EXTRA_G=[
+ ["Crédit","TAEG (taux annuel effectif global)","Le vrai coût d'un crédit en pourcentage par an, tout compris : intérêts, frais de dossier, assurance obligatoire. C'est le seul chiffre à comparer entre deux offres."],
+ ["Bourse","PRU (prix de revient unitaire)","Le prix moyen auquel tu as acheté tes parts, en tenant compte de tous tes achats. Si le cours est au-dessus de ton PRU, tu es en gain."],
+ ["Crédit","LOA / LLD","Location avec option d'achat / location longue durée : tu paies un loyer pour utiliser une voiture sans en être propriétaire. Pratique mais souvent plus cher au total qu'un achat."],
+ ["Crédit","Taux d'endettement","Toutes tes mensualités de crédit divisées par tes revenus. Les banques le limitent en général à 35 %."],
+ ["Méthode","Épargne de précaution / matelas","De l'argent mis de côté sur un livret, disponible tout de suite, pour les coups durs. On vise 3 à 6 mois de dépenses avant d'investir en bourse."],
+ ["Méthode","Taux plein","Le niveau de retraite publique maximal, obtenu quand tu as tous tes trimestres (ou à un certain âge). Sans le taux plein, ta pension est réduite."],
+ ["Méthode","Rendement moyen","Ce que rapporte un placement en moyenne par an, sur longue période. Certaines années sont bien meilleures, d'autres négatives."],
+ ["Conseil","Contenu de marque","Un podcast ou une vidéo produit par une entreprise (banque, courtier, appli). Ça peut être utile, mais l'entreprise a intérêt à te vendre ses services."],
+ ["Bourse","Euros d'aujourd'hui","Un montant futur corrigé de l'inflation, pour qu'il te parle : « 100 000 € d'aujourd'hui » = ce que tu pourrais acheter avec 100 000 € maintenant."]
+];
+EXTRA_G.forEach(x=>G.push(x));
+// mot-clé dans le texte → titre du lexique
+const TERMS=[
+ ['LEP',"LEP (Livret d'épargne populaire)"],['Livret A','Livret A'],['LDDS','LDDS'],['PEA','PEA'],['PERCOL','PERCOL'],['PEE','PEE'],['PER','PER'],
+ ['ETF','ETF (tracker)'],['MSCI World','MSCI World'],['All World','MSCI ACWI / All World'],['ACWI','MSCI ACWI / All World'],['TER','TER'],['TAEG','TAEG (taux annuel effectif global)'],['PRU','PRU (prix de revient unitaire)'],
+ ['TMI','TMI'],['flat tax','Flat tax (PFU)'],['prélèvements sociaux','Prélèvements sociaux'],['revenu fiscal de référence','Revenu fiscal de référence (RFR)'],['RFR','Revenu fiscal de référence (RFR)'],
+ ['abondement','Abondement'],['fonds euros','Fonds euros'],['unités de compte','Unités de compte'],['intérêts composés','Intérêts composés'],['DCA','Versement programmé (DCA)'],
+ ['inflation','Inflation'],['krach','Krach'],['diversifi','Diversification'],['capitalisant','Capitalisant / distribuant'],['ISIN','ISIN / ticker'],['cours limité','Ordre à cours limité'],
+ ['courtier','Courtier'],['taux de remplacement','Taux de remplacement'],['trimestres','Trimestres'],['OAT','OAT'],['BCE','BCE'],['dividende','Dividende'],['obligation','Obligation'],
+ ['LOA','LOA / LLD'],['taux d\'endettement','Taux d\'endettement'],['matelas','Épargne de précaution / matelas'],['épargne de précaution','Épargne de précaution / matelas'],
+ ['taux plein','Taux plein'],['clause bénéficiaire','Clause bénéficiaire'],['swap','Swap / synthétique'],['volatil','Volatilité'],['euros d\'aujourd\'hui','Euros d\'aujourd\'hui'],['contenu de marque','Contenu de marque'],['ORIAS','ORIAS / REGAFI'],['AMF','AMF']
+];
+const T_RE=TERMS.map(([k,t])=>{const esc2=k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),acro=k===k.toUpperCase()&&/[A-Z]/.test(k);
+  return{k,t,re:acro?new RegExp('(^|[^A-Za-zÀ-ÿ])('+esc2+')(?![A-Za-zÀ-ÿ])'):new RegExp('(^|[^A-Za-zÀ-ÿ])('+esc2+'[a-zà-ÿ]*)','i')};});
+const SKIP='a,button,input,textarea,select,label,.tl,.term,.msg.u,h1,.hv,.bigv,.tile,.tag,.seg,summary,.ordre,svg,canvas,nav,header,.qopt,.opts,.legend';
+const CARDS='.card,.gb,.msg.a,.tip,.rule,.plain,ol.steps li,.task .body';
+function linkCard(card){
+  if(card.closest('#v-plus [data-pane="plus:lexique"]')) return;
+  const have=new Set([...card.querySelectorAll('.tl')].map(b=>b.dataset.t));let n=have.size;if(n>=7)return;
+  const walker=document.createTreeWalker(card,NodeFilter.SHOW_TEXT,{acceptNode:tn=>{const p=tn.parentElement;if(!p||!tn.nodeValue.trim())return NodeFilter.FILTER_REJECT;if(p.closest(SKIP))return NodeFilter.FILTER_REJECT;const c=p.closest(CARDS);return c===card?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}});
+  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+  for(const tn of nodes){
+    if(n>=7)break;
+    for(const T of T_RE){if(have.has(T.t))continue;const m=T.re.exec(tn.nodeValue);if(!m)continue;
+      const pre=m[0].length-m[2].length,start=m.index+pre,word=m[2];
+      const after=tn.splitText(start);after.nodeValue=after.nodeValue.slice(word.length);
+      const b=document.createElement('button');b.type='button';b.className='tl';b.dataset.t=T.t;b.textContent=word;b.setAttribute('aria-label',word+' : voir l\'explication');
+      tn.parentNode.insertBefore(b,after);have.add(T.t);n++;break;}
+  }
+}
+let linkQ=new Set(),linkRAF=0;
+function queueLink(el){if(!el||el.nodeType!==1)return;const c=el.matches&&el.matches(CARDS)?el:el.closest&&el.closest(CARDS);if(c)linkQ.add(c);el.querySelectorAll&&el.querySelectorAll(CARDS).forEach(x=>linkQ.add(x));if(!linkRAF)linkRAF=requestAnimationFrame(()=>{linkRAF=0;const q=[...linkQ];linkQ.clear();obs.disconnect();q.forEach(c=>{try{linkCard(c);}catch(e){}});obs.observe(document.querySelector('main'),{childList:true,subtree:true});});}
+const obs=new MutationObserver(ms=>{for(const m of ms){if(m.target.closest&&m.target.closest('.tl'))continue;queueLink(m.target.nodeType===1?m.target:m.target.parentElement);}});
+document.addEventListener('click',e=>{const b=e.target.closest('.tl');if(!b)return;e.preventDefault();e.stopPropagation();openDef(b.dataset.t,b.textContent);},true);
+function openDef(title,word){
+  const g=G.find(x=>x[1]===title);if(!g)return;
+  $('defT').textContent=g[1];$('defC').textContent=g[0];$('defD').textContent=g[2];
+  $('defAsk').dataset.ask=`Explique-moi simplement « ${word} » avec un exemple concret adapté à ma situation.`;
+  $('def').hidden=false;$('defClose').focus();
+}
+$('defClose').addEventListener('click',()=>{$('def').hidden=true;});
+$('def').addEventListener('click',e=>{if(e.target.id==='def')$('def').hidden=true;});
+$('defAsk').addEventListener('click',()=>{$('def').hidden=true;});
+$('defLex').addEventListener('click',()=>{$('def').hidden=true;location.hash='plus';setTimeout(()=>{showPane('plus','lexique');$('q').value=$('defT').textContent.split(' (')[0];gl();},0);});
+
+/* ================= PODCASTS : filtre ================= */
+document.querySelectorAll('#podLvl button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#podLvl button').forEach(x=>x.setAttribute('aria-pressed',x===b));const l=b.dataset.l;
+  document.querySelectorAll('.pod').forEach(c=>{c.hidden=!(l==='all'||(l==='new'?c.dataset.new==='1':c.dataset.l===l));});}));
+const POD_WEEK=[['Allo La Martingale','Des auditeurs posent leurs vraies questions d\'argent.'],['S\'investir (YouTube)','Une vidéo sur les ETF ou le PEA, très proche de ta stratégie.'],['Le Grand Bain','Épargne et premiers investissements, sans jargon.'],['Finary Talk','La série « Back to basics » pour les débutants.'],['Jugeote','L\'épisode « Le PER : dans quelle situation en ouvrir un ? ».'],['Combien Ça Gagne','Comprendre les métiers et les revenus.'],['Heu?reka (YouTube)','Comprendre l\'économie et les crises.'],['C\'est mon budget','Des épisodes courts sur le budget du quotidien.']];
+function podOfWeek(){const d=new Date(),w=Math.floor((d-new Date(d.getFullYear(),0,1))/6048e5);return POD_WEEK[w%POD_WEEK.length];}
+
 /* ================= RENDU GLOBAL ================= */
 function fillInputs(){
   $('capa').value=S.profil.capa??'';$('capa').placeholder=String(Math.round((S.profil.salaire||0)*0.2/10)*10);$('paie').value=S.profil.paie;$('jour').value=S.profil.jour;$('debutant').checked=S.profil.debutant!==false;$('peeSt').value=S.profil.pee;
@@ -2450,6 +2667,7 @@ renderActu();renderAll();renderQuiz();gl();repart();immo();route();
 try{applyTheme(LSG('prt-theme','auto'));}catch(e){}
 if(LSG('prt-hide',''))setHide(true);
 (()=>{let un=false;try{un=sessionStorage.getItem('prt-unlocked')==='1';}catch(e){}if(LSG('prt-pin','')&&!un)openLock('unlock');})();
+queueLink(document.querySelector('main'));obs.observe(document.querySelector('main'),{childList:true,subtree:true});
 setTimeout(()=>{if(S.onboarded)return;if(!S.accounts.some(a=>a.solde))openOnb();else{S.onboarded=true;persist();}},IN_CLAUDE?4000:300);
 window.addEventListener('resize',refreshCanvases);
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',refreshCanvases);}catch(e){}
