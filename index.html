@@ -261,6 +261,28 @@ nav.tabs a.center .bub svg{stroke:#fff;width:24px;height:24px}
 nav.tabs a.center[aria-current="page"] .bub{background:#0b5551}
 /* tuiles Plus */
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kidbox{background:var(--accent-soft);border-radius:14px;padding:10px 12px;margin:0 0 10px}
+.kidbox b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);margin-bottom:2px}
+.kidbox p{margin:0;font-size:.96rem;line-height:1.5}
+.vids{display:flex;flex-direction:column;gap:4px;margin:0 0 10px;font-size:.92rem}
+.vids b{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.vids a{color:var(--accent);font-weight:600;text-decoration:none}
+.vids small{font-size:.78rem}
+.kidbtn{margin:0 0 12px}
+.term .kidl{color:var(--muted);font-size:.9rem;margin-top:4px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);font-size:.95rem;line-height:1.4}
+.chk:last-child{border-bottom:0}
+.chk input{width:22px;height:22px;min-height:0;flex:0 0 22px;margin:0;accent-color:var(--accent)}
+.chk input:checked+span{text-decoration:line-through;color:var(--muted)}
+.calm{margin:16px 0 6px;text-transform:capitalize;font-size:.95rem;color:var(--muted)}
+.cal{display:flex;gap:12px;background:var(--surface);border-radius:14px;box-shadow:var(--shadow);padding:10px 12px;margin-bottom:8px;border-left:4px solid var(--c)}
+.cal .cd{min-width:38px;text-align:center}.cal .cd b{display:block;font-size:1.25rem;line-height:1.1}.cal .cd small{color:var(--muted);font-size:.75rem}
+.cal .cb{flex:1;min-width:0}.cal .tt{font-weight:700}.cal p{margin:2px 0 0}
+.alrt{padding:10px 0;border-bottom:1px solid var(--line)}.alrt:last-of-type{border-bottom:0}
+.alrt .tt{font-weight:700;margin:6px 0 2px}.alrt p{margin:0 0 4px}
+.alrt .abt{display:flex;gap:18px;align-items:center;margin:2px 0 0}.alrt .abt .go{margin:0}.alrt .abt .linkbtn{margin:0;width:auto}
+.alertc{border-left:4px solid var(--warn)}
+#rdvChips button,#jConf button{width:auto}
 .tile{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);border-radius:18px;min-height:112px;padding:14px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;gap:10px}
 .tile .ti{width:38px;height:38px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center}
 .tile .ti svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -406,6 +428,7 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
     <div class="hs" id="homeSplit"></div>
     <div class="hb"><a href="#conseiller" class="hbtn">Parler à mon conseiller</a><a href="#argent" class="hbtn alt">Mes comptes</a></div>
   </div>
+  <div class="card alertc" id="alertCard" hidden></div>
   <div class="card mission" id="mission" hidden></div>
   <div class="card goalc" id="goalCard"></div>
   <div class="card bilanc" id="bilanCard" hidden></div>
@@ -602,6 +625,7 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
     <button type="button" data-seg="simuler" data-p="voiture" aria-pressed="false">Voiture</button>
     <button type="button" data-seg="simuler" data-p="etsi" aria-pressed="false">Et si…</button>
     <button type="button" data-seg="simuler" data-p="impots" aria-pressed="false">Impôts</button>
+    <button type="button" data-seg="simuler" data-p="couple" aria-pressed="false">À deux</button>
 
   </div>
 
@@ -772,6 +796,27 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
   </div>
 
   <!-- Impôts -->
+  <div class="pane" data-pane="simuler:couple">
+    <p class="lead">Pour plus tard, quand tu vivras à deux : combien chacun verse pour les dépenses communes, et ce qu'il lui reste.</p>
+    <div class="card">
+      <div class="field"><label for="cS1">Mon salaire net par mois</label><input type="number" id="cS1" inputmode="numeric" step="50"></div>
+      <div class="field"><label for="cS2">Salaire net de l'autre</label><input type="number" id="cS2" inputmode="numeric" step="50" placeholder="Ex. : 1600"></div>
+      <div class="field"><label for="cLoyer">Loyer et charges</label><input type="number" id="cLoyer" inputmode="numeric" step="10" placeholder="Ex. : 750"></div>
+      <div class="field"><label for="cCourses">Courses</label><input type="number" id="cCourses" inputmode="numeric" step="10" placeholder="Ex. : 350"></div>
+      <div class="field"><label for="cFact">Énergie, internet, assurance habitation</label><input type="number" id="cFact" inputmode="numeric" step="10" placeholder="Ex. : 120"></div>
+      <div class="field"><label for="cAutres">Autres dépenses communes (sorties, abonnements…)</label><input type="number" id="cAutres" inputmode="numeric" step="10" placeholder="Ex. : 100"></div>
+      <div class="field"><label>Comment partager</label><div class="chips" id="cMode"><button type="button" data-m="prop">Au prorata des revenus</button><button type="button" data-m="egal">50/50</button></div></div>
+    </div>
+    <div id="cRes"></div>
+    <div class="card"><h3>Bien s'organiser à deux</h3><ul class="small" style="margin:0;padding-left:18px">
+      <li><strong>Un compte commun pour les dépenses communes</strong>, alimenté chaque mois par un virement automatique de chacun après la paie. Le reste de vos salaires reste sur vos comptes perso.</li>
+      <li><strong>Attention au compte joint :</strong> chaque titulaire est responsable de tout le découvert, même s'il ne l'a pas causé.</li>
+      <li><strong>Gardez chacun votre épargne</strong> : PEA, LEP et Livret A sont individuels. Fixez ensemble un montant d'épargne commune pour vos projets (voyage, appartement).</li>
+      <li><strong>Prêter de l'argent à l'autre ?</strong> Au-delà de 1 500 €, fais une reconnaissance de dette écrite et signée : c'est la seule preuve qui compte.</li>
+      <li><strong>Parlez d'argent tôt</strong> : revenus, dettes, objectifs. Le podcast <em>Rends l'argent</em> parle de l'argent dans le couple.</li>
+      <li>PACS ou mariage : ça change vos impôts (déclaration commune) et la protection de chacun. À voir le moment venu avec un notaire.</li></ul></div>
+    <button type="button" class="ghost" data-ask="Aide-moi à organiser un budget à deux : comment répartir les dépenses communes, faut-il un compte joint, comment garder chacun son épargne, et comment en parler sans dispute ?">En parler au conseiller</button>
+  </div>
   <div class="pane" data-pane="simuler:impots">
     <p class="lead">Combien d'impôt sur le revenu tu paieras après ton alternance, et quand le PER devient intéressant.</p>
     <div class="card">
@@ -792,7 +837,7 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
 
 <!-- ================= PLAN ================= -->
 <section class="view" id="v-plus">
-  <div id="plusHome"><h2>Plus</h2><p class="lead">Ton plan, tes guides et tout pour comprendre.</p><div class="tiles"><button type="button" class="tile" data-seg="plus" data-p="podcasts"><span class="ti"><svg viewBox="0 0 24 24"><path d="M3 14v-2a9 9 0 0 1 18 0v2M3 14a2 2 0 0 1 2-2h1v7H5a2 2 0 0 1-2-2zM21 14a2 2 0 0 0-2-2h-1v7h1a2 2 0 0 0 2-2z"/></svg></span><span><b>Podcasts &amp; vidéos</b><small>Apprendre en écoutant</small></span></button><button type="button" class="tile" data-seg="plus" data-p="orienter"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span><span><b>Vers qui m'orienter</b><small>Organismes gratuits, pros</small></span></button><button type="button" class="tile" data-seg="plus" data-p="bilan"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Mon bilan du mois</b><small>Ce que tu as accompli</small></span></button><button type="button" class="tile" data-seg="plus" data-p="annee"><span class="ti"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span><b>Mon année</b><small>Ton année en chiffres</small></span></button><button type="button" class="tile" data-seg="plus" data-p="defis"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></svg></span><span><b>Mes défis</b><small>Un défi par mois</small></span></button><button type="button" class="tile" data-seg="plus" data-p="cours"><span class="ti"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5"/></svg></span><span><b>Mini-cours</b><small>Comprendre l'investissement</small></span></button><button type="button" class="tile" data-seg="plus" data-p="reglages"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span><span><b>Réglages</b><small>Code, thème, sauvegardes</small></span></button><button type="button" class="tile" data-seg="plus" data-p="etapes"><span class="ti"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span><b>Mon plan</b><small>Ta checklist, étape par étape</small></span></button><button type="button" class="tile" data-seg="plus" data-p="conseil"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span><b>Mon profil investisseur</b><small>Le test en 7 questions</small></span></button><button type="button" class="tile" data-seg="plus" data-p="badges"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></span><span><b>Mes badges</b><small>Tes objectifs et récompenses</small></span></button><button type="button" class="tile" data-seg="plus" data-p="guides"><span class="ti"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5zM12 6v14"/></svg></span><span><b>Guides pas à pas</b><small>Acheter un ETF, krach, prime…</small></span></button><button type="button" class="tile" data-seg="plus" data-p="compar"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Comparatif</b><small>Courtiers et assurances vie</small></span></button><button type="button" class="tile" data-seg="plus" data-p="apres"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span><b>Après l'alternance</b><small>Fin d'alternance, 1er CDI</small></span></button><button type="button" class="tile" data-seg="plus" data-p="actu"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v13a1 1 0 0 0 2 0V8M5 4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14M8 8h6M8 12h6M8 16h4"/></svg></span><span><b>Actualité</b><small>Les marchés ce mois-ci</small></span></button><button type="button" class="tile" data-seg="plus" data-p="quiz"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17.5v.01"/></svg></span><span><b>Quiz</b><small>Teste tes bases</small></span></button><button type="button" class="tile" data-seg="plus" data-p="lexique"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M19 19v2H6"/></svg></span><span><b>Lexique</b><small>Tous les mots expliqués</small></span></button></div>
+  <div id="plusHome"><h2>Plus</h2><p class="lead">Ton plan, tes guides et tout pour comprendre.</p><div class="tiles"><button type="button" class="tile" data-seg="plus" data-p="calendrier"><span class="ti"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h2M14 14h2M8 17h2"/></svg></span><span><b>Mon calendrier</b><small>Les dates à ne pas rater</small></span></button><button type="button" class="tile" data-seg="plus" data-p="rdv"><span class="ti"><svg viewBox="0 0 24 24"><path d="M9 4h6a1 1 0 0 1 1 1v1H8V5a1 1 0 0 1 1-1z"/><rect x="5" y="6" width="14" height="15" rx="2"/><path d="M9 12l2 2 4-4M9 17h6"/></svg></span><span><b>Préparer un rendez-vous</b><small>Banque, logement, permis…</small></span></button><button type="button" class="tile" data-seg="plus" data-p="journal"><span class="ti"><svg viewBox="0 0 24 24"><path d="M6 3h11a2 2 0 0 1 2 2v16H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8 8h7M8 12h7M8 16h4"/></svg></span><span><b>Mon journal</b><small>Pourquoi j'ai fait ce choix</small></span></button><button type="button" class="tile" data-seg="plus" data-p="podcasts"><span class="ti"><svg viewBox="0 0 24 24"><path d="M3 14v-2a9 9 0 0 1 18 0v2M3 14a2 2 0 0 1 2-2h1v7H5a2 2 0 0 1-2-2zM21 14a2 2 0 0 0-2-2h-1v7h1a2 2 0 0 0 2-2z"/></svg></span><span><b>Podcasts &amp; vidéos</b><small>Apprendre en écoutant</small></span></button><button type="button" class="tile" data-seg="plus" data-p="orienter"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span><span><b>Vers qui m'orienter</b><small>Organismes gratuits, pros</small></span></button><button type="button" class="tile" data-seg="plus" data-p="bilan"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Mon bilan du mois</b><small>Ce que tu as accompli</small></span></button><button type="button" class="tile" data-seg="plus" data-p="annee"><span class="ti"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span><b>Mon année</b><small>Ton année en chiffres</small></span></button><button type="button" class="tile" data-seg="plus" data-p="defis"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></svg></span><span><b>Mes défis</b><small>Un défi par mois</small></span></button><button type="button" class="tile" data-seg="plus" data-p="cours"><span class="ti"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5"/></svg></span><span><b>Mini-cours</b><small>Comprendre l'investissement</small></span></button><button type="button" class="tile" data-seg="plus" data-p="reglages"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span><span><b>Réglages</b><small>Code, thème, sauvegardes</small></span></button><button type="button" class="tile" data-seg="plus" data-p="etapes"><span class="ti"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span><b>Mon plan</b><small>Ta checklist, étape par étape</small></span></button><button type="button" class="tile" data-seg="plus" data-p="conseil"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span><b>Mon profil investisseur</b><small>Le test en 7 questions</small></span></button><button type="button" class="tile" data-seg="plus" data-p="badges"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></span><span><b>Mes badges</b><small>Tes objectifs et récompenses</small></span></button><button type="button" class="tile" data-seg="plus" data-p="guides"><span class="ti"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5zM12 6v14"/></svg></span><span><b>Guides pas à pas</b><small>Acheter un ETF, krach, prime…</small></span></button><button type="button" class="tile" data-seg="plus" data-p="compar"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><span><b>Comparatif</b><small>Courtiers et assurances vie</small></span></button><button type="button" class="tile" data-seg="plus" data-p="apres"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span><b>Après l'alternance</b><small>Fin d'alternance, 1er CDI</small></span></button><button type="button" class="tile" data-seg="plus" data-p="actu"><span class="ti"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v13a1 1 0 0 0 2 0V8M5 4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14M8 8h6M8 12h6M8 16h4"/></svg></span><span><b>Actualité</b><small>Les marchés ce mois-ci</small></span></button><button type="button" class="tile" data-seg="plus" data-p="quiz"><span class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17.5v.01"/></svg></span><span><b>Quiz</b><small>Teste tes bases</small></span></button><button type="button" class="tile" data-seg="plus" data-p="lexique"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M19 19v2H6"/></svg></span><span><b>Lexique</b><small>Tous les mots expliqués</small></span></button></div>
   <p class="foot">Sources : COR (rapport juin 2026), Insee (inflation oct. 2026), BCE (29 oct. 2026), LFSS 2026, service-public.fr, grilles tarifaires des courtiers (nov. 2026). Outil pédagogique, pas un conseil financier personnalisé.</p></div>
   <div class="pane" data-pane="plus:etapes">
     <button type="button" class="back" data-back>← Plus</button>
@@ -977,6 +1022,9 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
     <h2>Actualité</h2>
 
     <span class="asof" id="asof"></span>
+    <h3 style="margin:10px 0 8px">Alertes qui te concernent</h3>
+    <div class="card small" id="alertList"></div>
+    <p class="small muted" style="margin:-4px 0 14px">Mises à jour chaque 5 du mois : taux des livrets, fiscalité de l'épargne, retraites, aides aux jeunes et aux apprentis, crédit.</p>
     <div class="news" id="news"></div>
     <h3 style="margin:14px 0 8px">Ce que ça change pour toi</h3>
     <div id="impacts"></div>
@@ -1058,11 +1106,59 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
     </div>
     <button type="button" class="ghost" id="replayOnb">Revoir la présentation de l'appli</button>
   </div>
+
+  <div class="pane" data-pane="plus:calendrier">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Mon calendrier</h2>
+    <p class="lead">Les démarches et dates importantes des 12 prochains mois, calculées pour toi : impôts, taux des livrets, tes projets, tes placements.</p>
+    <div class="card"><h3>Mes dates clés</h3><div class="mp" id="calKey"></div></div>
+    <div id="calList"></div>
+    <div class="card"><h3>Ajouter un événement</h3>
+      <div class="field"><label for="calT">Quoi</label><input type="text" id="calT" maxlength="80" placeholder="Ex. : RDV banque, fin du contrat, anniversaire…"></div>
+      <div class="field"><label for="calD">Quand</label><input type="date" id="calD"></div>
+      <label class="switch" for="calAn">Chaque année <input type="checkbox" id="calAn"></label>
+      <button type="button" id="calAddBtn">Ajouter</button></div>
+    <div class="card"><h3>Pour calculer tes dates</h3>
+      <div class="field"><label for="calPea">Date d'ouverture de ton PEA</label><input type="date" id="calPea"><small>C'est elle qui compte pour les 5 ans, même si tu as versé plus tard. Sans date, l'appli prend ton premier achat d'ETF.</small></div>
+      <div class="field"><label for="calAv">Date d'ouverture de ton assurance vie</label><input type="date" id="calAv"></div>
+      <div class="field"><label for="calAuto">Échéance de ton assurance auto (si tu en as une)</label><input type="date" id="calAuto"><small>L'appli te rappellera de comparer 2 mois avant.</small></div></div>
+    <button type="button" class="ghost" id="calIcs">Ajouter tout à mon calendrier iPhone (.ics)</button>
+    <p class="small muted">Dates de déclaration et d'avis d'impôt approximatives : les dates exactes sont annoncées chaque printemps sur impots.gouv.fr.</p>
+  </div>
+  <div class="pane" data-pane="plus:rdv">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Préparer un rendez-vous</h2>
+    <p class="lead">Choisis ton rendez-vous : l'appli te dit quoi apporter, quoi demander et les pièges à éviter. Coche au fur et à mesure.</p>
+    <div class="chips" role="group" aria-label="Type de rendez-vous" id="rdvChips"></div>
+    <div id="rdvBox"></div>
+    <p class="small muted">N'envoie jamais tes identifiants ni tes codes, même à un conseiller. Une vraie banque ne te les demandera jamais.</p>
+  </div>
+  <div class="pane" data-pane="plus:journal">
+    <button type="button" class="back" data-back>← Plus</button>
+    <h2>Mon journal</h2>
+    <p class="lead">Note chaque décision importante et <strong>pourquoi</strong> tu l'as prise. Quand la bourse chute ou qu'on te pousse à changer, relire tes raisons t'aide à garder ton calme.</p>
+    <div class="card">
+      <div class="field"><label for="jT">Ma décision</label><input type="text" id="jT" maxlength="160" placeholder="Ex. : J'ouvre un PEA chez Trade Republic"></div>
+      <div class="field"><label for="jW">Pourquoi</label><textarea id="jW" maxlength="600" style="font-family:var(--font-body);font-size:15px" placeholder="Ex. : frais bas, achat programmé gratuit, je veux investir 50 € par mois sur 40 ans"></textarea></div>
+      <div class="field"><label for="jCat">Type</label><select id="jCat"><option value="placement">Placement</option><option value="achat">Achat</option><option value="credit">Crédit</option><option value="budget">Budget</option><option value="autre">Autre</option></select></div>
+      <div class="field"><label for="jD">Date</label><input type="date" id="jD"></div>
+      <div class="field"><label>Ma confiance dans ce choix</label><div class="chips" id="jConf"><button type="button" data-c="1">1</button><button type="button" data-c="2">2</button><button type="button" data-c="3">3</button><button type="button" data-c="4">4</button><button type="button" data-c="5">5</button></div></div>
+      <button type="button" id="jSave">Noter ma décision</button>
+    </div>
+    <div class="card tint small"><strong>Questions à te poser avant de décider :</strong> Est-ce que j'en ai besoin, ou est-ce que j'en ai envie ? Qu'est-ce qui se passe si ça tourne mal ? Est-ce que je ferais le même choix dans un mois ? Qui gagne de l'argent si je dis oui ?</div>
+    <div id="jList"></div>
+  </div>
   <div class="pane" data-pane="plus:podcasts">
     <button type="button" class="back" data-back>← Plus</button>
     <h2>Podcasts &amp; vidéos</h2>
     <p class="lead">Une sélection de podcasts et de chaînes en français, triée par niveau. Sélection relevée en novembre 2026, à partir de classements récents.</p>
     <div class="card tint small"><strong>Ton plan d'écoute pour commencer (1 épisode par semaine)</strong><ol style="margin:6px 0 0"><li>Semaine 1 : <em>Allo La Martingale</em>, un épisode dont la question ressemble à la tienne.</li><li>Semaine 2 : <em>S'investir</em> sur YouTube, une vidéo sur les ETF ou le PEA.</li><li>Semaine 3 : <em>Le Grand Bain</em> ou <em>Finary Talk</em>, un épisode « Back to basics ».</li><li>Semaine 4 : <em>Jugeote</em>, l'épisode sur le PER.</li></ol></div>
+    <div class="card" id="podSum"><h3>Résumer un épisode</h3>
+      <p class="small">Le conseiller ne peut pas écouter un lien. Colle le titre et la description, ou mieux la transcription (sur YouTube : « … » sous la vidéo → « Afficher la transcription »). Il te fait un résumé, explique les mots compliqués et te dit si c'est cohérent avec ton plan.</p>
+      <div class="field"><label for="psT">Titre de l'épisode</label><input type="text" id="psT" maxlength="160" placeholder="Ex. : Comment investir avec 100 € par mois"></div>
+      <div class="field"><label for="psX">Description ou transcription</label><textarea id="psX" maxlength="12000" style="font-family:var(--font-body);font-size:15px;min-height:130px" placeholder="Colle le texte ici"></textarea></div>
+      <label class="switch" for="psKid">Explique comme si j'avais 12 ans <input type="checkbox" id="psKid"></label>
+      <button type="button" id="psGo">Résumer avec mon conseiller</button><p class="small muted" id="psNote" style="margin:6px 0 0"></p></div>
     <div class="chips" role="group" aria-label="Niveau" id="podLvl"><button type="button" data-l="all" aria-pressed="true">Tout</button><button type="button" data-l="debut" aria-pressed="false">Débutant</button><button type="button" data-l="inter" aria-pressed="false">Intermédiaire</button><button type="button" data-l="avance" aria-pressed="false">Avancé</button><button type="button" data-l="new" aria-pressed="false">Nouveaux 2026</button></div>
     <h3 style="margin:14px 0 8px">Podcasts</h3>
     <div class="card pod" data-l="debut" data-new="0"><div class="ph"><div><b>Allo La Martingale</b><small>Amaury de Tonquédec · Orso Media · 30-45 min, chaque semaine</small></div><span class="tag" style="background:transparent;border:1.5px solid var(--good);color:var(--good)">Débutant</span></div>
@@ -1232,7 +1328,8 @@ body.privacy .hv,body.privacy .bigv,body.privacy .amt,body.privacy .am,body.priv
     <div class="mtop"><span class="tag" id="defC"></span><button type="button" class="linkbtn" id="defClose" style="margin:0">Fermer</button></div>
     <h2 id="defT" style="margin:10px 0 6px;font-size:1.25rem"></h2>
     <p id="defD" style="font-size:1.02rem;line-height:1.55"></p>
-    <div class="btns" style="margin-top:12px"><button type="button" id="defAsk" data-ask="">Un exemple pour moi</button><button type="button" class="ghost" id="defLex">Voir le lexique</button></div>
+    <div class="kidbox" id="defKid" hidden><b>En une image</b><p id="defKidT"></p></div>
+    <div class="btns" style="margin-top:12px"><button type="button" id="defAsk" data-ask="">Un exemple pour moi</button><button type="button" class="ghost" id="defKidAsk" data-ask="">Comme si j'avais 12 ans</button><button type="button" class="ghost" id="defLex">Voir le lexique</button></div>
   </div>
 </div>
 <nav class="tabs" aria-label="Navigation"><div class="in">
@@ -1257,7 +1354,7 @@ const KORDER=['courant','secu','inv','autre'];
 const DEF_ACC=[['courant','Compte courant','courant'],['lep','LEP','secu'],['livretA','Livret A / LDDS','secu'],['pea','PEA','inv'],['av','Assurance vie','inv'],['pee','Épargne salariale','inv']];
 const newAcc=(id,n,k)=>({id,n,k,solde:0,mensuel:0,maj:0});
 const DEF_PROJ=()=>[{id:'p1',n:'Permis + voiture',montant:6000,date:'2028-06',deja:0},{id:'p2',n:'Voyage / déménagement',montant:2000,date:'2027-09',deja:0},{id:'p3',n:'Apport logement',montant:25000,date:'2032-06',deja:0}];
-function defState(){return{v:3,profil:{salaire:1100,depenses:600,rfr:'',parts:'1',capa:null,paie:'fin',pee:'inconnu',jour:28,debutant:true},risk:null,projets:DEF_PROJ(),positions:[],analyse:null,badges:{},objectif:{montant:10000,age:25},defis:{},env:null,cours:{},memo:[],carriere:{trim:0,estim:0},onboarded:false,accounts:DEF_ACC.map(([id,n,k])=>newAcc(id,n,k)),historique:[],done:{},sim:{}};}
+function defState(){return{v:3,profil:{salaire:1100,depenses:600,rfr:'',parts:'1',capa:null,paie:'fin',pee:'inconnu',jour:28,debutant:true},risk:null,projets:DEF_PROJ(),positions:[],analyse:null,badges:{},objectif:{montant:10000,age:25},defis:{},env:null,cours:{},memo:[],carriere:{trim:0,estim:0},journal:[],events:[],dates:{pea:'',av:'',auto:''},couple:{s1:0,s2:0,loyer:0,courses:0,factures:0,autres:0,mode:'prop'},alertsSeen:[],onboarded:false,accounts:DEF_ACC.map(([id,n,k])=>newAcc(id,n,k)),historique:[],done:{},sim:{}};}
 let S=defState();
 const num=(v,min)=>{const x=+v;return isFinite(x)?(min===undefined?x:Math.max(min,x)):0;};
 function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau format)
@@ -1284,6 +1381,11 @@ function clean(d){ // valide un état venu de l'extérieur (ancien ou nouveau fo
   if(Array.isArray(d.memo))s.memo=d.memo.filter(m=>m&&m.t).slice(-30).map(m=>({t:str(m.t,200),d:num(m.d,0)}));
   if(d.carriere&&typeof d.carriere==='object')s.carriere={trim:Math.max(0,Math.round(num(d.carriere.trim,0))),estim:num(d.carriere.estim,0)};
   if(typeof d.onboarded==='boolean')s.onboarded=d.onboarded;
+  if(Array.isArray(d.journal))s.journal=d.journal.filter(j=>j&&j.t&&isD(j.d)).slice(0,100).map(j=>({id:str(j.id||Math.random().toString(36).slice(2),40),d:j.d,t:str(j.t,160),why:str(j.why,600),cat:['placement','achat','credit','budget','autre'].includes(j.cat)?j.cat:'autre',conf:Math.min(5,Math.max(1,Math.round(num(j.conf,1)||3)))}));
+  if(Array.isArray(d.events))s.events=d.events.filter(e=>e&&e.t&&isD(e.d)).slice(-60).map(e=>({id:str(e.id||Math.random().toString(36).slice(2),40),d:e.d,t:str(e.t,80),an:!!e.an}));
+  if(d.dates&&typeof d.dates==='object')for(const k of ['pea','av','auto'])if(isD(d.dates[k]))s.dates[k]=d.dates[k];
+  if(d.couple&&typeof d.couple==='object'){for(const k of ['s1','s2','loyer','courses','factures','autres'])s.couple[k]=num(d.couple[k],0);s.couple.mode=d.couple.mode==='egal'?'egal':'prop';}
+  if(Array.isArray(d.alertsSeen))s.alertsSeen=d.alertsSeen.filter(x=>typeof x==='string').slice(-60).map(x=>x.slice(0,60));
   if(Array.isArray(d.projets)) s.projets=d.projets.filter(p=>p&&p.id).slice(0,12).map(p=>({id:String(p.id).slice(0,40),n:String(p.n||'Projet').slice(0,40),montant:num(p.montant,0),date:/^\d{4}-\d{2}$/.test(p.date)?p.date:'2028-01',deja:num(p.deja,0)}));
   if(Array.isArray(d.accounts)){
     const seen=new Set();
@@ -2656,13 +2758,337 @@ document.querySelectorAll('#podLvl button').forEach(b=>b.addEventListener('click
 const POD_WEEK=[['Allo La Martingale','Des auditeurs posent leurs vraies questions d\'argent.'],['S\'investir (YouTube)','Une vidéo sur les ETF ou le PEA, très proche de ta stratégie.'],['Le Grand Bain','Épargne et premiers investissements, sans jargon.'],['Finary Talk','La série « Back to basics » pour les débutants.'],['Jugeote','L\'épisode « Le PER : dans quelle situation en ouvrir un ? ».'],['Combien Ça Gagne','Comprendre les métiers et les revenus.'],['Heu?reka (YouTube)','Comprendre l\'économie et les crises.'],['C\'est mon budget','Des épisodes courts sur le budget du quotidien.']];
 function podOfWeek(){const d=new Date(),w=Math.floor((d-new Date(d.getFullYear(),0,1))/6048e5);return POD_WEEK[w%POD_WEEK.length];}
 
+/* ================= EXPLIQUE-MOI COMME SI J'AVAIS 12 ANS ================= */
+const KID={
+ "LEP (Livret d'épargne populaire)":"Une tirelire de la banque qui rapporte plus que les autres, mais réservée aux gens qui gagnent peu. Tu peux reprendre ton argent quand tu veux, et l'État garantit qu'il ne disparaît pas.",
+ "Livret A":"Une tirelire sûre que tout le monde peut avoir. Elle grossit un tout petit peu chaque année, et tu peux casser la tirelire à tout moment.",
+ "LDDS":"Le petit frère du Livret A : même tirelire, même règles, juste un peu plus petite.",
+ "Épargne de précaution":"La roue de secours dans le coffre de la voiture. Tu ne t'en sers presque jamais, mais le jour où tu crèves, tu es bien content de l'avoir.",
+ "Épargne de précaution / matelas":"La roue de secours dans le coffre de la voiture. Tu ne t'en sers presque jamais, mais le jour où tu crèves, tu es bien content de l'avoir.",
+ "Rendement réel":"Si ta tirelire grossit de 2 € mais que le prix des bonbons monte de 3 €, tu peux en fait acheter moins de bonbons qu'avant.",
+ "Revenu fiscal de référence (RFR)":"Le chiffre que les impôts retiennent pour dire combien ton foyer a gagné dans l'année. C'est un peu ta « note de revenus » officielle.",
+ "Rattachement fiscal":"Rester sur la « fiche » impôts de tes parents, comme quand tu étais petit, au lieu d'avoir ta propre fiche.",
+ "TMI":"Les impôts, c'est comme des marches d'escalier : chaque euro gagné en plus monte d'une marche. La TMI, c'est la marche la plus haute que tu atteins.",
+ "Prélèvements sociaux":"Une petite part de tes gains que l'État prend pour payer la santé et la sécurité sociale.",
+ "Flat tax (PFU)":"Un impôt « tarif unique » sur ce que rapportent tes placements : la même part pour tout le monde.",
+ "Action":"Un tout petit morceau d'une entreprise. Si tu as une action Danone, tu possèdes une miette de Danone.",
+ "Dividende":"La part du gâteau qu'une entreprise redonne à ceux qui possèdent ses actions quand elle a gagné de l'argent.",
+ "Obligation":"Tu prêtes de l'argent à un pays ou à une entreprise, et il te rend la somme plus un petit bonus.",
+ "Indice":"Le classement des meilleures entreprises, comme le top 50 des chansons. Il monte quand ces entreprises vont bien.",
+ "MSCI World":"Une équipe de 1 300 grandes entreprises des pays riches. Si l'une perd, les autres compensent.",
+ "MSCI ACWI / All World":"La même grande équipe que le MSCI World, plus des entreprises de pays comme l'Inde ou le Brésil.",
+ "ETF (tracker)":"Un panier déjà rempli avec des centaines de fruits différents. Au lieu d'acheter chaque fruit un par un, tu achètes le panier entier en une fois.",
+ "Capitalisant / distribuant":"Capitalisant : les bonus restent dans la tirelire et la font grossir tout seuls. Distribuant : on te donne les bonus en main propre.",
+ "Swap / synthétique":"Un échange organisé en coulisse pour que le panier copie exactement le classement, même s'il ne contient pas toutes les entreprises. C'est encadré et courant.",
+ "TER":"Le petit loyer annuel du panier. Plus il est bas, plus il te reste d'argent.",
+ "Ordre à cours limité":"Dire au vendeur « je n'achète pas plus cher que tel prix ». Si le prix dépasse, rien ne se passe.",
+ "Frais de courtage":"Le ticket d'entrée que tu paies au magasin à chaque achat ou vente.",
+ "Courtier":"Le magasin où tu achètes tes paniers d'entreprises (tes ETF).",
+ "Volatilité":"À quel point ça bouge : un manège doux ou des montagnes russes.",
+ "Krach":"Une grosse chute de la bourse, comme une tempête. Les tempêtes passent, et les arbres solides repoussent.",
+ "Diversification":"Ne pas mettre tous tes œufs dans le même panier : si tu en fais tomber un, tu ne casses pas tout.",
+ "Inflation":"Les prix qui montent petit à petit : ta baguette coûte un peu plus cher chaque année.",
+ "BCE":"La banque des banques, en Europe. Elle règle le « thermostat » de l'économie avec ses taux.",
+ "Taux directeur":"Le thermostat de l'économie : on le monte pour calmer la hausse des prix, on le baisse pour relancer.",
+ "Intérêts composés":"Une boule de neige qui roule : plus elle descend longtemps, plus elle ramasse de neige, et de plus en plus vite.",
+ "Versement programmé (DCA)":"Mettre la même pièce dans la tirelire chaque mois, sans réfléchir, qu'il pleuve ou qu'il fasse beau.",
+ "Règle des 4 %":"À la retraite, tu manges chaque année 4 % de ton gâteau. Comme il continue de grossir, il dure très longtemps.",
+ "Répartition (allocation)":"Comment tu ranges ton argent entre plusieurs boîtes : une boîte sûre, une boîte projets, une boîte long terme.",
+ "Taux d'endettement":"La part de ton salaire qui part chaque mois pour rembourser des crédits. Les banques veulent que ça reste sous un tiers environ.",
+ "PEA":"Une boîte spéciale pour acheter des paniers d'entreprises. Si tu la gardes fermée 5 ans, l'État te fait cadeau de l'impôt sur le revenu sur tes gains.",
+ "Assurance vie":"Un grand coffre à plusieurs tiroirs : un tiroir très sûr et des tiroirs plus risqués. Malgré son nom, c'est un placement, pas une assurance décès.",
+ "Fonds euros":"Le tiroir très sûr de l'assurance vie : il grossit doucement et ne baisse pas.",
+ "Unités de compte":"Les tiroirs plus risqués de l'assurance vie : ils peuvent monter beaucoup, ou baisser.",
+ "Clause bénéficiaire":"Le petit papier qui dit à qui ira ton coffre s'il t'arrive quelque chose.",
+ "PER":"Une tirelire fermée à clé jusqu'à la retraite. En échange, l'État te rend une partie de tes impôts, utile seulement si tu en paies beaucoup.",
+ "PEE":"La tirelire de l'entreprise : tu mets un peu, et parfois ton patron ajoute des sous en cadeau.",
+ "PERCOL":"La tirelire retraite de l'entreprise, avec souvent un cadeau du patron en plus.",
+ "Abondement":"Le cadeau du patron : tu mets 10 €, il en ajoute par exemple 10 €. C'est de l'argent offert.",
+ "Répartition (retraite)":"Ceux qui travaillent aujourd'hui paient les retraites des grands-parents d'aujourd'hui. Plus tard, les jeunes paieront la tienne.",
+ "Capitalisation":"Tu remplis ta propre tirelire pour ta retraite, au lieu de compter seulement sur les autres.",
+ "Âge légal":"L'âge minimum pour avoir le droit de partir à la retraite.",
+ "Taux de remplacement":"Ta retraite comparée à ton dernier salaire : si tu gagnais 100 € et que tu touches 60 €, le taux est de 60 %.",
+ "CGP":"Un coach de l'argent. Certains sont payés par toi (neutres), d'autres par les produits qu'ils vendent.",
+ "AMF":"L'arbitre de la bourse en France : il surveille et met en garde contre les tricheurs.",
+ "TAEG (taux annuel effectif global)":"Le vrai prix d'un crédit, tout compris. Pour comparer deux crédits, compare toujours ce chiffre.",
+ "PRU (prix de revient unitaire)":"Le prix moyen que tu as payé chaque part, en mélangeant tous tes achats.",
+ "LOA / LLD":"Louer une voiture au mois, comme un abonnement. Pratique, mais à la fin elle n'est pas à toi.",
+ "Taux plein":"La retraite « complète », sans réduction, quand tu as travaillé assez longtemps.",
+ "Rendement moyen":"Comme une moyenne en classe : certaines notes sont mauvaises, d'autres très bonnes, la moyenne lisse tout.",
+ "Contenu de marque":"Une pub déguisée en émission : ça peut être utile, mais celui qui la fait veut aussi te vendre quelque chose.",
+ "Euros d'aujourd'hui":"Traduire un prix du futur en prix d'aujourd'hui, pour savoir ce que tu pourras vraiment acheter.",
+ "Salaire d'apprenti":"Ton salaire d'alternant : jusqu'au niveau du SMIC, il ne compte pas pour l'impôt sur le revenu.",
+ "Notaire (frais de)":"Les frais à payer en plus du prix quand on achète un logement, surtout des taxes."
+};
+openDef=(function(orig){return function(title,word){orig(title,word);const k=KID[title];
+  $('defKid').hidden=!k;$('defKidT').textContent=k||'';
+  $('defKidAsk').dataset.ask=`Explique-moi « ${word} » comme si j'avais 12 ans, avec une comparaison de la vie de tous les jours, puis dis-moi en une phrase ce que ça change pour moi.`;};})(openDef);
+$('defKidAsk').addEventListener('click',()=>{$('def').hidden=true;});
+gl=function(){const q=$('q').value.trim().toLowerCase();const it=G.filter(([c,t,d])=>(cat==='Tout'||c===cat)&&(!q||t.toLowerCase().includes(q)||d.toLowerCase().includes(q)));
+  $('gloss').innerHTML=it.map(([c,t,d])=>`<div class="term"><dt>${t}<span class="cat">${c}</span></dt><dd>${d}</dd>${KID[t]?`<dd class="kidl"><b>En une image :</b> ${esc(KID[t])}</dd>`:''}</div>`).join('');$('empty').hidden=it.length>0;};
+
+// Guides : une image simple, des vidéos, et le bouton « 12 ans »
+const YTS=q=>'https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+const GX={
+ g1:{img:"Acheter un ETF, c'est comme faire ses courses en ligne : tu remplis ton porte-monnaie (le PEA), tu cherches le bon produit (l'ETF monde), tu vérifies l'étiquette (éligible PEA, frais bas), puis tu passes commande. Et avec l'achat programmé, la livraison revient toute seule chaque mois.",vid:[["Ouvrir un PEA et acheter son premier ETF","S'investir acheter premier ETF PEA"],["Passer un ordre à cours limité","ordre à cours limité expliqué débutant"]]},
+ g2:{img:"Un ETF monde, c'est miser sur toute l'équipe plutôt que sur un seul joueur. Un joueur peut se blesser, l'équipe entière continue de jouer. Mais certaines saisons, toute l'équipe perd : il faut accepter d'attendre.",vid:[["ETF MSCI World : avantages et risques","ETF MSCI World avantages risques explication"],["Pourquoi investir sur le long terme","investir long terme intérêts composés explication"]]},
+ g3:{img:"Le simulateur, c'est une boule de neige : le versement mensuel, c'est la neige que tu ajoutes ; le rendement, c'est la pente ; les années, c'est la longueur de la piste. Plus la piste est longue, plus la boule devient énorme.",vid:[["Les intérêts composés en images","intérêts composés expliqués simplement"]]},
+ g4:{img:"Une chute de la bourse, c'est comme les soldes : les mêmes produits coûtent moins cher. Ceux qui vendent pendant les soldes perdent, ceux qui continuent d'acheter font de bonnes affaires.",vid:[["Que faire quand la bourse chute","que faire krach boursier débutant ETF"],["Les krachs passés et la reprise","historique krachs boursiers reprise"]]},
+ g5:{img:"Une prime, c'est comme remplir des verres dans l'ordre : d'abord le verre « sécurité », puis le verre « projets », et seulement ensuite le grand verre « long terme ». Tu ne remplis pas le suivant tant que le premier n'est pas plein.",vid:[["Que faire d'une prime ou d'une somme d'argent","que faire d'une prime épargne ordre priorité"]]},
+ g6:{img:"Les virements automatiques, c'est comme un arrosage automatique : tu le règles une fois, et ton jardin est arrosé même quand tu oublies.",vid:[["Mettre en place un virement permanent","virement permanent épargne automatique se payer en premier"]]},
+ g7:{img:"Acheter une voiture comptant, c'est payer la pizza en entier. À crédit, c'est la payer en plusieurs fois avec un supplément. En LOA, c'est la louer chaque mois : à la fin, tu rends le carton et la pizza n'est pas à toi.",vid:[["Crédit auto, LOA ou comptant","crédit auto LOA LLD comptant comparaison"],["Comprendre le TAEG","TAEG expliqué simplement crédit"]]},
+ g8:{img:"Un rendez-vous à la banque, c'est comme chez le garagiste : il est gentil, mais il gagne de l'argent sur ce qu'il te vend. Viens avec ta liste, pose tes questions, et ne signe rien le jour même.",vid:[["Préparer son rendez-vous avec son banquier","rendez-vous banquier conseils questions à poser"]]},
+ g9:{img:"Un placement « miracle », c'est comme un inconnu qui te promet de doubler ton argent de poche si tu lui donnes tout de suite. Si c'était si facile, il ne viendrait pas te chercher.",vid:[["Reconnaître une arnaque au placement","arnaque placement financier comment reconnaître AMF"]]}
+};
+document.querySelectorAll('details.guide[id^="g"]').forEach(d=>{const x=GX[d.id];const gb=d.querySelector('.gb');if(!x||!gb||gb.querySelector('.kidbox'))return;
+  const title=d.querySelector('summary b').textContent;
+  const box=document.createElement('div');
+  box.innerHTML=`<div class="kidbox"><b>En une image</b><p>${esc(x.img)}</p></div>`+
+   `<div class="vids"><b>En vidéo</b>${x.vid.map(([t,q])=>`<a href="${YTS(q)}" target="_blank" rel="noopener">▶︎ ${esc(t)}</a>`).join('')}<small class="muted">Recherche YouTube : privilégie S'investir, Heu?reka, l'AMF ou La finance pour tous, et méfie-toi des vidéos qui vendent une formation.</small></div>`+
+   `<button type="button" class="ghost kidbtn" data-ask="${esc(`Explique-moi le guide « ${title} » comme si j'avais 12 ans, avec une comparaison de la vie de tous les jours, puis dis-moi ce que je dois faire concrètement, dans ma situation.`)}">Explique-moi comme si j'avais 12 ans</button>`;
+  gb.prepend(...box.childNodes);});
+
+/* ================= RÉSUMER UN ÉPISODE ================= */
+$('psGo').addEventListener('click',async()=>{
+  const t=$('psT').value.trim().slice(0,160),x=$('psX').value.trim().slice(0,12000),kid=$('psKid').checked;
+  if(x.length<40){toast('Colle d\'abord la description ou la transcription');return;}
+  const q=`Résume-moi cet épisode${t?` « ${t} »`:''} à partir du texte ci-dessous (description ou transcription, tu n'as pas l'épisode lui-même) :
+1) l'idée principale en une phrase${kid?', expliquée comme si j\'avais 12 ans':''} ;
+2) les 5 points à retenir ;
+3) les mots compliqués expliqués simplement ;
+4) est-ce cohérent avec mon plan (matelas, projets, ETF monde en versements programmés) ? Ce que je peux appliquer, et ce que je dois ignorer ou vérifier ;
+5) est-ce que ça ressemble à du contenu sponsorisé ou à une promesse trop belle ?
+Termine par UNE action concrète pour moi ce mois-ci.
+
+TEXTE :
+"""${x}"""`;
+  if(SAMPLE){askAdvisor(q);$('psX').value='';return;}
+  let ok=false;try{await navigator.clipboard.writeText(q);ok=true;}catch(e){}
+  $('psNote').textContent=ok?'Demande copiée. Ouvre le conseiller (onglet du milieu → « Ouvrir mon conseiller ») et colle-la dans la discussion.':'Copie impossible ici : ouvre le conseiller et colle le texte de l\'épisode.';
+  toast(ok?'Demande copiée ✔':'Copie impossible');
+});
+
+/* ================= RENDEZ-VOUS : CHECKLIST ================= */
+const RDV=[
+ {id:'lep',n:'Ouvrir un LEP',who:'Ta banque (Société Générale), en agence ou dans l\'appli',
+  docs:['Pièce d\'identité en cours de validité','Ton dernier avis d\'impôt sur le revenu (au cas où la vérification automatique ne marche pas)','RIB de ton compte courant','Au moins 30 € à verser à l\'ouverture'],
+  q:['« Pouvez-vous vérifier mon éligibilité directement auprès des impôts ? »','« Y a-t-il des frais ? » (la réponse doit être non)','« Puis-je programmer un virement automatique chaque mois après ma paie ? »'],
+  tips:['Tu peux l\'ouvrir dans n\'importe quelle banque, pas seulement la tienne.','Si on te propose autre chose à la place (assurance vie maison, carte premium), tu peux dire : « Merci, je veux seulement le LEP aujourd\'hui. »'],
+  perso:()=>{const r=+S.profil.rfr;return r?(r<=23028?[`Ton revenu fiscal de référence (${eur(r)}) est sous le plafond de 23 028 € pour 1 part : tu y as droit.`]:[`Ton revenu fiscal de référence (${eur(r)}) dépasse le plafond de 23 028 € pour 1 part : le LEP te sera refusé. Garde le Livret A.`]):['Regarde ton revenu fiscal de référence sur ton dernier avis d\'impôt. Si tu es encore rattaché à tes parents, c\'est le revenu de leur foyer qui compte.'];}},
+ {id:'credit',n:'Demander un crédit auto',who:'Ta banque, puis au moins une autre pour comparer',
+  docs:['Pièce d\'identité et justificatif de domicile de moins de 3 mois','Tes 3 derniers bulletins de salaire','Ton contrat d\'apprentissage (avec sa date de fin)','Ton dernier avis d\'impôt','Tes 3 derniers relevés de compte','Le devis ou bon de commande de la voiture','Un RIB'],
+  q:['« Quel est le TAEG, et le coût total du crédit en euros ? »','« L\'assurance emprunteur est-elle obligatoire, et combien coûte-t-elle par mois ? »','« Y a-t-il des frais de dossier ? Des frais si je rembourse plus tôt ? »','« Que se passe-t-il si mon contrat se termine avant la fin du crédit ? »'],
+  tips:['Ne signe rien le jour même : demande l\'offre écrite et compare-la à une autre banque.','Après la signature, tu as 14 jours pour te rétracter.','Un crédit affecté (lié à la voiture) est annulé si la vente ne se fait pas.'],
+  perso:()=>{const s=S.profil.salaire||0;return s?[`Les banques veulent en général que toutes tes mensualités restent sous 35 % de tes revenus, soit au plus ${eur(s*0.35)} par mois pour toi. Pour garder de la marge, vise plutôt moins de ${eur(Math.round(s*0.15/10)*10)}.`,'Fais d\'abord la simulation dans Simuler → Voiture, et viens avec le résultat.']:[];}},
+ {id:'recla',n:'Contester des frais bancaires',who:'Ton conseiller bancaire, puis le service réclamations',
+  docs:['Les relevés où apparaissent les frais (entoure-les)','La grille tarifaire de ta banque (sur son site)','Une copie de tes échanges écrits'],
+  q:['« Pouvez-vous me rembourser ces frais, à titre commercial ? »','« Existe-t-il une offre moins chère adaptée à un jeune actif ? »','« Pouvez-vous mettre en place une alerte quand mon solde est bas ? »'],
+  tips:['Demande d\'abord poliment par message dans l\'appli : c\'est souvent accepté la première fois.','Sans réponse satisfaisante sous 2 mois après ta réclamation écrite, tu peux saisir gratuitement le médiateur de la banque.'],
+  perso:()=>S.analyse&&S.analyse.frais?[`Ton dernier relevé importé montre environ ${eur(S.analyse.frais/S.analyse.months)} de frais par mois.`]:['Importe un relevé dans Mon argent → Budget pour repérer tes frais automatiquement.']},
+ {id:'pcb',n:'Point conseil budget',who:'Gratuit et confidentiel, trouvable sur mesquestionsdargent.fr',
+  docs:['Tes 3 derniers relevés de compte','Tes bulletins de salaire','La liste de tes charges fixes (loyer, téléphone, assurance, abonnements)','Tes crédits en cours et ce qu\'il reste à rembourser','Les courriers de relance si tu en as'],
+  q:['« Par quoi je commence pour revenir à l\'équilibre ? »','« Ai-je droit à des aides que je n\'utilise pas ? »','« Comment négocier un échéancier ? »'],
+  tips:['Plus tu y vas tôt, plus c\'est facile. Ce n\'est pas réservé aux situations graves.'],
+  perso:()=>{const s=S.profil.salaire||0,d=S.profil.depenses||0;return s?[`Dans l\'appli : ${eur(s)} de salaire et ${eur(d)} de dépenses fixes par mois, soit ${eur(s-d)} de marge.`]:[];}},
+ {id:'adil',n:'Logement : ADIL et Action Logement',who:'ADIL de ton département (gratuit) et actionlogement.fr',
+  docs:['Ton contrat d\'apprentissage et tes bulletins de salaire','Pièce d\'identité','L\'annonce ou le projet de bail','Ton dernier avis d\'impôt'],
+  q:['« Ce bail est-il conforme ? Le dépôt de garantie et les charges sont-ils normaux ? »','« Ai-je droit à l\'APL, à Mobili-Jeune, à la garantie Visale ? »','« Quels frais d\'agence sont autorisés ? »'],
+  tips:['Mobili-Jeune (Action Logement) : de 10 à 100 € par mois pour les alternants de moins de 30 ans dont le salaire brut ne dépasse pas 120 % du SMIC, jusqu\'à 1 100 € par année de formation.','Visale : une caution gratuite pour remplacer un garant.','Simule l\'APL sur caf.fr avant de signer.'],
+  perso:()=>[]},
+ {id:'impots',n:'Impôts (France services ou centre des impôts)',who:'France services près de chez toi, ou ta messagerie sur impots.gouv.fr',
+  docs:['Pièce d\'identité','Ton numéro fiscal (sur un ancien avis, ou celui de tes parents si tu es rattaché)','Tes bulletins de salaire de décembre (cumul annuel)','Ton contrat d\'apprentissage'],
+  q:['« Vaut-il mieux que je fasse ma propre déclaration ou que je reste rattaché à mes parents ? »','« Comment déclarer mon salaire d\'apprenti, qui est exonéré jusqu\'au SMIC ? »','« Comment obtenir mon avis d\'impôt pour ouvrir un LEP ? »'],
+  tips:['Ta propre déclaration peut te rendre éligible au LEP, mais tes parents perdent une demi-part : faites le calcul ensemble.'],
+  perso:()=>[]},
+ {id:'permis',n:'Auto-école et « permis à 1 € par jour »',who:'Une auto-école labellisée, puis une banque partenaire',
+  docs:['Pièce d\'identité','Justificatif de domicile','Le devis ou contrat de formation de l\'auto-école','Tes bulletins de salaire','Les coordonnées d\'une personne qui peut se porter caution, au cas où'],
+  q:['« Êtes-vous labellisée pour le permis à 1 € par jour ? »','« Quel est le prix total, examen compris ? Combien coûte une heure en plus ? »','« Que se passe-t-il si j\'échoue à l\'examen ? »'],
+  tips:['Ce n\'est pas une aide mais un prêt sans intérêts de 600 à 1 200 €, que tu rembourses 30 € par mois. Tu n\'y as droit qu\'une fois.','L\'aide de 500 € au permis des apprentis a été supprimée en 2026. Demande à ta région, ta mairie ou la mission locale s\'il existe une aide locale.','Le CPF ne finance plus le permis des salariés, sauf si quelqu\'un d\'autre (employeur, région) le cofinance.'],
+  perso:()=>[]},
+ {id:'assu',n:'Assurance auto',who:'Plusieurs assureurs, en ligne ou en agence',
+  docs:['Ton permis de conduire','La carte grise (ou le certificat de cession)','Ton relevé d\'information si tu as déjà été assuré, même en conduite accompagnée','Le code postal où la voiture dort, et si elle est dans un garage'],
+  q:['« Quelle franchise en cas d\'accident ? »','« Le bris de glace et l\'assistance sont-ils inclus ? »','« Y a-t-il une réduction pour la conduite accompagnée ou un petit kilométrage ? »'],
+  tips:['Compare au moins 3 devis à garanties égales.','Après un an de contrat, tu peux changer d\'assurance auto à tout moment.'],
+  perso:()=>[]},
+ {id:'cgp',n:'Conseiller en gestion de patrimoine (plus tard)',who:'Un CGP indépendant, de préférence payé en honoraires',
+  docs:['La liste de tes comptes et placements avec leurs montants','Tes objectifs et leurs dates','Ton dernier avis d\'impôt'],
+  q:['« Êtes-vous inscrit à l\'ORIAS avec le statut CIF ? » (vérifie sur orias.fr)','« Comment êtes-vous payé : honoraires ou commissions sur les produits ? »','« Quels sont les frais totaux par an, en euros, de ce que vous me proposez ? »'],
+  tips:['À ton âge, un ETF monde en PEA suffit. Un CGP devient utile avec un patrimoine plus important ou un projet complexe.'],
+  perso:()=>[]}
+];
+let rdvSel='lep';
+function renderRdv(){
+  $('rdvChips').innerHTML=RDV.map(r=>`<button type="button" data-r="${r.id}" aria-pressed="${r.id===rdvSel}">${esc(r.n)}</button>`).join('');
+  const r=RDV.find(x=>x.id===rdvSel),P=r.perso();
+  const li=(arr,k)=>arr.map((t,i)=>`<label class="chk"><input type="checkbox" data-k="${k}${i}"><span>${esc(t)}</span></label>`).join('');
+  $('rdvBox').innerHTML=`<div class="card"><div class="eyebrow">Où</div><p style="margin:2px 0 0">${esc(r.who)}</p></div>`+
+   (P.length?`<div class="card tint small"><strong>Pour toi :</strong> ${P.map(esc).join(' ')}</div>`:'')+
+   `<div class="card"><h3>À apporter</h3>${li(r.docs,'d')}</div><div class="card"><h3>Questions à poser</h3>${li(r.q,'q')}</div><div class="card"><h3>Bon à savoir</h3><ul class="small" style="margin:0;padding-left:18px">${r.tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`+
+   `<div class="btns"><button type="button" id="rdvCopy">Copier la liste</button><button type="button" class="ghost" data-ask="${esc(`Je prépare un rendez-vous : « ${r.n} ». Aide-moi à le préparer selon ma situation : ce que je dois dire, ce que je dois refuser, et les pièges à éviter.`)}">Préparer avec le conseiller</button></div>`+
+   `<div class="card" style="margin-top:10px"><div class="field" style="margin:0"><label for="rdvDate">Ajouter ce rendez-vous à mon calendrier</label><div style="display:flex;gap:8px"><input type="date" id="rdvDate"><button type="button" id="rdvAdd" style="width:auto">Ajouter</button></div></div></div>`;
+  $('rdvChips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{rdvSel=b.dataset.r;renderRdv();}));
+  $('rdvCopy').addEventListener('click',async()=>{const t=`${r.n}\n${r.who}\n\nÀ APPORTER\n${r.docs.map(x=>'☐ '+x).join('\n')}\n\nQUESTIONS\n${r.q.map(x=>'☐ '+x).join('\n')}${P.length?'\n\nPOUR MOI\n'+P.join('\n'):''}`;
+    try{await navigator.clipboard.writeText(t);toast('Liste copiée : colle-la dans Notes');}catch(e){toast('Copie impossible ici');}});
+  $('rdvAdd').addEventListener('click',()=>{const d=$('rdvDate').value;if(!/^\d{4}-\d{2}-\d{2}$/.test(d)){toast('Choisis une date');return;}
+    S.events.push({id:'e'+Date.now().toString(36),d,t:'Rendez-vous : '+r.n,an:false});persist();renderCal();toast('Ajouté à Mon calendrier ✔');});
+}
+
+/* ================= MON CALENDRIER ================= */
+const FIXED=[
+ [1,10,'Ton bilan annuel',"Augmente ton versement si ton salaire a monté, revois tes projets et ton objectif.",'plus:annee'],
+ [2,1,'Nouveaux taux du Livret A et du LEP',"Calculés à partir de l'inflation. Rien à faire, regarde juste le nouveau taux.",'plus:actu'],
+ [4,15,'Déclaration de revenus (vers mi-avril)',"Ouverture du service en ligne ; dates limites fin mai à début juin selon ton département. Pense au choix : rattaché ou ta propre déclaration.",'argent:budget'],
+ [8,1,'Avis d\'impôt (fin juillet – août)',"Note ton revenu fiscal de référence dans Réglages et vérifie ton droit au LEP.",'argent:budget'],
+ [9,15,'Rentrée : vérifie tes aides',"Nouveau contrat ou nouveau logement ? Pense à Mobili-Jeune et à l'APL.",'plus:orienter'],
+ [10,15,'Ton relevé de carrière',"Vérifie sur info-retraite.fr que tes trimestres d'apprentissage sont bien comptés.",'simuler:retraite'],
+ [12,10,'Budget de fin d\'année',"Prévois une enveloppe cadeaux. Une prime ou de l'argent à Noël : matelas, puis projets, puis PEA.",'argent:budget']
+];
+const dKey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const pD=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d||1);};
+function firstBuy(){let f='';S.positions.forEach(p=>p.achats.forEach(a=>{if(!f||a.d<f)f=a.d;}));return f;}
+function keyDates(){const out=[],pea=S.dates.pea||firstBuy(),av=S.dates.av;
+  if(pea){const d=pD(pea);d.setFullYear(d.getFullYear()+5);out.push({d,t:'Ton PEA a 5 ans',p:'Tes gains échappent alors à l\'impôt sur le revenu (il reste les prélèvements sociaux). Ne retire rien avant !',go:'plus:etapes',k:'cle'});}
+  if(av){const d=pD(av);d.setFullYear(d.getFullYear()+8);out.push({d,t:'Ton assurance vie a 8 ans',p:'Abattement de 4 600 € par an sur les gains retirés.',go:null,k:'cle'});}
+  return out;}
+function calEvents(months=12){
+  const now=new Date(),t0=new Date(now.getFullYear(),now.getMonth(),now.getDate()),end=new Date(t0);end.setMonth(end.getMonth()+months);
+  const ev=[],inW=d=>d>=t0&&d<end,push=e=>{if(inW(e.d))ev.push(e);};
+  for(let y=t0.getFullYear();y<=end.getFullYear();y++){
+    FIXED.forEach(([m,d,t,p,go])=>push({d:new Date(y,m-1,d),t,p,go,k:'fixe'}));
+    S.events.filter(e=>e.an).forEach(e=>{const x=pD(e.d);push({d:new Date(y,x.getMonth(),x.getDate()),t:e.t,p:'Chaque année',k:'perso',id:e.id});});
+    if(S.dates.auto){const x=pD(S.dates.auto),e=new Date(y,x.getMonth(),x.getDate()),b=new Date(e);b.setMonth(b.getMonth()-2);
+      push({d:b,t:'Compare ton assurance auto',p:`Échéance le ${e.toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} : demande 3 devis à garanties égales.`,go:'plus:rdv',k:'fixe'});}
+  }
+  S.events.filter(e=>!e.an).forEach(e=>push({d:pD(e.d),t:e.t,p:'',k:'perso',id:e.id}));
+  // paie et point mensuel : seulement la prochaine occurrence
+  const J=S.profil.jour||28;let pay=new Date(t0.getFullYear(),t0.getMonth(),Math.min(J,new Date(t0.getFullYear(),t0.getMonth()+1,0).getDate()));if(pay<t0)pay=new Date(t0.getFullYear(),t0.getMonth()+1,Math.min(J,new Date(t0.getFullYear(),t0.getMonth()+2,0).getDate()));
+  push({d:pay,t:'Paie : répartis ton épargne',p:'Puis chaque mois le '+J+'.',k:'mois'});
+  let pt=new Date(t0.getFullYear(),t0.getMonth(),5);if(pt<t0)pt=new Date(t0.getFullYear(),t0.getMonth()+1,5);
+  push({d:pt,t:'Ton point mensuel du conseiller',p:'Actu des marchés, alertes et conseils du mois. Puis chaque 5 du mois.',k:'mois'});
+  S.projets.forEach(p=>{if(!/^\d{4}-\d{2}$/.test(p.date))return;const d=pD(p.date+'-01'),b=new Date(d);b.setMonth(b.getMonth()-3);
+    push({d,t:'Échéance : '+p.n,p:`Objectif ${eur(p.montant)}.`,go:'argent:projets',k:'projet'});
+    push({d:b,t:'Plus que 3 mois pour '+p.n,p:'Vérifie que l\'argent est bien sur un livret, pas en bourse.',go:'argent:projets',k:'projet'});});
+  keyDates().forEach(push);
+  return ev.sort((a,b)=>a.d-b.d);
+}
+const KC={fixe:'var(--accent)',perso:'var(--gain)',projet:'var(--good)',mois:'var(--muted)',cle:'var(--warn)'};
+function renderCal(){
+  if(!$('calList'))return;
+  $('calPea').value=S.dates.pea||'';$('calAv').value=S.dates.av||'';$('calAuto').value=S.dates.auto||'';
+  const ev=calEvents(12);let h='',cur='';
+  ev.forEach(e=>{const m=e.d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});if(m!==cur){cur=m;h+=`<h4 class="calm">${m}</h4>`;}
+    h+=`<div class="cal" style="--c:${KC[e.k]}"><div class="cd"><b>${e.d.getDate()}</b><small>${e.d.toLocaleDateString('fr-FR',{weekday:'short'})}</small></div><div class="cb"><div class="tt">${esc(e.t)}</div>${e.p?`<p class="small muted">${esc(e.p)}</p>`:''}${e.go?`<a class="go" href="#${e.go.split(':')[0]}" data-go="${e.go}">Ouvrir →</a>`:''}${e.id?`<button type="button" class="linkbtn" data-delev="${e.id}">Supprimer</button>`:''}</div></div>`;});
+  $('calList').innerHTML=h||'<p class="small muted">Rien de prévu.</p>';
+  const K=keyDates();$('calKey').innerHTML=K.length?K.map(k=>`<div class="row"><span>${esc(k.t)}</span><b>${k.d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}</b></div>`).join(''):'<p class="small muted" style="margin:0">Indique la date d\'ouverture de ton PEA ci-dessous (ou ajoute ton premier achat d\'ETF) pour voir quand il aura 5 ans.</p>';
+  $('calList').querySelectorAll('[data-delev]').forEach(b=>b.addEventListener('click',()=>{S.events=S.events.filter(x=>x.id!==b.dataset.delev);persist();renderCal();}));
+}
+[['calPea','pea'],['calAv','av'],['calAuto','auto']].forEach(([id,k])=>$(id).addEventListener('change',e=>{const v=e.target.value;S.dates[k]=/^\d{4}-\d{2}-\d{2}$/.test(v)?v:'';persist();renderCal();}));
+$('calAddBtn').addEventListener('click',()=>{const d=$('calD').value,t=$('calT').value.trim().slice(0,80);if(!/^\d{4}-\d{2}-\d{2}$/.test(d)||!t){toast('Indique une date et un titre');return;}
+  S.events.push({id:'e'+Date.now().toString(36),d,t,an:$('calAn').checked});S.events=S.events.slice(-60);$('calT').value='';persist();renderCal();toast('Ajouté ✔');});
+function calIcs(){
+  const pad=n=>String(n).padStart(2,'0'),f=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`,stamp=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z',ix=s=>String(s).replace(/\\/g,'\\\\').replace(/[,;]/g,m=>'\\'+m).replace(/\n/g,'\\n');
+  const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Mon Plan Retraite//FR','CALSCALE:GREGORIAN'];
+  calEvents(12).filter(e=>e.k!=='mois').forEach((e,i)=>{const n=new Date(e.d);n.setDate(n.getDate()+1);
+    L.push('BEGIN:VEVENT',`UID:cal-${f(e.d)}-${i}@mon-plan-retraite`,`DTSTAMP:${stamp}`,`DTSTART;VALUE=DATE:${f(e.d)}`,`DTEND;VALUE=DATE:${f(n)}`,`SUMMARY:${ix(e.t)}`,`DESCRIPTION:${ix(e.p||'')}`,'BEGIN:VALARM','ACTION:DISPLAY',`DESCRIPTION:${ix(e.t)}`,'TRIGGER:-PT15H','END:VALARM','END:VEVENT');});
+  L.push('END:VCALENDAR');return L.join('\r\n');
+}
+$('calIcs').addEventListener('click',()=>{
+  if(IN_CLAUDE){toast('Fais-le depuis l\'appli installée sur ton iPhone');return;}
+  const blob=new Blob([calIcs()],{type:'text/calendar'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='mon-calendrier-argent.ics';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);toast('Ouvre le fichier puis touche « Tout ajouter »');
+});
+
+/* ================= À DEUX ================= */
+function couple(save=true){
+  const C=S.couple,g=id=>Math.max(0,+$(id).value||0);
+  C.s1=g('cS1');C.s2=g('cS2');C.loyer=g('cLoyer');C.courses=g('cCourses');C.factures=g('cFact');C.autres=g('cAutres');
+  const tot=C.loyer+C.courses+C.factures+C.autres,R=C.s1+C.s2;
+  const p1=R?C.s1/R:.5,prop=[tot*p1,tot*(1-p1)],egal=[tot/2,tot/2],use=C.mode==='egal'?egal:prop;
+  const rest=[C.s1-use[0],C.s2-use[1]];
+  $('cRes').innerHTML=`<div class="res"><div class="big"><div class="l">Dépenses communes par mois</div><div class="v">${eur(tot)}</div><div class="l">${R?Math.round(tot/R*100)+' % de vos revenus à deux':''}</div></div>
+   <div class="sm"><div class="l">Toi, tu verses</div><div class="v">${eur(use[0])}</div><div class="l">il te reste ${eur(rest[0])}</div></div>
+   <div class="sm"><div class="l">L'autre verse</div><div class="v">${eur(use[1])}</div><div class="l">il lui reste ${eur(rest[1])}</div></div></div>
+   <div class="card small"><h3>Les deux méthodes comparées</h3>
+   <div class="row"><span>50/50<small>chacun paie la moitié</small></span><b>${eur(egal[0])} / ${eur(egal[1])}</b></div>
+   <div class="row"><span>Au prorata des revenus<small>toi ${Math.round(p1*100)} %, l'autre ${Math.round((1-p1)*100)} %</small></span><b>${eur(prop[0])} / ${eur(prop[1])}</b></div>
+   <p class="small muted" style="margin:8px 0 0">${Math.abs(C.s1-C.s2)<R*0.1?'Vos revenus sont proches : les deux méthodes donnent presque la même chose.':'Vos revenus sont différents : le prorata laisse à chacun une part de « reste pour soi » plus équilibrée.'} Il n'y a pas de bonne réponse : l'important, c'est que ce soit décidé ensemble et que chacun le trouve juste.</p></div>`;
+  if(save)persist();
+}
+['cS1','cS2','cLoyer','cCourses','cFact','cAutres'].forEach(id=>$(id).addEventListener('input',couple));
+document.querySelectorAll('#cMode button').forEach(b=>b.addEventListener('click',()=>{S.couple.mode=b.dataset.m;document.querySelectorAll('#cMode button').forEach(x=>x.setAttribute('aria-pressed',x===b));couple();}));
+function fillCouple(){const C=S.couple;$('cS1').value=C.s1||S.profil.salaire||'';$('cS2').value=C.s2||'';$('cLoyer').value=C.loyer||'';$('cCourses').value=C.courses||'';$('cFact').value=C.factures||'';$('cAutres').value=C.autres||'';
+  document.querySelectorAll('#cMode button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.m===(C.mode||'prop')));}
+
+/* ================= MON JOURNAL DE DÉCISIONS ================= */
+let jConf=3;
+const JCAT={placement:'Placement',achat:'Achat',credit:'Crédit',budget:'Budget',autre:'Autre'};
+function renderJournal(){
+  if(!$('jList'))return;
+  if(!$('jD').value)$('jD').value=dKey(new Date());
+  document.querySelectorAll('#jConf button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.c===jConf));
+  $('jList').innerHTML=S.journal.length?S.journal.map(j=>`<div class="card jr"><div class="mtop"><span class="tag">${esc(JCAT[j.cat]||'Autre')}</span><small class="muted">${pD(j.d).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}</small></div>
+    <div class="tt" style="font-weight:700;margin:6px 0 2px">${esc(j.t)}</div>${j.why?`<p class="small" style="margin:0 0 6px"><b>Pourquoi :</b> ${esc(j.why)}</p>`:''}
+    <div class="small muted">Confiance : ${'●'.repeat(j.conf)}${'○'.repeat(5-j.conf)}</div>
+    <div class="btns" style="margin-top:8px"><button type="button" class="ghost" data-ask="${esc(`Relis avec moi cette décision de mon journal : « ${j.t} » (prise le ${j.d}${j.why?`, raison : ${j.why}`:''}). Est-ce toujours une bonne décision aujourd'hui, et pourquoi ?`)}">En parler au conseiller</button><button type="button" class="linkbtn" data-delj="${j.id}">Supprimer</button></div></div>`).join(''):'<p class="small muted">Aucune décision notée pour l\'instant. Commence par la prochaine : ouvrir ton PEA, choisir ton ETF, un achat important…</p>';
+  $('jList').querySelectorAll('[data-delj]').forEach(b=>b.addEventListener('click',()=>{if(!confirmDel(b))return;S.journal=S.journal.filter(x=>x.id!==b.dataset.delj);persist();renderJournal();}));
+}
+function confirmDel(b){if(b.dataset.sure)return true;b.dataset.sure='1';b.textContent='Toucher encore pour confirmer';setTimeout(()=>{if(b.isConnected){delete b.dataset.sure;b.textContent='Supprimer';}},3000);return false;}
+document.querySelectorAll('#jConf button').forEach(b=>b.addEventListener('click',()=>{jConf=+b.dataset.c;renderJournal();}));
+$('jSave').addEventListener('click',()=>{const t=$('jT').value.trim().slice(0,160),why=$('jW').value.trim().slice(0,600),d=$('jD').value;
+  if(!t){toast('Écris ta décision');return;}
+  S.journal.unshift({id:'j'+Date.now().toString(36),d:/^\d{4}-\d{2}-\d{2}$/.test(d)?d:dKey(new Date()),t,why,cat:$('jCat').value,conf:jConf});S.journal=S.journal.slice(0,100);
+  $('jT').value='';$('jW').value='';persist();renderJournal();toast('Décision notée ✔');});
+TOOLS.push({name:'noter_decision',description:"Ajoute une décision importante de Hugo dans son journal de décisions (ex. « Ouvrir un PEA chez Trade Republic », raison « frais bas, versement programmé gratuit »). À utiliser quand il confirme un choix, pas pour une simple idée.",
+  inputSchema:{type:'object',properties:{decision:{type:'string'},raison:{type:'string'},categorie:{type:'string',enum:['placement','achat','credit','budget','autre']},confiance:{type:'number',description:'1 à 5'}},required:['decision']},
+  execute(i){const t=String(i.decision||'').trim().slice(0,160);if(!t)throw new Error('décision vide');S.journal.unshift({id:'j'+Date.now().toString(36),d:dKey(new Date()),t,why:String(i.raison||'').slice(0,600),cat:JCAT[i.categorie]?i.categorie:'autre',conf:Math.min(5,Math.max(1,Math.round(+i.confiance||3)))});S.journal=S.journal.slice(0,100);persist();try{renderJournal();}catch(e){}return{ok:true};}});
+
+/* ================= ALERTES ================= */
+const DEF_ALERTS=[
+ {id:'a-permis26',date:'2026-02-24',tag:'Aide',t:'L\'aide de 500 € au permis des apprentis est supprimée',d:'La loi de finances 2026 l\'a retirée. Il reste le prêt « permis à 1 € par jour » (600 à 1 200 €, remboursé 30 € par mois) et d\'éventuelles aides locales.',go:'plus:rdv'},
+ {id:'a-flat26',date:'2026-01-01',tag:'Fiscalité',t:'Flat tax à 31,4 % depuis janvier 2026',d:'Les prélèvements sociaux sont passés à 18,6 % (17,2 % sur l\'assurance vie). Ça touche les gains de tes placements, pas tes livrets réglementés.',go:'plus:actu'},
+ {id:'a-livA27',date:'2026-11-01',tag:'Taux',t:'Prochaine révision du Livret A et du LEP le 1er février 2027',d:'Le nouveau taux dépend de l\'inflation. Ton conseiller te le dira dans le point mensuel de février.',go:'plus:calendrier'},
+ {id:'a-budget27',date:'2026-11-01',tag:'Fiscalité',t:'Budget 2027 en discussion',d:'La fiscalité de l\'épargne peut encore changer d\'ici fin décembre. Rien à faire pour l\'instant.',go:'plus:actu'}
+];
+const alerts=()=>(Array.isArray(ACTU.alertes)&&ACTU.alertes.length?ACTU.alertes:DEF_ALERTS).filter(a=>a&&a.t).slice(0,8).map(a=>({...a,id:String(a.id||a.t).slice(0,60)}));
+function renderAlerts(){
+  const A=alerts(),seen=new Set(S.alertsSeen||[]),nw=A.filter(a=>!seen.has(a.id));
+  const item=(a,btn)=>`<div class="alrt"><div class="mtop"><span class="tag">${esc(a.tag||'Info')}</span>${a.date?`<small class="muted">${/^\d{4}-\d{2}-\d{2}$/.test(a.date)?pD(a.date).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):esc(String(a.date))}</small>`:''}</div><div class="tt">${esc(a.t)}</div><p class="small">${esc(a.d||'')}</p><div class="abt">${a.go&&/^[a-z]+:[a-z]+$/.test(a.go)?`<a class="go" href="#${a.go.split(':')[0]}" data-go="${a.go}">Voir →</a>`:''}${btn?`<button type="button" class="linkbtn" data-seen="${esc(a.id)}">J'ai compris</button>`:''}</div></div>`;
+  const c=$('alertCard');if(c){c.hidden=!nw.length;c.innerHTML=nw.length?`<div class="eyebrow">⚠️ ${nw.length} alerte${nw.length>1?'s':''} pour toi</div>${nw.slice(0,2).map(a=>item(a,true)).join('')}${nw.length>2?`<a class="go" href="#plus" data-go="plus:actu">Voir les ${nw.length} alertes →</a>`:''}`:'';}
+  const l=$('alertList');if(l)l.innerHTML=A.length?A.map(a=>item(a,!seen.has(a.id))).join(''):'<p class="small muted">Aucune alerte en ce moment.</p>';
+  document.querySelectorAll('[data-seen]').forEach(b=>b.addEventListener('click',()=>{S.alertsSeen=[...new Set([...(S.alertsSeen||[]),b.dataset.seen])].slice(-60);persist();renderAlerts();}));
+}
+renderActu=(function(orig){return function(){orig();renderAlerts();};})(renderActu);
+
+/* ================= CONSEILLER : contexte en plus ================= */
+situation=(function(orig){return function(){const o=orig();
+  o.journal_decisions=S.journal.slice(0,10).map(j=>({date:j.d,decision:j.t,raison:j.why,categorie:j.cat,confiance:j.conf}));
+  o.calendrier_60_jours=calEvents(2).filter(e=>e.k!=='mois').map(e=>dKey(e.d)+' : '+e.t);
+  o.alertes=alerts().map(a=>a.t);
+  if(S.couple&&S.couple.s2)o.budget_a_deux={mon_salaire:S.couple.s1,salaire_autre:S.couple.s2,depenses_communes:S.couple.loyer+S.couple.courses+S.couple.factures+S.couple.autres,methode:S.couple.mode==='egal'?'50/50':'prorata des revenus'};
+  return o;};})(situation);
+sysPrompt=(function(orig){return function(){return orig()+`
+
+JOURNAL DES DÉCISIONS : Hugo note ses choix et leurs raisons (écran Plus → Mon journal). Quand il confirme une décision importante, propose-lui de la noter et utilise l'outil « noter_decision ». Si les marchés baissent ou s'il doute, rappelle-lui les raisons qu'il avait notées.
+EXPLICATIONS « 12 ANS » : s'il demande d'expliquer comme s'il avait 12 ans, utilise une comparaison de la vie quotidienne (tirelire, panier de fruits, boule de neige, équipe de foot…), des phrases très courtes, zéro jargon, puis une phrase sur ce que ça change pour lui.
+RÉSUMÉ D'ÉPISODE : tu n'as que le texte collé (description ou transcription), pas l'audio ; dis-le si le texte est trop court pour juger.
+ALERTES EN COURS : ${alerts().map(a=>a.t).join(' | ')}
+AUTRES ÉCRANS : Plus → Préparer un rendez-vous (checklists), Mon calendrier, Mon journal ; Simuler → À deux (budget de couple).`;};})(sysPrompt);
+
+/* ================= COACH : rappels du calendrier et du journal ================= */
+coachTips=(function(orig){return function(){const tips=orig(),add=(lv,t,p,go,gt,pr)=>tips.push({lv,t,p,go,gt,pr:pr??({u:0,a:1,c:2,i:3})[lv]});
+  try{const t0=new Date();t0.setHours(0,0,0,0);calEvents(1).filter(e=>e.k!=='mois'&&(e.d-t0)/864e5<=7).slice(0,2).forEach(e=>{const n=Math.round((e.d-t0)/864e5);add('a',(n===0?'Aujourd\'hui : ':n===1?'Demain : ':`Dans ${n} jours : `)+e.t,e.p||'Prévu dans ton calendrier.',e.go||'plus:calendrier',e.go?'Ouvrir':'Voir mon calendrier',0.8);});}catch(e){}
+  try{const nw=alerts().filter(a=>!(S.alertsSeen||[]).includes(a.id));if(nw.length)add('i',nw.length+' alerte'+(nw.length>1?'s':'')+' sur tes aides, taux ou impôts',nw[0].t+'.','plus:actu','Lire les alertes',1.2);}catch(e){}
+  try{const drop=(ACTU.news||[]).find(n=>n.c==='warn'&&/[−-]\s?\d/.test(n.v));if(drop&&S.journal.some(j=>j.cat==='placement'))add('c','Relis ton journal avant de toucher à quoi que ce soit','Les marchés baissent. Relis pourquoi tu as choisi ta stratégie : tu avais prévu ces moments-là.','plus:journal','Ouvrir mon journal',1.4);
+    else if(!S.journal.length&&S.positions.some(p=>p.achats.length))add('i','Note pourquoi tu as choisi ton ETF','Dans 2 ans, lors d\'une baisse, relire tes raisons t\'aidera à garder le cap.','plus:journal','Ouvrir mon journal',3.2);}catch(e){}
+  return tips.sort((a,b)=>a.pr-b.pr);};})(coachTips);
+
 /* ================= RENDU GLOBAL ================= */
 function fillInputs(){
   $('capa').value=S.profil.capa??'';$('capa').placeholder=String(Math.round((S.profil.salaire||0)*0.2/10)*10);$('paie').value=S.profil.paie;$('jour').value=S.profil.jour;$('debutant').checked=S.profil.debutant!==false;$('peeSt').value=S.profil.pee;
   $('sal').value=S.profil.salaire;$('dep').value=S.profil.depenses;$('rfr').value=S.profil.rfr;$('parts').value=S.profil.parts;
   SIMK.forEach(k=>{if(S.sim[k]!==undefined&&$(k))$(k).value=S.sim[k];});
 }
-function renderAll(){fillInputs();renderAccounts();renderMoney();renderHist();budget();lep();renderTasks();update();drawHist();renderProjets();renderAdvisor();renderPositions();renderAnalyse();renderEnv();renderCarriere();$('rTrim').value=S.carriere.trim||'';$('rEstim').value=S.carriere.estim||'';$('gMont').value=S.objectif.montant;$('gAge').value=S.objectif.age;retraite();impots();voiture();etsi();renderCours();renderDefi();renderMemo();renderCoach();renderGoal();renderBilan();renderYear();renderPinState();renderSnaps();}
+function renderAll(){fillInputs();renderAccounts();renderMoney();renderHist();budget();lep();renderTasks();update();drawHist();renderProjets();renderAdvisor();renderPositions();renderAnalyse();renderEnv();renderCarriere();$('rTrim').value=S.carriere.trim||'';$('rEstim').value=S.carriere.estim||'';$('gMont').value=S.objectif.montant;$('gAge').value=S.objectif.age;retraite();impots();voiture();etsi();renderCours();renderDefi();renderMemo();renderCoach();renderGoal();renderBilan();renderYear();renderPinState();renderSnaps();renderAlerts();renderCal();renderRdv();fillCouple();couple(false);renderJournal();}
 renderActu();renderAll();renderQuiz();gl();repart();immo();route();
 try{applyTheme(LSG('prt-theme','auto'));}catch(e){}
 if(LSG('prt-hide',''))setHide(true);
